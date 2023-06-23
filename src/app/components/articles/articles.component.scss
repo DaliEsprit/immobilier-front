@@ -1,0 +1,45 @@
+:host ::ng-deep  .dark  .p-tabmenu .p-tabmenu-nav {
+    background: #111827;
+    border: 1px solid #202b42;
+    border-width: 0 0 2px 0;
+    display: flex;
+    justify-content: center;
+}
+
+:host ::ng-deep  .dark .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link{
+    background:  #151d2e;
+    border: 1px solid #2f3d5a;
+    border-width: 0 0 2px 0;
+    margin-left: 5px;
+}
+ 
+
+
+
+:host ::ng-deep .dark .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background:  #202738; 
+}
+
+:host ::ng-deep .dark .p-paginator .p-dropdown {
+    background:  #202738;
+    border: 1px solid #2f3d5a;
+}
+
+:host ::ng-deep .dark .p-paginator .p-dropdown .p-dropdown-label{
+    background:  #202738;
+    border: 1px none;
+}
+
+:host ::ng-deep .p-overlay {
+    min-width: 59%!important;
+}
+
+.dark .nav-active{
+    background: #383e52;
+    color: white;
+    border-bottom: 2px solid blue;
+}
+.nav-active{ 
+    color: blue;
+    border-bottom: 2px solid blue;
+}

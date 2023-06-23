@@ -1,0 +1,27 @@
+
+<div class="min-h-screen flex flex-col">
+   <app-header></app-header>
+   <!-- <div class="filter grayscale contrast-50 w-full bg-fixed h-80 bg-no-repeat bg-center bg-[url('https://leaderonomics-storage.s3.ap-southeast-1.amazonaws.com/p06_07_0107_selling_1_b1ae69190f.jpg')]"></div> -->
+
+   <main class="flex-grow bg-gray-300 dark:bg-gray-700 min-h-full pt-0 p-6 min-w-full">
+      <app-sidebar></app-sidebar>
+      <div class="mt-20 flex justify-center min-w-full">
+         <div class="w-full max-w-screen"> <!-- Added "max-w-screen-xl" class for the desired width -->
+            <div class="flex justify-center"> <!-- Added "flex justify-center" classes -->
+               <div class="w-full"> <!-- Added "w-full" class -->
+                  <router-outlet ></router-outlet>
+               </div>
+            </div>
+         </div>
+      </div>
+   </main>
+   <footer class="border-gray-200 bg-gray-50 dark:bg-gray-950 dark:border-gray-700 mt-auto">
+      <div class="w-full max-w-screen-xl mx-auto md:py-2">
+         <app-footer></app-footer>
+      </div>
+   </footer>
+</div>
+<!-- <div class="p-4 sm:ml-64"> -->
+
+ 
+

@@ -1,0 +1,57 @@
+
+:host ::ng-deep .p-menubar {
+    border: 1px green;
+    border-style: solid;
+    border-radius: 20px;
+    box-shadow: none!important;
+}
+  
+:host ::ng-deep .p-panelmenu  .p-panelmenu-header > a {
+    padding: 10px;
+    background: #f8f9fa;
+    border-color: #dee2e6;
+    color: #343a40;
+}
+  
+:host ::ng-deep  .p-panelmenu .p-panelmenu-header > a:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem #ffffff00;
+}
+
+:host ::ng-deep  .dark  .p-panelmenu-header > a {
+    background: #111827;
+    border-color: #1a1a1a;
+    color: #e6e6e6;
+}
+:host ::ng-deep  .dark  .p-panelmenu-header > a:focus {
+    background: #111827!important;
+    border-color: #1a1a1a!important;
+    color: #e6e6e6!important;
+}
+:host ::ng-deep  .dark  .p-panelmenu-header > a:hover {
+    background: #111827!important;
+    border-color: #1a1a1a!important;
+    color: #e6e6e6!important;
+}
+
+
+:host ::ng-deep  .dark   .p-panelmenu  .p-panelmenu-content { 
+    border: 1px solid #202b42 !important; 
+    background:#202b42 !important;
+    color: #ebedf0; 
+}
+:host ::ng-deep .dark  .p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link .p-menuitem-text{ 
+
+    color: #ebedf0; 
+}
+:host ::ng-deep .dark  .p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:not(.p-disabled):hover{ 
+ 
+    color: #080e16; 
+}
+:host ::ng-deep .p-sidebar-left {
+    top: 0;
+    left: 0;
+    width: 16rem;
+    height: 100%;
+}

@@ -1,0 +1,11 @@
+.sidebar-push {
+    position: relative;
+    z-index: 1;
+    width: 80%;
+    transform: translateX(0);
+    transition: transform 0.3s ease-out;
+  }
+  
+  .sidebar-push-active {
+    transform: translateX(15rem); /* Adjust the value as per your sidebar width */
+  }
