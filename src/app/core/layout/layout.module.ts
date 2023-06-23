@@ -15,6 +15,7 @@ import { FooterComponent } from './footer/footer.component';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule } from '@angular/forms'; 
+import { RoomComponent } from 'src/app/room/room.component';
 
 const routes: Routes = [
   {
@@ -30,7 +31,8 @@ const routes: Routes = [
     FooterComponent,
     LayoutComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    RoomComponent,
   ],
   imports: [
     FormsModule,

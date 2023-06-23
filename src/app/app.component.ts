@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { initializeGoogleSignIn } from './utils/google.initializer';
+// import { initializeGoogleSignIn } from './utils/google.initializer';
 declare const google: any;
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ declare const google: any;
 export class AppComponent {
 
   constructor() { 
-    initializeGoogleSignIn() 
+    // initializeGoogleSignIn() 
   }
   
   

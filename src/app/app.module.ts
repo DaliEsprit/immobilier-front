@@ -11,9 +11,10 @@ import { ButtonModule } from 'primeng/button';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ArticlesModule } from './components/articles/articles.module';
  import { TokenInterceptor } from './core/interceptors/auth.interceptor';
+import { HeaderComponent } from './core/layout/header/header.component';
  @NgModule({
   declarations: [
-    AppComponent, 
+    AppComponent,
   ],
   imports: [ 
     BrowserAnimationsModule,
