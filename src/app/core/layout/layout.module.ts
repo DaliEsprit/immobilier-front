@@ -17,6 +17,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { RoomComponent } from 'src/app/room/room.component';
 import { RegisterComponent } from 'src/app/components/auth/register/register.component';
+import { LoginComponent } from 'src/app/components/auth/login/login.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,7 @@ const routes: Routes = [
     SidebarComponent,
     RoomComponent,
     RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     ReactiveFormsModule,

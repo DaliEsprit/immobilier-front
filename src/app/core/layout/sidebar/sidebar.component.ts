@@ -14,8 +14,6 @@ export class SidebarComponent {
 constructor(public sideBarService:SidebarService,public themeService:ThemeService){
     
 }
-items: MenuItem[]=environment.categories;
-
 ngOnInit() {
    
 }
