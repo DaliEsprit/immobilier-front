@@ -12,13 +12,16 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ArticlesModule } from './components/articles/articles.module';
  import { TokenInterceptor } from './core/interceptors/auth.interceptor';
 import { HeaderComponent } from './core/layout/header/header.component';
+import { ReactiveFormsModule } from '@angular/forms';
  @NgModule({
   declarations: [
     AppComponent,
+
   ],
   imports: [ 
     BrowserAnimationsModule,
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule, 
     HttpClientModule,
     ArticlesModule

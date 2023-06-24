@@ -7,11 +7,15 @@ import { environment } from 'src/environments/environment.development';
 })
 export class UserService {
 
-  protected readonly BASE_URI=environment.baseUri+"users"
+  protected readonly BASE_URI=environment.baseUri+"user"
   
   constructor(private http: HttpClient) { }
   getUserByToken() {
     const url = `${this.BASE_URI}?token=${localStorage.getItem("token")}`;
     return this.http.get(url);
+  }
+
+  save(user:any){
+    return this.http.post(this.BASE_URI,user)
   }
 }

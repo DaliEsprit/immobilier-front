@@ -14,8 +14,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FooterComponent } from './footer/footer.component';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { RoomComponent } from 'src/app/room/room.component';
+import { RegisterComponent } from 'src/app/components/auth/register/register.component';
 
 const routes: Routes = [
   {
@@ -33,8 +34,10 @@ const routes: Routes = [
     HeaderComponent,
     SidebarComponent,
     RoomComponent,
+    RegisterComponent,
   ],
   imports: [
+    ReactiveFormsModule,
     FormsModule,
     AutoCompleteModule,
     PanelMenuModule,
