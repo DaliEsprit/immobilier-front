@@ -12,9 +12,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ArticlesModule } from './components/articles/articles.module';
  import { TokenInterceptor } from './core/interceptors/auth.interceptor';
 import { HeaderComponent } from './core/layout/header/header.component';
+import { ImmobiliereComponent } from './immobiliere/immobiliere.component';
+import { ImmobiliereDetailsComponent } from './immobiliere-details/immobiliere-details.component';
  @NgModule({
   declarations: [
     AppComponent,
+    ImmobiliereComponent,
+    ImmobiliereDetailsComponent,
   ],
   imports: [ 
     BrowserAnimationsModule,
