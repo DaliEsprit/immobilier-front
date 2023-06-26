@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { SidebarService } from 'src/app/shared/services/sidebar.service';
 import { ThemeService } from 'src/app/shared/services/teme.service';
 import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -16,7 +17,7 @@ export class HeaderComponent {
 
 
 
-  constructor(private authService: AuthService, public themeService: ThemeService, public sideBarService: SidebarService, private cdr: ChangeDetectorRef) {
+  constructor(private authService: AuthService, public themeService: ThemeService, public sideBarService: SidebarService, private cdr: ChangeDetectorRef,private router:Router) {
     let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     let themeToggleLightIcon = document.getElementById(
       'theme-toggle-light-icon'
@@ -57,6 +58,20 @@ export class HeaderComponent {
   toggleTheme(): void {
     this.themeService.toggleDarkMode();
   }
+  ValidateUser(): any {
+    console.log(this.authService.getToken())
+    if (this.authService.getToken() != null){
+      this.router.navigateByUrl("/userDetails")
+      return true;
+    }
+    else{
+      this.router.navigateByUrl("/login")
+      return false
+    }
+  }
+  RemoveUser():any{
+    localStorage.removeItem("token");
+  }
 
-  
+
 }

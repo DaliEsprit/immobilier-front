@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
- 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarModule } from 'primeng/sidebar';
 import { PanelModule } from 'primeng/panel';
@@ -14,8 +13,6 @@ import { ArticlesModule } from './components/articles/articles.module';
 import { HeaderComponent } from './core/layout/header/header.component';
 import { ImmobiliereComponent } from './components/immobiliere/immobiliere.component';
 import { ImmobiliereDetailsComponent } from './components/immobiliere-details/immobiliere-details.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './components/auth/login/login.component';
  @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +22,6 @@ import { LoginComponent } from './components/auth/login/login.component';
   imports: [ 
     BrowserAnimationsModule,
     BrowserModule,
-    ReactiveFormsModule,
     AppRoutingModule, 
     HttpClientModule,
     ArticlesModule

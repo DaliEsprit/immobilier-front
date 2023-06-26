@@ -22,7 +22,7 @@ export class LoginComponent {
   login(){
     this.authService.loginUser(this.form.value).subscribe(user=>{
       if(user["accessToken"]!=null){
-      localStorage.setItem("usertoken",user["accessToken"]);
+      localStorage.setItem("token",user["accessToken"]);
       this.router.navigateByUrl("");
       }
       else

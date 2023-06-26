@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoomComponent } from 'src/app/room/room.component';
 import { RegisterComponent } from 'src/app/components/auth/register/register.component';
 import { LoginComponent } from 'src/app/components/auth/login/login.component';
+import { UserDetailsComponent } from 'src/app/components/user-details/user-details.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,7 @@ const routes: Routes = [
     RoomComponent,
     RegisterComponent,
     LoginComponent,
+    UserDetailsComponent
   ],
   imports: [
     ReactiveFormsModule,
