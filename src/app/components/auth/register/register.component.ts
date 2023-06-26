@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class RegisterComponent implements OnInit{
 
 form:FormGroup
 
-constructor(private fb:FormBuilder,private userService:UserService){
+constructor(private fb:FormBuilder,private userService:UserService,private router:Router){
 this.form=fb.group({
   firstName:['',Validators.required],
   lastName:['',Validators.required],
@@ -38,7 +39,7 @@ save(){
   delete user.confirmPassword
   this.userService.save(user).subscribe(user=>{
     console.log(user);
-    
+    this.router.navigateByUrl("/login")
   })
 }
 }
