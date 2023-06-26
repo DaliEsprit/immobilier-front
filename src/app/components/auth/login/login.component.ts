@@ -20,8 +20,13 @@ export class LoginComponent {
   }
 
   login(){
-    this.authService.loginUser(this.form.value).subscribe({
-      next:()=>this.router.navigateByUrl('')
+    this.authService.loginUser(this.form.value).subscribe(user=>{
+      if(user["accessToken"]!=null){
+      localStorage.setItem("usertoken",user["accessToken"]);
+      this.router.navigateByUrl("");
+      }
+      else
+        alert("user is invalid")
     })
   }
 }
