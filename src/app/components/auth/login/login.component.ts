@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -11,7 +12,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class LoginComponent {
   form:FormGroup
 
-  constructor(private fb:FormBuilder,private authService:AuthService){
+  constructor(private fb:FormBuilder,private authService:AuthService,private router:Router){
   this.form=fb.group({
     email:['',Validators.required],
     password:['',Validators.required]
@@ -19,8 +20,8 @@ export class LoginComponent {
   }
 
   login(){
-    this.authService.loginUser(this.form.value).subscribe(user=>{
-
+    this.authService.loginUser(this.form.value).subscribe({
+      next:()=>this.router.navigateByUrl('')
     })
   }
 }
