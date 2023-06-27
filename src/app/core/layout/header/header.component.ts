@@ -59,13 +59,12 @@ export class HeaderComponent {
     this.themeService.toggleDarkMode();
   }
   ValidateUser(): any {
-    console.log(this.authService.getToken())
     if (this.authService.getToken() != null){
-      this.router.navigateByUrl("/userDetails")
+      // this.router.navigateByUrl("/userDetails")
       return true;
     }
     else{
-      this.router.navigateByUrl("/login")
+      // this.router.navigateByUrl("/login")
       return false
     }
   }

@@ -1,7 +1,7 @@
 <nav class="border-gray-200 fixed w-full z-20 top-0 left-0 bg-gray-50 dark:bg-gray-950 dark:border-gray-700">
   <div [ngClass]="{'dark': (themeService.theme$ | async) == 'dark'}"
     class="max-w-screen-xl z-10 flex flex-wrap items-center justify-between mx-auto p-2">
-    <div (click)="RemoveUser()" class="flex justify-center items-center">
+    <div  class="flex justify-center items-center">
       <a href="#" class="flex items-center justify-start">
         <b class="text-2xl">Immobiler</b>
       </a>
@@ -38,12 +38,12 @@
     </div>
     <div class="flex justify-center items-center space-x-2">
       <div style="padding-right: 10px;cursor: pointer;">
-        <img  routerLink="room" *ngIf="theme=='light'" src="../../../../assets/room.png" width="20"/>
-        <img  routerLink="room" *ngIf="theme=='dark'" src="../../../../assets/roomWhite.png" width="20"/>
+        <img routerLink="room" *ngIf="theme=='light'" src="../../../../assets/room.png" width="20" />
+        <img routerLink="room" *ngIf="theme=='dark'" src="../../../../assets/roomWhite.png" width="20" />
       </div>
       <div style="padding-right: 10px;cursor: pointer;">
-        <img  routerLink="notification" *ngIf="theme=='light'" src="../../../../assets/bell-ring.png" width="20"/>
-        <img  routerLink="notification" *ngIf="theme=='dark'" src="../../../../assets/bell-ringwhite.png" width="20"/>
+        <img routerLink="notification" *ngIf="theme=='light'" src="../../../../assets/bell-ring.png" width="20" />
+        <img routerLink="notification" *ngIf="theme=='dark'" src="../../../../assets/bell-ringwhite.png" width="20" />
       </div>
       <a *showIfLogged="true" class="flex justify-center items-center space-x-2" routerLink="/account">
         <div
@@ -88,6 +88,10 @@
             clip-rule="evenodd"></path>
         </svg>
       </button>
+      <div *ngIf="ValidateUser()"  (click)="RemoveUser()" style="padding-right: 10px;cursor: pointer;">
+        <img  *ngIf="theme=='light'" src="../../../../assets/logout.png" width="20" />
+        <img  *ngIf="theme=='dark'" src="../../../../assets/logoutwhite.png" width="20" />
+      </div>
     </div>
 
   </div>

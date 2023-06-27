@@ -1,1 +1,19 @@
-<p>immobiliere-details works!</p>
+<div style="display: flex;">
+    <div style="flex: 3;">
+        <div class="grid gap-4">
+            <div>
+                <img class="h-auto max-w-full rounded-lg"
+                    src={{selectedImage}} alt="">
+            </div>
+            <div class="grid grid-cols-5 gap-4">
+                <div *ngFor="let att of attachmentList ">
+                    <img (click)="setMainAttachemnt(att.idAttachment)" src={{att.path}} />
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div style="flex: 5;">
+
+    </div>
+</div>
