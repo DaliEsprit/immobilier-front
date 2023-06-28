@@ -7,7 +7,7 @@
             </div>
             <div class="grid grid-cols-5 gap-4">
                 <div *ngFor="let att of attachmentList ">
-                    <img (click)="setMainAttachemnt(att.idAttachment)" src={{att.path}} />
+                    <img (mouseover)="setMainAttachemnt(att.idAttachment)" src={{att.path}} />
                 </div>
             </div>
         </div>
