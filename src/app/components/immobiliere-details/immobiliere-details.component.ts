@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/auth/auth.service';
 import { Attachements } from 'src/app/shared/models/Attachments.model';
 
 @Component({
@@ -17,10 +19,18 @@ export class ImmobiliereDetailsComponent {
 ]
 selectedAttachment:any[]=[]
 selectedImage:string=this.attachmentList[0].path;
-constructor(){}
+constructor(private auth:AuthService,private router:Router){}
 setMainAttachemnt(idM:number){
   this.selectedAttachment=this.attachmentList.filter(d=>d.idAttachment==idM);
   this.selectedImage=this.selectedAttachment[0].path
+}
+validateUser(){
+  if(this.auth.getToken()!=null)
+  return true
+  else{
+    this.router.navigateByUrl("/login");
+  return false
+  };
 }
 
 }
