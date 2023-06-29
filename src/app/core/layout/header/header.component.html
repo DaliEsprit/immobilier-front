@@ -45,7 +45,7 @@
         <img routerLink="notification" *ngIf="theme=='light'" src="../../../../assets/bell-ring.png" width="20" />
         <img routerLink="notification" *ngIf="theme=='dark'" src="../../../../assets/bell-ringwhite.png" width="20" />
       </div>
-      <a *showIfLogged="true" class="flex justify-center items-center space-x-2" routerLink="/account">
+      <!-- <a *showIfLogged="true" class="flex justify-center items-center space-x-2" routerLink="/account">
         <div
           class="relative inline-flex items-center justify-center w-6 h-6 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
           <span class="font-bold text-xs text-gray-600 dark:text-gray-300">{{userName.slice(0,1)}}</span>
@@ -53,7 +53,7 @@
         <div class="text-sm">
           <span class="font-semibold ">Hello</span>, {{userName}}
         </div>
-      </a>
+      </a> -->
       <button (click)="ValidateUser()" routerLink="/login">
 
         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"

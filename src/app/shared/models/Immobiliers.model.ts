@@ -8,5 +8,6 @@ export class immobilier{
     userId!:number;
     roomId!:number;
     attachement!:string;
+    nbClick!:number
 
 }
