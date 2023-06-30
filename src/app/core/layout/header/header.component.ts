@@ -14,10 +14,9 @@ export class HeaderComponent {
   theme: any = ""
   userName = "Med Ali Nouri"
 
-
-
-
-  constructor(private authService: AuthService, public themeService: ThemeService, public sideBarService: SidebarService, private cdr: ChangeDetectorRef,private router:Router) {
+  visible: boolean = false;
+  mainFeedTitle: string = ""
+  constructor(private authService: AuthService, public themeService: ThemeService, public sideBarService: SidebarService, private cdr: ChangeDetectorRef, private router: Router) {
     let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     let themeToggleLightIcon = document.getElementById(
       'theme-toggle-light-icon'
@@ -59,18 +58,34 @@ export class HeaderComponent {
     this.themeService.toggleDarkMode();
   }
   ValidateUser(): any {
-    if (this.authService.getToken() != null){
+    if (this.authService.getToken() != null) {
       // this.router.navigateByUrl("/userDetails")
       return true;
     }
-    else{
+    else {
       // this.router.navigateByUrl("/login")
       return false
     }
   }
-  RemoveUser():any{
+  RemoveUser(): any {
     localStorage.removeItem("token");
   }
+  showDialog() {
+    this.validateRouter()
+    return this.visible = true;
+  }
+  validateRouter() {
+    this.mainFeedTitle = this.router.url;
+    if (this.mainFeedTitle == "/")
+      this.mainFeedTitle = "Title  Home";
+    else if (this.mainFeedTitle == "/immobiliereDetails")
+      this.mainFeedTitle = "Title  Immobiliere details";
+    else if (this.mainFeedTitle == "/room")
+      this.mainFeedTitle = "Title  Room";
+    else if (this.mainFeedTitle == "/login")
+      this.mainFeedTitle = "Title  login";
+    else if (this.mainFeedTitle == "/register")
+      this.mainFeedTitle = "Title  Register";
 
-
+  }
 }

@@ -21,7 +21,7 @@ import { LoginComponent } from 'src/app/components/auth/login/login.component';
 import { UserDetailsComponent } from 'src/app/components/user-details/user-details.component';
 import { ImmobiliereComponent } from 'src/app/components/immobiliere/immobiliere.component';
 import { ImmobiliereDetailsComponent } from 'src/app/components/immobiliere-details/immobiliere-details.component';
-
+import { DialogModule } from 'primeng/dialog';
 const routes: Routes = [
   {
     path: '',
@@ -57,6 +57,7 @@ const routes: Routes = [
     MenubarModule,
     SidebarModule,
     SharedModule ,
+    DialogModule,
   RouterModule.forChild(routes),
   ]
 })
