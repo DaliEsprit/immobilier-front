@@ -21,12 +21,17 @@ this.form=fb.group({
   password:['',Validators.required],
   confirmPassword:['',Validators.required],
   phoneNumber:['',Validators.required],
+  role:['',Validators.required],
   cin:['',Validators.required],
   address:''
 })
 }
 
 ngOnInit(): void {
+  this.form.valueChanges.subscribe(res=>{
+   console.log( this.form);
+   
+  })
 }
 getAge(date) { 
   let diff = Date.now() - date.getTime();

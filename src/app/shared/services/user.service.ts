@@ -10,8 +10,8 @@ export class UserService {
   protected readonly BASE_URI=environment.baseUri+"user"
   
   constructor(private http: HttpClient) { }
-  getUserByToken() {
-    const url = `${this.BASE_URI}?token=${localStorage.getItem("token")}`;
+  getCurrent() {
+    const url = `${this.BASE_URI}/current`;
     return this.http.get(url);
   }
 

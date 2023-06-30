@@ -16,7 +16,9 @@ export class AuthService {
       return this._loggedIn.asObservable();
     }
    
-     
+    set loggedIn(val:any) {
+         this._loggedIn.next(val);
+      }
     constructor( private http: HttpClient) {
        
          

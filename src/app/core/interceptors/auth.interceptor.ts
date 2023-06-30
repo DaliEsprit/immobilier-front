@@ -15,7 +15,7 @@ import { AuthService } from "../auth/auth.service"
  
       let tokenizedReq=req.clone({
         setHeaders:{
-          Authorization:`${this.authService.getToken()}`
+          Authorization:`Bearer ${this.authService.getToken()}`
         }
       })
       return next.handle(tokenizedReq)
