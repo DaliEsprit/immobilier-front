@@ -7,8 +7,8 @@ import { Jeton } from '../models/Jeton.model';
   providedIn: 'root'
 })
 export class JetonService {
-  jeton:Jeton=new Jeton();
-  protected readonly BASE_URI=environment.baseUri+"attachement/"
+  jeton:Jeton={idJeton:1,value:"dgsgsdgsdg",idUser:3};
+  protected readonly BASE_URI=environment.baseUri+"jeton/"
   constructor(private http:HttpClient) { }
   addJeton(jeton:Jeton){
     return this.http.post(this.BASE_URI+"add-jeton",jeton);
@@ -22,5 +22,6 @@ export class JetonService {
   deleteJeton(idJet:number){
     return this.http.delete(this.BASE_URI+"remove-jeton/"+idJet);
   }
+
 
 }

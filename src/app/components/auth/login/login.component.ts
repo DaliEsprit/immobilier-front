@@ -23,7 +23,9 @@ export class LoginComponent {
     this.authService.loginUser(this.form.value).subscribe(user=>{
       if(user["accessToken"]!=null){
       localStorage.setItem("token",user["accessToken"]);
+      localStorage.setItem("useremail",user["email"]);
       this.router.navigateByUrl("");
+      console.log(user)
       }
       else
         alert("user is invalid")

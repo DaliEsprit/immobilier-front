@@ -22,7 +22,8 @@ this.form=fb.group({
   confirmPassword:['',Validators.required],
   phoneNumber:['',Validators.required],
   cin:['',Validators.required],
-  address:''
+  address:'',
+  role:2
 })
 }
 
