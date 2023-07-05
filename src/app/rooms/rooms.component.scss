@@ -1,0 +1,36 @@
+.room-menu{
+    width : 98%;
+    margin-left : auto;
+    margin-right : auto;
+    display: grid;
+    margin-top: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(281px, 1fr));
+    grid-row-gap: 30px;
+    grid-column-gap: 30px;
+}
+.gold-room{
+    text-align: center;
+    background-color: rgb(186, 153, 84);
+    font-family: sans-serif;
+    color: #000;
+
+}
+.premium-room{
+    text-align: center;
+    background-color: silver;
+    font-family: sans-serif;
+    color: #000;
+
+}
+.basic-room{
+    background-color: #fff;
+    color: #000;
+    font-family: sans-serif;
+    text-align: center;
+
+}
+.room-watermark{
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    display: flex;
+}
