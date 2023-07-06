@@ -5,6 +5,8 @@ import { RoomService } from '../shared/services/room.service';
 import { AuthService } from '../core/auth/auth.service';
 import { UserService } from '../shared/services/user.service';
 import { ThemeService } from '../shared/services/teme.service';
+import { JetonService } from '../shared/services/jeton.service';
+import { Jeton } from '../shared/models/Jeton.model';
 
 @Component({
   selector: 'app-rooms',
@@ -15,15 +17,16 @@ export class RoomsComponent {
   listRooms: Room[] = [];
   room: Room = new Room();
   private userId!: number;
-  theme:string;
-  constructor(private router: Router, private roomserv: RoomService, private userServ: UserService, public themeService: ThemeService) { }
+  theme: string;
+  constructor(private router: Router, private roomserv: RoomService, private userServ: UserService, public themeService: ThemeService, private jetonServ: JetonService) { }
   ngOnInit(): void {
     this.roomserv.getallroom().subscribe({
       next: (data: any) => { this.listRooms = data }
     })
     this.themeService.theme$.subscribe(theme => {
       this.theme = theme
-    })  }
+    })
+  }
   navToRoom(roomId: number) {
     this.userServ.getCurrent().subscribe({
       next: (data: any) => {
@@ -31,15 +34,24 @@ export class RoomsComponent {
         this.roomserv.AssignUserToRoom(roomId, data.id).subscribe({
           next: (dt: any) => {
             if (dt.message == "Access Granted") {
-              this.listRooms.forEach(p => { 
-                p.clientNumber=p.clientNumber+1;
+              this.listRooms.forEach(p => {
+                p.clientNumber = p.clientNumber + 1;
                 if (p.id == roomId) this.roomserv.Room = p;
-                this.roomserv.updateRoom(p).subscribe({next:(data:any)=>console.log(data)});
-               })
+                this.roomserv.updateRoom(p).subscribe({ next: (data: any) => console.log(data) });
+              })
+              // console.log( this.jetonServ.getJetonByUser(1)
+              this.jetonServ.getJetonByUser(data.id)
+              .then(lastValue => {
+                console.log(lastValue);
+              })
+              .catch(error => {
+                console.error('Error occurred:', error);
+              });
+            
               this.router.navigateByUrl("/room");
-              
+
             }
-            else{
+            else {
               this.router.navigateByUrl("/payment")
             }
           }

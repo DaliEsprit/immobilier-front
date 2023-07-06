@@ -29,4 +29,10 @@ export class RoomService {
   AssignUserToRoom(roomId:number,userId:number){
     return this.http.put(this.BASE_URI+"assign-user-to-room/"+roomId+"/"+userId,null);
   }
+  AssignImmobiliereToRoom(userId:number,immobiliereId:number,roomId:number){
+    return this.http.put(this.BASE_URI+"assign-immobiliere-to-room/"+userId+"/"+immobiliereId+"/"+roomId,null)
+  }
+  getImmobiliereByRoom(idRoom:number){
+    return this.http.get("get-immobilier-by-room/"+idRoom);
+  }
 }
