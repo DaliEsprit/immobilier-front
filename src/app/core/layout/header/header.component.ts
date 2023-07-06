@@ -4,6 +4,7 @@ import { SidebarService } from 'src/app/shared/services/sidebar.service';
 import { ThemeService } from 'src/app/shared/services/teme.service';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
+import { JetonService } from 'src/app/shared/services/jeton.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -16,7 +17,7 @@ export class HeaderComponent {
 
   visible: boolean = false;
   mainFeedTitle: string = ""
-  constructor(private authService: AuthService, public themeService: ThemeService, public sideBarService: SidebarService, private cdr: ChangeDetectorRef, private router: Router) {
+  constructor(private authService: AuthService, public themeService: ThemeService, public sideBarService: SidebarService, private cdr: ChangeDetectorRef, private router: Router, private jetonservice: JetonService) {
     let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     let themeToggleLightIcon = document.getElementById(
       'theme-toggle-light-icon'
@@ -69,6 +70,7 @@ export class HeaderComponent {
   }
   RemoveUser(): any {
     localStorage.removeItem("token");
+    localStorage.removeItem("useremail");
   }
   showDialog() {
     this.validateRouter()
@@ -87,5 +89,11 @@ export class HeaderComponent {
     else if (this.mainFeedTitle == "/register")
       this.mainFeedTitle = "Title  Register";
 
+  }
+  navToRoom() {
+    if (this.jetonservice.jeton.value != "")
+      return this.router.navigateByUrl("/room");
+    else
+      return this.router.navigateByUrl("/payment");
   }
 }

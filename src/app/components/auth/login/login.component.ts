@@ -36,7 +36,9 @@ export class LoginComponent implements OnInit{
       this.userService.getCurrent().subscribe((next:any)=>{
         localStorage.setItem("user",JSON.stringify(next) );
       })
+      localStorage.setItem("useremail",user["email"]);
       this.router.navigateByUrl("");
+      console.log(user)
       }
       else
         alert("user is invalid")

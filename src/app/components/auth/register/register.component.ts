@@ -11,7 +11,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class RegisterComponent implements OnInit{
 
 form:FormGroup
-
+registerError=false
 constructor(private fb:FormBuilder,private userService:UserService,private router:Router){
 this.form=fb.group({
   firstName:['',Validators.required],
@@ -42,9 +42,13 @@ save(){
   let user = this.form.value
   user.age=this.getAge(new Date(user.age))
   delete user.confirmPassword
-  this.userService.save(user).subscribe(user=>{
+  this.userService.save(user).subscribe({
+    next:user=>{
     console.log(user);
     this.router.navigateByUrl("/login")
-  })
+  },
+error:err=>{
+  this.registerError=true
+}})
 }
 }
