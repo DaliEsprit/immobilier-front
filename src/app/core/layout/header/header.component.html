@@ -18,8 +18,8 @@
     </div>
     <div class="flex justify-center items-center space-x-2">
       <div style="padding-right: 0px;cursor: pointer;">
-        <img (click)="navToRoom()" *ngIf="theme=='light'" src="../../../../assets/room.png" width="20" />
-        <img (click)="navToRoom()" *ngIf="theme=='dark'" src="../../../../assets/roomWhite.png" width="20" />
+        <img routerLink="rooms" *ngIf="theme=='light'" src="../../../../assets/room.png" width="20" />
+        <img routerLink="rooms" *ngIf="theme=='dark'" src="../../../../assets/roomWhite.png" width="20" />
       </div>
       <button  style="background-color: transparent;" type="button" class="relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         <img routerLink="notification" *ngIf="theme=='light'" src="../../../../assets/bell-ring.png" width="20" />

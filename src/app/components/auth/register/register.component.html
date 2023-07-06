@@ -1,56 +1,22 @@
 <div class=" flex justify-center items-center mt-4 align-middle">
-    <div class="p-12 w-[30rem] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-800">
-<form [formGroup]="form">
-  <div class="mb-6">
-    <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">firstname</label>
-    <input type="firstName" formControlName="firstName" id="firstName" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"  required>
-  </div>
-  <div class="mb-6">
-    <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">lastname</label>
-    <input type="lastName" formControlName="lastName" id="lastName" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
-  </div>
-    <div class="mb-6">
-      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-      <input type="email" formControlName="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required>
-    </div>
-    <div class="mb-6">
-      <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your phone</label>
-      <input type="number" formControlName="phoneNumber" id="phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required>
-    </div>
-    <div class="mb-6">
-      <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your role</label>
-      <select class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required formControlName="role" id="role"  >
-        <option value="ROLE_SELLER">seller</option>
-        <option value="ROLE_BUYER">buyer</option>
-      </select>
-      
-    </div>
-    <div class="mb-6">
-      <label for="cin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">N° cin</label>
-      <input type="number" formControlName="cin" id="cin" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"  required>
-    </div>
-    <div class="mb-6">
-      <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
-      <input type="text" formControlName="address" id="address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"  required>
-    </div>
-    <div class="mb-6">
-      <label for="age" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date</label>
-      <input type="date" formControlName="age" id="age" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"  required>
-    </div>
-    <div class="mb-6">
-      <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-      <input type="password" formControlName="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
-    </div>
-    <div class="mb-6">
-      <label for="repeat-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat password</label>
-      <input type="password" formControlName="confirmPassword" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
-    </div>
-    <div *ngIf="registerError" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-      <span class="font-semibold">register error!: </span> user already exist
-    </div>
-    <button  [ngClass]="{'bg-blue-400':form.invalid}" (click)="save()" [disabled]="form.invalid" type="button" class="text-white bg-blue-700  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">register</button>
+  <div class="p-12 w-[30rem] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-800">
+    <form [formGroup]="form" class="max-w-md mx-auto">
+      <!-- ... -->
+      <ng-container *ngFor="let control of getControls()">
+        <div class="mb-6">
+          <label [for]="control" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ control
+            }}</label>
+          <input [type]="control === 'password' || control === 'confirmPassword' ? 'password' : 'text'"
+            [formControlName]="control" [id]="control"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            required>
+          <div class="text-red-500 text-sm mt-1" *ngIf="form.get(control).invalid && form.get(control).touched">
+            {{ this.getErrorMessage(form.get(control)) }}
+          </div>
+        </div>
+      </ng-container>
+      <!-- ... -->
+    </form>
 
-   </form>
   </div>
-  </div>
-  
+</div>

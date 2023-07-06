@@ -13,7 +13,7 @@ import { ArticlesModule } from './components/articles/articles.module';
 import { HeaderComponent } from './core/layout/header/header.component';
  @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [ 
     BrowserAnimationsModule,

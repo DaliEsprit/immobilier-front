@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { SweatAlertService } from 'src/app/utils/swalsGeniric/sweat-alert.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class LoginComponent implements OnInit{
   form:FormGroup
   loginError=false
-  constructor(private userService:UserService,private fb:FormBuilder,private authService:AuthService,private router:Router){
+  constructor(private alert:SweatAlertService,private userService:UserService,private fb:FormBuilder,private authService:AuthService,private router:Router){
   this.form=fb.group({
     email:['',[Validators.required,Validators.email]],
     password:['',Validators.required]
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit{
     this.authService.loginUser(this.form.value).subscribe({
       next:user=>{ 
         this.authService.loggedIn=true
-        
+        this.alert.show("success","login success")
         
       if(user["accessToken"]!=null){
       localStorage.setItem("token",user["accessToken"]);
@@ -38,7 +39,6 @@ export class LoginComponent implements OnInit{
       })
       localStorage.setItem("useremail",user["email"]);
       this.router.navigateByUrl("");
-      console.log(user)
       }
       else
         alert("user is invalid")
