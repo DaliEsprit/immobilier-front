@@ -5,6 +5,7 @@ import { ImmobiliereDetailsComponent } from "src/app/components/immobiliere-deta
 import { PayementComponent } from "src/app/components/payement/payement.component";
 import { UserDetailsComponent } from "src/app/components/user-details/user-details.component";
 import { RoomComponent } from "src/app/room/room.component";
+import { RoomsComponent } from "src/app/rooms/rooms.component";
 
 const Routing: Routes = [
   {
@@ -14,10 +15,8 @@ const Routing: Routes = [
         (m) => m.ArticlesRoutingModule
       ),
   } ,
+  { path: 'room/:id', component: RoomComponent },
   {
-    path: "room",
-    component: RoomComponent
-  },{
     path:"register",
     component:RegisterComponent
   },{
@@ -30,8 +29,8 @@ const Routing: Routes = [
     path:"immobiliereDetails",
     component:ImmobiliereDetailsComponent
   },{
-    path:"payement",
-    component:PayementComponent
+    path:"payment",
+    component:PaymentComponent
   }
   ];
   

@@ -22,6 +22,7 @@ import { UserDetailsComponent } from 'src/app/components/user-details/user-detai
 import { ImmobiliereComponent } from 'src/app/components/immobiliere/immobiliere.component';
 import { ImmobiliereDetailsComponent } from 'src/app/components/immobiliere-details/immobiliere-details.component';
 import { DialogModule } from 'primeng/dialog';
+import { RoomsComponent } from 'src/app/rooms/rooms.component';
 const routes: Routes = [
   {
     path: '',
@@ -42,7 +43,8 @@ const routes: Routes = [
     LoginComponent,
     UserDetailsComponent,
     ImmobiliereComponent,
-    ImmobiliereDetailsComponent
+    ImmobiliereDetailsComponent,
+    RoomsComponent
   ],
   imports: [
     ReactiveFormsModule,

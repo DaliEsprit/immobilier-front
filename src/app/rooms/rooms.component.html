@@ -1,0 +1,58 @@
+<div class="room-menu">
+    <div style=" flex:1" *ngFor="let immo of listRooms ">
+
+        <div style="flex: 1;"
+            class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div>
+                <div>
+                    <img style="cursor: pointer;" class="rounded-t-lg"
+                        src="https://www.selexium.com/app/uploads/2022/05/media-marche-immobilier-luxe-hausse.jpg"
+                        alt="" />
+                </div>
+                <div class="room-watermark">
+                    <div *ngIf="immo.roomStatus=='Open'" style="flex: 1;" class="mt-1 flex items-center gap-x-1.5">
+                        <div class="flex-none rounded-full bg-emerald-500/20 p-1">
+                            <div class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+                        </div>
+                        <p class="text-xs leading-5 text-gray-500">Open</p>
+                    </div>
+                    <div *ngIf="immo.roomStatus=='NotStarted'" style="flex: 1;" class="mt-1 flex items-center gap-x-1.5">
+                        <div class="flex-none rounded-full bg-emerald-500/20 p-1">
+                            <div  style="background-color: yellow;" class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+                        </div>
+                        <p class="text-xs leading-5 text-gray-500">NoStarted</p>
+                    </div>
+                    <div *ngIf="immo.roomStatus=='Closed'" style="flex: 1;" class="mt-1 flex items-center gap-x-1.5">
+                        <div class="flex-none rounded-full bg-emerald-500/20 p-1">
+                            <div  style="background-color: red;" class="h-1.5 w-1.5 rounded-full bg-emerald-500"></div>
+                        </div>
+                        <p class="text-xs leading-5 text-gray-500">Closed</p>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="float: right;margin-right: 10px;">
+                            {{immo.clientNumber}}
+                        </div>
+                        <img  *ngIf="theme=='dark'" src="../../assets/group.png" width="20px" style="float: right;margin-top: 1px;margin-right: 5px;"/>
+                        <img  *ngIf="theme=='light'" src="../../assets/groupblack.png" width="20px" style="float: right;margin-top: 1px;margin-right: 5px;"/>
+
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="immo.goldRoom" class="gold-room">
+                Gold Room
+            </div>
+            <div *ngIf="immo.premiumRoom" class="premium-room">
+                Premium Room
+            </div>
+            <div *ngIf="!immo.premiumRoom&&!immo.goldRoom" class="basic-room">
+                Basic Room
+            </div>
+            <button type="button" [disabled]="immo.roomStatus=='Closed'"
+                style="width: 100%;border-radius:0px;border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;"
+                (click)="navToRoom(immo.id)"
+                class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Join
+            </button>
+        </div>
+
+    </div>
+</div>

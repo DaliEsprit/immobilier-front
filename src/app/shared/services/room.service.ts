@@ -7,6 +7,7 @@ import { Room } from '../models/Room.model';
   providedIn: 'root'
 })
 export class RoomService {
+  Room:Room=new Room();
   protected readonly BASE_URI=environment.baseUri+"room/";
 
   constructor(private http:HttpClient) { }
@@ -21,5 +22,20 @@ export class RoomService {
   }
   deleteRoom(roomId:number){
     return this.http.delete(this.BASE_URI+"remove-room/"+roomId)
+  }
+  getUsersbyRoom(roomId:number){
+    return this.http.get(this.BASE_URI+"retrieve-users-by-room/"+roomId)
+  }
+  AssignUserToRoom(roomId:number,userId:number){
+    return this.http.put(this.BASE_URI+"assign-user-to-room/"+roomId+"/"+userId,null);
+  }
+  AssignImmobiliereToRoom(userId:number,immobiliereId:number,roomId:number){
+    return this.http.put(this.BASE_URI+"assign-immobiliere-to-room/"+userId+"/"+immobiliereId+"/"+roomId,null)
+  }
+  getImmobiliereByRoom(idRoom:number){
+    return this.http.get(this.BASE_URI+"get-immobilier-by-room/"+idRoom);
+  }
+  getRoom(idRoom:number){
+    return this.http.get(this.BASE_URI+ "retrieve-room-by-id/"+idRoom)
   }
 }

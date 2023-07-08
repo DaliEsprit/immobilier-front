@@ -1,5 +1,6 @@
 export class Jeton{
     idJeton!:number;
     value!:string;
-    idUser!:number;
+    jetonStatus!:number;
+    bidValue!:Float64Array
 }
