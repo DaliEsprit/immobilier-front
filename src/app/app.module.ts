@@ -11,16 +11,22 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ArticlesModule } from './components/articles/articles.module';
  import { TokenInterceptor } from './core/interceptors/auth.interceptor';
 import { HeaderComponent } from './core/layout/header/header.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PayementComponent } from './components/payement/payement.component';
  @NgModule({
   declarations: [
     AppComponent,
+    PayementComponent
+                            
   ],
   imports: [ 
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule, 
     HttpClientModule,
-    ArticlesModule
+    ArticlesModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
      {
