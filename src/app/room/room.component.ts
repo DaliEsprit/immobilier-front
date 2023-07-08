@@ -8,6 +8,8 @@ import { JetonService } from '../shared/services/jeton.service';
 import { Observable } from 'rxjs';
 import { Jeton } from '../shared/models/Jeton.model';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../core/auth/auth.service';
+import { UserService } from '../shared/services/user.service';
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
@@ -21,14 +23,15 @@ export class RoomComponent {
   jeton: Jeton = new Jeton();
   id: string;
   bidValue: any = 0;
-  currentRoomAmount:any;
-  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute) {
+  currentRoomAmount: any;
+  user:User;
+  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute,private userServ:UserService) {
   }
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     })
-     this.RoomSer.getRoom(parseInt(this.id)).subscribe({next:(rm:Room)=>this.room=rm});
+    this.RoomSer.getRoom(parseInt(this.id)).subscribe({ next: (rm: Room) => this.room = rm });
     this.getUsers(parseInt(this.id));
     this.testRoom(parseInt(this.id));
   }
@@ -61,8 +64,12 @@ export class RoomComponent {
       }
     })
   }
-  updateBid(){
-
+  updateBid() {
+    console.log(this.currentRoomAmount);
+    this.userServ.getCurrent().subscribe({
+      next:(data:any)=>{this.user=data}
+    })
+    console.log(this.user)
   }
 }
 
