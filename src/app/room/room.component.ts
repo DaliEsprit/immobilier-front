@@ -24,8 +24,9 @@ export class RoomComponent {
   id: string;
   bidValue: any = 0;
   currentRoomAmount: any;
-  user:User;
-  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute,private userServ:UserService) {
+  user: User;
+  buyerId:string
+  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute, private userServ: UserService) {
   }
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -34,6 +35,11 @@ export class RoomComponent {
     this.RoomSer.getRoom(parseInt(this.id)).subscribe({ next: (rm: Room) => this.room = rm });
     this.getUsers(parseInt(this.id));
     this.testRoom(parseInt(this.id));
+    this.userServ.getCurrent().subscribe({
+      next:(st:any)=>this.buyerId=st.id
+    })
+    
+    // this.getAllUserBids()
   }
   getUsers(id: number) {
     this.RoomSer.getUsersbyRoom(id).subscribe({
@@ -64,13 +70,42 @@ export class RoomComponent {
       }
     })
   }
-  updateBid() {
+  updateBid(userId: string) {
     console.log(this.currentRoomAmount);
     this.userServ.getCurrent().subscribe({
-      next:(data:any)=>{this.user=data}
+      next: (data: any) => {
+        this.user = data;
+        (this.listUsers.forEach(singleuser => {
+          if (singleuser.bidValue <this.currentRoomAmount) {
+            if (userId == singleuser.id) {
+              this.jetonServ.getJetonByUser(parseInt(singleuser.id)).subscribe({
+                next: (jt: any) => {
+                  this.jeton = jt;
+                  this.jeton.bidValue = this.currentRoomAmount
+                  console.log(this.jeton);
+                  this.jetonServ.updateJetonBidValue(this.jeton.idJeton,this.currentRoomAmount).subscribe({
+                    next: (updateJeton: Jeton) => {
+                      const currentIndex=this.listUsers.findIndex(item=>item.id==this.user.id);
+                      const elementToMove=this.listUsers.splice(currentIndex, 1)[0];
+                      this.listUsers.splice(0, 0, elementToMove);
+                      this.getUserBidAmount(this.user.id);
+                      this.currentRoomAmount=0;                  
+                      }
+                  })
+                }
+              })
+            }
+            else{
+              console.log("it's insufficiant")
+            }
+          }
+        }))
+      }
     })
-    console.log(this.user)
   }
+  // getAllUserBids():any{
+  //   this.listUsers=this.listUsers.forEach(user=>user.bidValue)
+  // }
 }
 
 
