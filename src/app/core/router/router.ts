@@ -30,7 +30,10 @@ const Routing: Routes = [
     component:ImmobiliereDetailsComponent
   },{
     path:"payment",
-    component:PaymentComponent
+    component:PayementComponent
+  },{
+    path:"rooms",
+    component:RoomsComponent
   }
   ];
   
