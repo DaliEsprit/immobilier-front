@@ -21,11 +21,12 @@ export class RoomsComponent {
   constructor(private router: Router, private roomserv: RoomService, private userServ: UserService, public themeService: ThemeService, private jetonServ: JetonService) { }
   ngOnInit(): void {
     this.roomserv.getallroom().subscribe({
-      next: (data: any) => { this.listRooms = data }
+      next: (data: any) => { this.listRooms = data;this.listRooms=this.listRooms.filter(rm=>rm.approvedRoom==true);console.log(this.listRooms) }
     })
     this.themeService.theme$.subscribe(theme => {
       this.theme = theme
     })
+    
   }
   navToRoom(roomId: number) {
     this.userServ.getCurrent().subscribe({
@@ -40,15 +41,7 @@ export class RoomsComponent {
                 this.roomserv.updateRoom(p).subscribe({ next: (data: any) => console.log(data) });
               })
               // console.log( this.jetonServ.getJetonByUser(1)
-              this.jetonServ.getJetonByUser(data.id)
-              .then(lastValue => {
-                console.log(lastValue);
-              })
-              .catch(error => {
-                console.error('Error occurred:', error);
-              });
-            
-              this.router.navigateByUrl("/room");
+              this.router.navigateByUrl("/room/"+roomId);
 
             }
             else {

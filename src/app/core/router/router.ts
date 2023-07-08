@@ -15,10 +15,8 @@ const Routing: Routes = [
         (m) => m.ArticlesRoutingModule
       ),
   } ,
+  { path: 'room/:id', component: RoomComponent },
   {
-    path: "room",
-    component: RoomComponent
-  },{
     path:"register",
     component:RegisterComponent
   },{

@@ -7,6 +7,7 @@ import { Room } from '../shared/models/Room.model';
 import { JetonService } from '../shared/services/jeton.service';
 import { Observable } from 'rxjs';
 import { Jeton } from '../shared/models/Jeton.model';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
@@ -15,27 +16,55 @@ import { Jeton } from '../shared/models/Jeton.model';
 export class RoomComponent {
   listUsers: User[] = [];
   immobilier: immobilier = new immobilier();
-  room:Room=new Room();
-  userAmountBid:any=0;
-  jeton:Jeton=new Jeton();
-  constructor(private RoomSer: RoomService,private jetonServ:JetonService) {
+  room: Room = new Room();
+  userAmountBid: any = 0;
+  jeton: Jeton = new Jeton();
+  id: string;
+  bidValue: any = 0;
+  currentRoomAmount:any;
+  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute) {
   }
   ngOnInit(): void {
-    this.testRoom();
-    this.room=this.RoomSer.Room;
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id');
+    })
+     this.RoomSer.getRoom(parseInt(this.id)).subscribe({next:(rm:Room)=>this.room=rm});
+    this.getUsers(parseInt(this.id));
+    this.testRoom(parseInt(this.id));
   }
-  testRoom() {
-    this.RoomSer.getUsersbyRoom(this.RoomSer.Room.id).subscribe({
-      next: (data: any) => { this.listUsers = data; console.log(this.listUsers) }
+  getUsers(id: number) {
+    this.RoomSer.getUsersbyRoom(id).subscribe({
+      next: (data: any) => { this.listUsers = data }
     })
   }
-  getUserBidAmount(idUser :number):Jeton {
-    //  this.jetonServ.getJetonByUser(idUser).subscribe({
-    //   next:(data:any)=>{this.jeton=data;console.log(data)}
-    // })
-    console.log(this.jeton)
-    return this.jeton;
+  getUserBidAmount(idUser: string): any {
+    var x = parseInt(idUser)
+    this.jetonServ.getJetonByUser(x).subscribe({
+      next: (data: any) => {
+        this.jeton = data; this.bidValue = this.jeton.bidValue;
+        this.listUsers.forEach(user => {
+          if (idUser == user.id) {
+            user.bidValue = this.jeton.bidValue
+          }
+        })
+      }
+    })
+    console.log(this.jeton.bidValue)
+    return this.jeton.bidValue!;
   }
+  testRoom(id: number) {
+    this.listUsers.forEach(user => { this.getUserBidAmount(user.id) });
+    this.RoomSer.getUsersbyRoom(id).subscribe({
+      next: (user: any) => {
+        this.listUsers = user;
+        this.listUsers.forEach(us => this.getUserBidAmount(us.id))
+      }
+    })
+  }
+  updateBid(){
 
-  
+  }
 }
+
+
+

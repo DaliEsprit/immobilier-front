@@ -33,6 +33,9 @@ export class RoomService {
     return this.http.put(this.BASE_URI+"assign-immobiliere-to-room/"+userId+"/"+immobiliereId+"/"+roomId,null)
   }
   getImmobiliereByRoom(idRoom:number){
-    return this.http.get("get-immobilier-by-room/"+idRoom);
+    return this.http.get(this.BASE_URI+"get-immobilier-by-room/"+idRoom);
+  }
+  getRoom(idRoom:number){
+    return this.http.get(this.BASE_URI+ "retrieve-room-by-id/"+idRoom)
   }
 }

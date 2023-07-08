@@ -6,4 +6,5 @@ export interface User{
     country?:string,
     intPhone?:number,
     localPhone?:number,
+    bidValue?:any,
 }

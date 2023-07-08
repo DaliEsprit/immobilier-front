@@ -24,8 +24,8 @@ export class JetonService {
   deleteJeton(idJet: number) {
     return this.http.delete(this.BASE_URI + "remove-jeton/" + idJet);
   }
-  getJetonByUser(idUser: number): Promise<any> {
-    return this.http.get<Jeton>(this.BASE_URI + "getJetonByRoom/" + idUser).toPromise();
+  getJetonByUser(idUser: number) {
+    return this.http.get<Jeton>(this.BASE_URI + "getJetonByUser/" + idUser);
   }
 
 }
