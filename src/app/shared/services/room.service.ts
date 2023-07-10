@@ -8,6 +8,7 @@ import { Room } from '../models/Room.model';
 })
 export class RoomService {
   Room:Room=new Room();
+  listRooms:Room=new Room();
   protected readonly BASE_URI=environment.baseUri+"room/";
 
   constructor(private http:HttpClient) { }
@@ -37,5 +38,8 @@ export class RoomService {
   }
   getRoom(idRoom:number){
     return this.http.get(this.BASE_URI+ "retrieve-room-by-id/"+idRoom)
+  }
+  ExitRoom(idUser:string){
+    return this.http.put(this.BASE_URI+"exit-room/"+idUser,null)
   }
 }
