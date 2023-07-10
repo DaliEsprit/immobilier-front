@@ -22,6 +22,7 @@ export class RoomsComponent {
   listUsers: User[] = [];
   joined: boolean = false;
   visible: boolean = false
+  selfJoined: boolean = false;
   constructor(private router: Router, private roomserv: RoomService, private userServ: UserService, public themeService: ThemeService, private jetonServ: JetonService) { }
   ngOnInit(): void {
     this.roomserv.getallroom().subscribe({
@@ -48,10 +49,26 @@ export class RoomsComponent {
   }
   navToRoom(roomId: number) {
     this.listRooms.forEach(room => {
-      if (room.joined)
-        this.visible = true
+      this.roomserv.getUsersbyRoom(room.id).subscribe({
+        next: (data: User[]) => {
+          data.forEach(user => {
+            this.userServ.getCurrent().subscribe({
+              next: (me: User) => {
+                if (me.id == user.id) {
+                  this.selfJoined = true
+                }
+                for (let i = 0; i < this.listRooms.length; i++) {
+                  if (this.listRooms[i].joined == true) {
+                    this.visible = true
+                  }
+                }
+              }
+            })
+          })
+        }
+      })
     })
-    if (!this.visible) {
+    if (this.selfJoined|| ! this.visible) {
       this.userServ.getCurrent().subscribe({
         next: (data: any) => {
           this.userId = data.id
@@ -67,13 +84,16 @@ export class RoomsComponent {
                 })
               }
               else {
-                this.router.navigateByUrl("/payment")
+                this.visible = true
               }
             }
           })
         }
       }
       )
+    }
+    else {
+      this.visible = true
     }
   }
 
