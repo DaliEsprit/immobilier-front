@@ -84,7 +84,7 @@ export class RoomsComponent {
                 })
               }
               else {
-                this.visible = true
+                this.router.navigateByUrl("/payment");
               }
             }
           })
