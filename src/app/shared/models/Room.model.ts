@@ -10,5 +10,6 @@ export class Room{
     roomStatus:string;
     approvedRoom!:boolean;
     immobiliereId:number;
+    joined:boolean=false;
     users:User[];
 }
