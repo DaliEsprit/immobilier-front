@@ -10,6 +10,8 @@ import { Jeton } from '../shared/models/Jeton.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../core/auth/auth.service';
 import { UserService } from '../shared/services/user.service';
+import { interval, Subscription } from 'rxjs';
+import { webSocket } from 'rxjs/webSocket';
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
@@ -26,19 +28,39 @@ export class RoomComponent {
   currentRoomAmount: any;
   user: User;
   buyerId: string
+  private subscription: Subscription;
+  private startTime: number;
+  private duration: number = 0; // Duration in seconds (3 minutes)
+  public elapsedTime: string;
+  initialduration: number;
+  listRooms:Room[];
   constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute, private userServ: UserService, private router: Router) {
   }
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     })
-    this.RoomSer.getRoom(parseInt(this.id)).subscribe({ next: (rm: Room) => { this.room = rm; console.log(this.room) } });
+    // console.log(this.webSocketSer.connect());
+    this.RoomSer.getRoom(parseInt(this.id)).subscribe({
+      next: (rm: Room) => {
+        this.room = rm; console.log(this.room);;
+      }
+    });
     this.getUsers(parseInt(this.id));
     this.testRoom(parseInt(this.id));
     this.userServ.getCurrent().subscribe({
       next: (st: any) => this.buyerId = st.id
     })
-    // this.getAllUserBids()
+    this.RoomSer.getRoomTime(parseInt(this.id)).subscribe({
+      next: (time: number) => {
+        this.duration = time;
+        if (this.room.roomStatus != "Open") {
+          this.initialduration = time;
+        }
+        else
+          this.start();
+      }
+    })
   }
   getUsers(id: number) {
     this.RoomSer.getUsersbyRoom(id).subscribe({
@@ -94,6 +116,7 @@ export class RoomComponent {
                       this.listUsers.splice(0, 0, elementToMove);
                       this.getUserBidAmount(this.user.id);
                       this.currentRoomAmount = 0;
+                      this.reset();
                     }
                   })
                 }
@@ -132,6 +155,62 @@ export class RoomComponent {
         )
       }
     })
+  }
+  start() {
+    if (this.room.roomStatus == "Open") {
+      this.startTime = Date.now();
+      this.subscription = interval(1000) // Update every second
+        .subscribe(() => {
+          const currentTime = Date.now();
+          const elapsedMilliseconds = currentTime - this.startTime;
+          const remainingMilliseconds = Math.max(0, this.duration * 1000 - elapsedMilliseconds);
+          this.elapsedTime = this.formatElapsedTime(remainingMilliseconds);
+        });
+    }
+    else {
+      console.log("close")
+    }
+  }
+
+  stop() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  reset() {
+    this.startTime = this.initialduration;
+    this.start();
+  }
+
+  private formatElapsedTime(milliseconds: number): string {
+    const seconds = Math.floor(milliseconds / 1000) % 60;
+    const minutes = Math.floor(milliseconds / (1000 * 60)) % 60;
+    this.room.timeRoom = seconds + minutes * 60;
+    this.RoomSer.updateRoomTime(parseInt(this.id), this.room.timeRoom).subscribe({
+      next: () => {
+      }
+    })
+    if (this.room.timeRoom == 0 && this.room.roomStatus == "Open") {
+      this.room.roomStatus = "Closed"
+      this.RoomSer.updateRoom(this.room).subscribe({
+        next: () => {
+          this.listUsers.forEach(user => {
+            this.RoomSer.ExitRoom(user.id).subscribe({
+              next: () => {
+                this.router.navigateByUrl("/rooms")
+              }
+            })
+          })
+        }
+      });
+    }
+    return `${this.pad(minutes)}:${this.pad(seconds)}`;
+  }
+
+
+  private pad(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
   }
 }
 

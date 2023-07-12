@@ -36,6 +36,11 @@ export class RoomsComponent {
     this.themeService.theme$.subscribe(theme => {
       this.theme = theme
     })
+    this.listRooms.forEach(room=>{
+      if(room.roomStatus=="Open"){
+        
+      }
+    })
 
   }
   verUsRo() {
