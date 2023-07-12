@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, from, lastValueFrom, Observable, take } from 'rxjs';
+import { HttpBackend, HttpClient, HttpRequest } from '@angular/common/http';
+import { BehaviorSubject, from, lastValueFrom, map, Observable, take } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { User } from 'src/app/shared/models/user.model';  
   
@@ -19,7 +19,7 @@ export class AuthService {
     set loggedIn(val:any) {
          this._loggedIn.next(val);
       }
-    constructor( private http: HttpClient) {
+    constructor( private http: HttpClient, private httpBackend: HttpBackend) {
        
          
      }
@@ -39,6 +39,11 @@ export class AuthService {
     userInfo(){
         return this.http.get(`${this.BASE_URI}auth/me`);
     }
-    
+    verifyUser(token:string){
+        return lastValueFrom(this.httpBackend
+            .handle(new HttpRequest('GET',`${this.BASE_URI}auth/verify-email/${token}`)).pipe(map((res: any) => {
+              return res.body;
+            }))); 
+    }
  
 }

@@ -11,9 +11,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ArticlesModule } from './components/articles/articles.module';
  import { TokenInterceptor } from './core/interceptors/auth.interceptor';
 import { HeaderComponent } from './core/layout/header/header.component';
+import { VerifyMailComponent } from './components/auth/verify-mail/verify-mail.component';
+import { UpdatePasswordComponent } from './components/auth/update-password/update-password.component';
  @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [ 
     BrowserAnimationsModule,

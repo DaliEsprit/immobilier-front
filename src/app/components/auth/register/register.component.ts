@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/auth/auth.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { SweatAlertService } from 'src/app/utils/swalsGeniric/sweat-alert.service';
 
 @Component({
   selector: 'app-register',
@@ -12,21 +14,19 @@ export class RegisterComponent implements OnInit{
 
 form:FormGroup
 registerError=false
-constructor(private fb:FormBuilder,private userService:UserService,private router:Router){
-this.form=fb.group({
-  firstName:['',Validators.required],
-  lastName:['',Validators.required],
-  email:['',Validators.required],
-  age:['',Validators.required],
-  
-  phoneNumber:['',Validators.required],
-  role:['',Validators.required],
-  cin:['',Validators.required],
-  address:'',
-  password:['',Validators.required],
-  confirmPassword:['',Validators.required],
-},
-{ validator: this.passwordMatchValidator })
+constructor(private authService:AuthService,private alert:SweatAlertService,private fb:FormBuilder,private userService:UserService,private router:Router){
+  this.form = this.fb.group({
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    age: ['', Validators.required],
+    phoneNumber: ['', [Validators.required, Validators.pattern('^\\d{8}$')]],
+    role: ['', Validators.required],
+    cin: ['', [Validators.required, Validators.pattern('^\\d{8}$')]],
+    address: '',
+    password: ['', Validators.required],
+    confirmPassword: ['', Validators.required],
+  }, { validator: this.passwordMatchValidator });
 }
 getControls(){
   return Object.keys(this.form.controls)
@@ -37,16 +37,16 @@ ngOnInit(): void {
    
   })
 }
-passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-  const password = control.get('password');
-  const confirmPassword = control.get('confirmPassword');
+passwordMatchValidator(form: FormGroup) {
+  const password = form.get('password').value;
+  const confirmPassword = form.get('confirmPassword').value;
 
-  if (password && confirmPassword && password.value !== confirmPassword.value) {
-    return { passwordMismatch: true };
+  if (password !== confirmPassword) {
+    form.get('confirmPassword').setErrors({ passwordMismatch: true });
+  } else {
+    form.get('confirmPassword').setErrors(null);
   }
-
-  return null;
-};
+}
 getAge(date) { 
   let diff = Date.now() - date.getTime();
   let age = new Date(diff); 
@@ -58,10 +58,10 @@ save(){
   delete user.confirmPassword
   this.userService.save(user).subscribe({
     next:user=>{
-    console.log(user);
-    this.router.navigateByUrl("/login")
+   
   },
 error:err=>{
+  this.alert.show("error",err.error.message)
   this.registerError=true
 }})
 }
@@ -71,7 +71,9 @@ getErrorMessage(control: AbstractControl): string {
     return 'This field is required.';
   }
   console.log(control.errors);
-  
+  if (control?.hasError('email')) {
+    return 'Invalid email format.';
+  }
   if (control.hasError('passwordMismatch')) {
     return 'Password and confirm password do not match.';
   }

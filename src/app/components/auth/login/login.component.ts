@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { SweatAlertService } from 'src/app/utils/swalsGeniric/sweat-alert.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -46,5 +47,18 @@ export class LoginComponent implements OnInit{
   error:err=>{
     this.loginError=true
   }})
+  }
+
+  forgetPassword(){
+    Swal.fire({
+      title:'Forget Password?',
+      text:'saisir votre mail pour la réintialier',
+      input:'email',
+      confirmButtonText:'envoyer'
+    }).then((result) => { 
+      if (result.isConfirmed) { 
+        
+      } 
+    })
   }
 }
