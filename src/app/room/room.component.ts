@@ -33,7 +33,7 @@ export class RoomComponent {
   private duration: number = 0; // Duration in seconds (3 minutes)
   public elapsedTime: string;
   initialduration: number;
-  listRooms:Room[];
+  listRooms: Room[];
   constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute, private userServ: UserService, private router: Router) {
   }
   ngOnInit(): void {
@@ -47,7 +47,9 @@ export class RoomComponent {
       }
     });
     this.getUsers(parseInt(this.id));
-    this.testRoom(parseInt(this.id));
+    setInterval(() => {
+      this.testRoom(parseInt(this.id));
+    }, 1000)
     this.userServ.getCurrent().subscribe({
       next: (st: any) => this.buyerId = st.id
     })
@@ -187,11 +189,12 @@ export class RoomComponent {
     const seconds = Math.floor(milliseconds / 1000) % 60;
     const minutes = Math.floor(milliseconds / (1000 * 60)) % 60;
     this.room.timeRoom = seconds + minutes * 60;
-    this.RoomSer.updateRoomTime(parseInt(this.id), this.room.timeRoom).subscribe({
-      next: () => {
-      }
-    })
-    if (this.room.timeRoom == 0 && this.room.roomStatus == "Open") {
+    if (this.room.roomStatus == "Open")
+      this.RoomSer.updateRoomTime(parseInt(this.id), this.room.timeRoom).subscribe({
+        next: () => {
+        }
+      })
+    if (this.room.timeRoom <= 0 && this.room.roomStatus == "Open") {
       this.room.roomStatus = "Closed"
       this.RoomSer.updateRoom(this.room).subscribe({
         next: () => {

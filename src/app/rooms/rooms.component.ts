@@ -36,9 +36,9 @@ export class RoomsComponent {
     this.themeService.theme$.subscribe(theme => {
       this.theme = theme
     })
-    this.listRooms.forEach(room=>{
-      if(room.roomStatus=="Open"){
-        
+    this.listRooms.forEach(room => {
+      if (room.roomStatus == "Open") {
+
       }
     })
 
@@ -73,7 +73,7 @@ export class RoomsComponent {
         }
       })
     })
-    if (this.selfJoined|| ! this.visible) {
+    if (this.selfJoined || !this.visible) {
       this.userServ.getCurrent().subscribe({
         next: (data: any) => {
           this.userId = data.id
@@ -82,7 +82,12 @@ export class RoomsComponent {
               if (dt.message == "Access Granted") {
                 this.listRooms.forEach(p => {
                   p.clientNumber = p.clientNumber + 1;
-                  if (p.id == roomId) this.roomserv.Room = p;
+                  if (p.id == roomId) {
+                    this.roomserv.getRoomTime(p.id).subscribe({
+                      next:(time:any)=>p.timeRoom=time
+                    })
+                    this.roomserv.Room = p;
+                  }
                   this.roomserv.updateRoom(p).subscribe({ next: (data: any) => console.log(data) });
                   // console.log( this.jetonServ.getJetonByUser(1)
                   this.router.navigateByUrl("/room/" + roomId);
