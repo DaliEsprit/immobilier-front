@@ -42,4 +42,10 @@ export class RoomService {
   ExitRoom(idUser:string){
     return this.http.put(this.BASE_URI+"exit-room/"+idUser,null)
   }
+  updateRoomTime(idRoom:number,time:number){
+    return this.http.put(this.BASE_URI+"update-time-room/"+idRoom+"/"+time,null)
+  }
+  getRoomTime(idRoom:number){
+    return this.http.get(this.BASE_URI+"get-room-time/"+idRoom)
+  }
 }
