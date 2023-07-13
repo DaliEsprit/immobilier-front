@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { HeaderComponent } from '../core/layout/header/header.component';
 import { RoomService } from '../shared/services/room.service';
 import { User } from '../shared/models/user.model';
@@ -34,7 +34,7 @@ export class RoomComponent {
   public elapsedTime: string;
   initialduration: number;
   listRooms: Room[];
-  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute, private userServ: UserService, private router: Router) {
+  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute, private userServ: UserService, private router: Router, private ngZone: NgZone) {
   }
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -47,9 +47,7 @@ export class RoomComponent {
       }
     });
     this.getUsers(parseInt(this.id));
-    setInterval(() => {
-      this.testRoom(parseInt(this.id));
-    }, 1000)
+    this.testRoom(parseInt(this.id));
     this.userServ.getCurrent().subscribe({
       next: (st: any) => this.buyerId = st.id
     })
@@ -151,8 +149,10 @@ export class RoomComponent {
   ExitRoom(): void {
     this.userServ.getCurrent().subscribe({
       next: (user: User) => {
-        this.RoomSer.ExitRoom(user.id).subscribe({
-          next: () => { this.router.navigateByUrl("/rooms"); }
+        this.RoomSer.ExitRoom(user.id,parseInt(this.id)).subscribe({
+          next: () => { 
+            this.router.navigateByUrl("/rooms");
+           }
         }
         )
       }
@@ -199,7 +199,7 @@ export class RoomComponent {
       this.RoomSer.updateRoom(this.room).subscribe({
         next: () => {
           this.listUsers.forEach(user => {
-            this.RoomSer.ExitRoom(user.id).subscribe({
+            this.RoomSer.ExitRoom(user.id,parseInt(this.id)).subscribe({
               next: () => {
                 this.router.navigateByUrl("/rooms")
               }
