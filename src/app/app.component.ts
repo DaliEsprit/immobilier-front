@@ -37,12 +37,23 @@ export class AppComponent {
               if (room.roomStatus != "Open") {
                 this.initialduration = time;
               }
-              else if (time <= 0)
+              else if (time <= 0 && this.listRooms.length!=0)
                 this.start(room);
             }
           })
         })
-
+      }
+    })
+    this.listRooms.forEach(room=>{
+      if(room.clientNumber>0){
+        this.roomService.getUsersbyRoom(room.id).subscribe({
+          next:(users:User[])=>{
+            this.listUsers=users;
+            this.listUsers.forEach(user=>{
+              console.log(user)
+            })
+          }
+        })
       }
     })
   }

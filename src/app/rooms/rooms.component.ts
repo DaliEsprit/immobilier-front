@@ -132,10 +132,10 @@ export class RoomsComponent {
       }
     })
   }
-  exitRoom() {
+  exitRoom(idRoom:number) {
     this.userServ.getCurrent().subscribe({
       next: (user: User) => {
-        this.roomserv.ExitRoom(user.id).subscribe({
+        this.roomserv.ExitRoom(user.id,idRoom).subscribe({
           next: () => {
             this.listRooms.forEach(room => room.joined = false)
 
