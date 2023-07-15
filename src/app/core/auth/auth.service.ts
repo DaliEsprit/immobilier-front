@@ -3,7 +3,12 @@ import { HttpBackend, HttpClient, HttpRequest } from '@angular/common/http';
 import { BehaviorSubject, from, lastValueFrom, map, Observable, take } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { User } from 'src/app/shared/models/user.model';  
-  
+import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
+import { Router } from '@angular/router';
+import { SweatAlertService } from 'src/app/utils/swalsGeniric/sweat-alert.service';
+import { UserService } from 'src/app/shared/services/user.service';
+import {GeolocationService} from '@ng-web-apis/geolocation';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -12,6 +17,7 @@ export class AuthService {
     isLoggedIn=false
     private _loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(!!localStorage.getItem("token"));
     private _isGuest: BehaviorSubject<boolean> = new BehaviorSubject<boolean>((JSON.parse(localStorage.getItem("user")) && JSON.parse(localStorage.getItem("user"))?.role=="ROLE_GUEST"));
+
 
     get isGuest():Observable<boolean> {
       return this._isGuest.asObservable();
@@ -28,7 +34,7 @@ export class AuthService {
       set loggedIn(val:any) {
            this._loggedIn.next(val);
         }
-    constructor( private http: HttpClient, private httpBackend: HttpBackend) {
+    constructor(private readonly geolocation$: GeolocationService,private alert:SweatAlertService,private userService:UserService,private router:Router,private socialAuthService:SocialAuthService, private http: HttpClient, private httpBackend: HttpBackend) {
        
          
      }
@@ -68,5 +74,31 @@ export class AuthService {
 
      updatePwd(token:string,pwd:string){
         return this.http.get(`${this.BASE_URI}auth/update-password?token=${token}&&password=${pwd}`)
+     }
+
+     socialSignOn(){
+        this.socialAuthService.authState.subscribe((user) => {
+          //  this.geolocation$.subscribe(position => console.log(position.coords.));
+          
+
+            this.socialLogin(user).subscribe(res=>{
+              this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+              this.loggedIn=true
+              this.alert.show("success","login success")
+            localStorage.setItem("token",res["accessToken"]);
+            Promise.resolve()
+            this.userService.getCurrent().subscribe((next:any)=>{
+              localStorage.setItem("user",JSON.stringify(next) );
+      
+              if(next.role=="ROLE_GUEST"){
+                this.router.navigateByUrl("/userDetails");
+               this.isGuest=true
+              }
+            })
+            localStorage.setItem("useremail",res["email"]);
+            this.router.navigateByUrl("");
+            
+            })
+          });
      }
 }
