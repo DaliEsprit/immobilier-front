@@ -4,6 +4,7 @@ import { SidebarService } from 'src/app/shared/services/sidebar.service';
 import { ThemeService } from 'src/app/shared/services/teme.service';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -16,13 +17,19 @@ export class HeaderComponent {
 
   visible: boolean = false;
   mainFeedTitle: string = ""
-  constructor(private authService: AuthService, public themeService: ThemeService, public sideBarService: SidebarService, private cdr: ChangeDetectorRef, private router: Router) {
+  constructor( 
+    private socialAuthService: SocialAuthService,
+    private authService: AuthService, 
+    public themeService: ThemeService, 
+    public sideBarService: SidebarService, 
+    private cdr: ChangeDetectorRef, 
+    private router: Router) {
     let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     let themeToggleLightIcon = document.getElementById(
       'theme-toggle-light-icon'
     );
-
-
+let user = JSON.parse(localStorage.getItem("user")) 
+this.userName = user.firstName + " " + user.lastName
     this.themeService.theme$.subscribe(theme => {
       this.theme = theme
     })
@@ -68,7 +75,10 @@ export class HeaderComponent {
     }
   }
   RemoveUser(): any {
-    localStorage.removeItem("token");
+    localStorage.clear()
+    this.socialAuthService.signOut()
+    this.authService.loggedIn=false
+    this.router.navigateByUrl("")
   }
   showDialog() {
     this.validateRouter()

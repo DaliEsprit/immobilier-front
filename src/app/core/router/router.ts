@@ -1,6 +1,8 @@
 import { Routes } from "@angular/router";
 import { LoginComponent } from "src/app/components/auth/login/login.component";
 import { RegisterComponent } from "src/app/components/auth/register/register.component";
+import { UpdatePasswordComponent } from "src/app/components/auth/update-password/update-password.component";
+import { VerifyMailComponent } from "src/app/components/auth/verify-mail/verify-mail.component";
 import { ImmobiliereDetailsComponent } from "src/app/components/immobiliere-details/immobiliere-details.component";
 import { PayementComponent } from "src/app/components/payement/payement.component";
 import { UserDetailsComponent } from "src/app/components/user-details/user-details.component";
@@ -34,6 +36,12 @@ const Routing: Routes = [
   },{
     path:"rooms",
     component:RoomsComponent
+  },{
+    path:"verify-mail/:token",
+    component:VerifyMailComponent
+  },{
+    path:"update-password/:token",
+    component:UpdatePasswordComponent
   }
   ];
   

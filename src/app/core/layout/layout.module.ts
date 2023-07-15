@@ -23,6 +23,12 @@ import { ImmobiliereComponent } from 'src/app/components/immobiliere/immobiliere
 import { ImmobiliereDetailsComponent } from 'src/app/components/immobiliere-details/immobiliere-details.component';
 import { DialogModule } from 'primeng/dialog';
 import { RoomsComponent } from 'src/app/rooms/rooms.component';
+import { VerifyMailComponent } from 'src/app/components/auth/verify-mail/verify-mail.component';
+import { UpdatePasswordComponent } from 'src/app/components/auth/update-password/update-password.component';
+import { GoogleSigninButtonDirective, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { PasswordModule } from 'primeng/password';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+
 import { ChatComponent } from 'src/app/chat/chat.component';
 
 const routes: Routes = [
@@ -47,6 +53,9 @@ const routes: Routes = [
     ImmobiliereComponent,
     ImmobiliereDetailsComponent,
     RoomsComponent,
+    VerifyMailComponent,
+    UpdatePasswordComponent,
+  
     ChatComponent
   ],
   imports: [
@@ -62,6 +71,10 @@ const routes: Routes = [
     MenubarModule,
     SidebarModule,
     SharedModule ,
+    SocialLoginModule,
+    PasswordModule,
+    OverlayPanelModule,
+    
     DialogModule,
   RouterModule.forChild(routes),
   ]

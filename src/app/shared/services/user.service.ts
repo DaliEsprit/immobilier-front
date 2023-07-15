@@ -18,4 +18,9 @@ export class UserService {
   save(user:any){
     return this.http.post(this.BASE_URI,user)
   }
+
+  update(user:any){
+    return this.http.put(this.BASE_URI,user)
+  }
+
 }

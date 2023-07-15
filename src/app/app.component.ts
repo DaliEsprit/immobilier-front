@@ -27,6 +27,21 @@ export class AppComponent {
     // initializeGoogleSignIn() 
   }
   ngOnInit(): void {
+    //  () => {
+    //   return new Promise<void>((resolve, reject) => {
+    //     // @ts-ignore
+    //     google.accounts.id.initialize({
+    //       client_id:
+    //         '1044877328330-4ubq5g95p35psru5l07o6l89c5r44bev.apps.googleusercontent.com',
+    //       callback: this.handleCredentialResponse,
+    //       auto_select: false,
+    //       cancel_on_tap_outside: false,
+    //       onDemand: true,
+    //     });
+  
+    //     resolve();
+    //   });
+    // };
     this.roomService.getallroom().subscribe({
       next: (data: Room[]) => {
         this.listRooms = data;
@@ -56,6 +71,10 @@ export class AppComponent {
         })
       }
     })
+  }
+  handleCredentialResponse(response: any) {
+    // Handle the response after the user signs in
+    console.log(response);
   }
   start(room: Room) {
     setInterval(() => {
