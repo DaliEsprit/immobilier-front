@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { HeaderComponent } from '../core/layout/header/header.component';
 import { RoomService } from '../shared/services/room.service';
 import { User } from '../shared/models/user.model';
@@ -33,8 +33,8 @@ export class RoomComponent {
   private duration: number = 0; // Duration in seconds (3 minutes)
   public elapsedTime: string;
   initialduration: number;
-  listRooms:Room[];
-  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute, private userServ: UserService, private router: Router) {
+  listRooms: Room[];
+  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute, private userServ: UserService, private router: Router, private ngZone: NgZone) {
   }
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -149,8 +149,10 @@ export class RoomComponent {
   ExitRoom(): void {
     this.userServ.getCurrent().subscribe({
       next: (user: User) => {
-        this.RoomSer.ExitRoom(user.id).subscribe({
-          next: () => { this.router.navigateByUrl("/rooms"); }
+        this.RoomSer.ExitRoom(user.id,parseInt(this.id)).subscribe({
+          next: () => { 
+            this.router.navigateByUrl("/rooms");
+           }
         }
         )
       }
@@ -187,16 +189,17 @@ export class RoomComponent {
     const seconds = Math.floor(milliseconds / 1000) % 60;
     const minutes = Math.floor(milliseconds / (1000 * 60)) % 60;
     this.room.timeRoom = seconds + minutes * 60;
-    this.RoomSer.updateRoomTime(parseInt(this.id), this.room.timeRoom).subscribe({
-      next: () => {
-      }
-    })
-    if (this.room.timeRoom == 0 && this.room.roomStatus == "Open") {
+    if (this.room.roomStatus == "Open")
+      this.RoomSer.updateRoomTime(parseInt(this.id), this.room.timeRoom).subscribe({
+        next: () => {
+        }
+      })
+    if (this.room.timeRoom <= 0 && this.room.roomStatus == "Open") {
       this.room.roomStatus = "Closed"
       this.RoomSer.updateRoom(this.room).subscribe({
         next: () => {
           this.listUsers.forEach(user => {
-            this.RoomSer.ExitRoom(user.id).subscribe({
+            this.RoomSer.ExitRoom(user.id,parseInt(this.id)).subscribe({
               next: () => {
                 this.router.navigateByUrl("/rooms")
               }

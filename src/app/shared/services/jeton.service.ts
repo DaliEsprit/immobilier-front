@@ -19,7 +19,7 @@ export class JetonService {
     return this.http.put(this.BASE_URI + "modify-jeton/"+idUser+"/"+idRoom, jeton);
   }
   getJeton() {
-    return this.http.get(this.BASE_URI + "retrive-all-jeton");
+    return this.http.get(this.BASE_URI + "retrieve-all-jeton");
   }
   deleteJeton(idJet: number) {
     return this.http.delete(this.BASE_URI + "remove-jeton/" + idJet);

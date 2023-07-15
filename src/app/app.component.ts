@@ -2,7 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { RoomService } from './shared/services/room.service';
 import { Room } from './shared/models/Room.model';
 import { Subscription, interval } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { JetonService } from './shared/services/jeton.service';
+import { User } from './shared/models/user.model';
 // import { initializeGoogleSignIn } from './utils/google.initializer';
 declare const google: any;
 @Component({
@@ -21,11 +22,9 @@ export class AppComponent {
   private duration: number = 0; // Duration in seconds (3 minutes)
   public elapsedTime: string;
   initialduration: number;
-  constructor(private roomService: RoomService,private http:HttpClient) {
-    this.http.get("http://api.ipify.org/?format=json").subscribe((res:any)=>{
-   console.log(res);
-   
-    });
+  private listUsers:User[];
+  constructor(private roomService: RoomService, private jetonService: JetonService) {
+    // initializeGoogleSignIn() 
   }
   ngOnInit(): void {
     //  () => {
@@ -46,19 +45,30 @@ export class AppComponent {
     this.roomService.getallroom().subscribe({
       next: (data: Room[]) => {
         this.listRooms = data;
-        this.listRooms = this.listRooms.filter(room => room.approvedRoom == true&& room.roomStatus=="Open");
+        this.listRooms = this.listRooms.filter(room => room.approvedRoom == true && room.roomStatus == "Open");
         this.listRooms.forEach(room => {
           this.roomService.getRoomTime(room.id).subscribe({
             next: (time: number) => {
               if (room.roomStatus != "Open") {
                 this.initialduration = time;
               }
-              else
+              else if (time <= 0 && this.listRooms.length!=0)
                 this.start(room);
             }
           })
         })
-
+      }
+    })
+    this.listRooms.forEach(room=>{
+      if(room.clientNumber>0){
+        this.roomService.getUsersbyRoom(room.id).subscribe({
+          next:(users:User[])=>{
+            this.listUsers=users;
+            this.listUsers.forEach(user=>{
+              console.log(user)
+            })
+          }
+        })
       }
     })
   }
@@ -74,13 +84,13 @@ export class AppComponent {
           console.log(room.timeRoom)
         }
       })
-      if (room.timeRoom== 0 && room.roomStatus == "Open") {
+      if (room.timeRoom <= 0 && room.roomStatus == "Open") {
         room.roomStatus = "Closed"
         this.roomService.updateRoom(room).subscribe({
           next: () => console.log(room)
         })
-  
-      } 
+
+      }
     }, 1000);
   }
 }

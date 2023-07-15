@@ -29,6 +29,7 @@ import { GoogleSigninButtonDirective, SocialLoginModule } from '@abacritt/angula
 import { PasswordModule } from 'primeng/password';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 
+import { ChatComponent } from 'src/app/chat/chat.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,7 @@ const routes: Routes = [
     VerifyMailComponent,
     UpdatePasswordComponent,
   
+    ChatComponent
   ],
   imports: [
     ReactiveFormsModule,
