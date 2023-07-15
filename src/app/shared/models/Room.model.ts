@@ -8,6 +8,9 @@ export class Room{
     premiumRoom:boolean;
     goldRoom:boolean;
     roomStatus:string;
+    approvedRoom!:boolean;
+    timeRoom!:number;
     immobiliereId:number;
+    joined:boolean=false;
     users:User[];
 }

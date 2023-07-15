@@ -6,7 +6,7 @@
         <b class="text-2xl">Immobiler</b>
       </a>
 
-       
+
     </div>
 
     <div class=" w-fit flex justify-center ml-[-25px]">
@@ -16,18 +16,24 @@
       <p-autoComplete styleClass="h-10 w-fit" [placeholder]="'search...'" [(ngModel)]="selectedItem"
         [suggestions]="suggestions" (completeMethod)="search($event)"></p-autoComplete>
     </div>
+
     <div class="flex justify-center items-center space-x-2">
-      <div style="padding-right: 0px;cursor: pointer;">
+      <div *showIfLogged="true" style="padding-right: 0px;cursor: pointer;">
         <img routerLink="rooms" *ngIf="theme=='light'" src="../../../../assets/room.png" width="20" />
         <img routerLink="rooms" *ngIf="theme=='dark'" src="../../../../assets/roomWhite.png" width="20" />
       </div>
-      <button  style="background-color: transparent;" type="button" class="relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+
+      <button *showIfLogged="true" style="background-color: transparent;" type="button"
+        class="relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         <img routerLink="notification" *ngIf="theme=='light'" src="../../../../assets/bell-ring.png" width="20" />
         <img routerLink="notification" *ngIf="theme=='dark'" src="../../../../assets/bell-ringwhite.png" width="20" />
         <span class="sr-only">Notifications</span>
-        <div style="top: -1px;right:1px" class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">20</div>
+        <div style="top: -1px;right:1px"
+          class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
+          20</div>
       </button>
-      <div (click)="showDialog()">
+      <div *showIfLogged="true" (click)="showDialog()">
         <img *ngIf="theme=='light'" style="cursor: pointer;" src="../../../../assets/review.png" width="20" />
         <img *ngIf="theme=='dark'" style="cursor: pointer;" src="../../../../assets/reviewwhite.png" width="20" />
       </div>
@@ -167,8 +173,9 @@
                 placeholder="Write an article..." required></textarea>
             </div>
           </div>
-          <button type="submit" 
-            class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800" style="float: right;">
+          <button type="submit"
+            class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+            style="float: right;">
             Publish feedback
           </button>
         </form>
@@ -183,7 +190,7 @@
           <span class="font-semibold ">Hello</span>, {{userName}}
         </div>
       </a> -->
-      <button (click)="ValidateUser()" routerLink="/login">
+      <button *showIfLogged="false" (click)="ValidateUser()" routerLink="/login">
 
         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
           fill="currentColor" viewBox="0 0 20 20">
@@ -206,22 +213,39 @@
       </button>
 
 
-
-      <button (click)="sideBarService.toggleSidebar()" class="ml-10">
-
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd"
-            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-            clip-rule="evenodd"></path>
+      <a (click)="op.toggle($event)" *showIfLogged="true"
+        class="cursor-pointer flex justify-center items-center space-x-2">
+        <div
+          class=" relative inline-flex items-center justify-center w-6 h-6 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+          <span class="font-bold text-xs text-gray-600 dark:text-gray-300">{{userName.slice(0,1)}}</span>
+        </div>
+        <div class="text-sm">
+          <span class="font-semibold ">Hello</span>, {{userName}}
+        </div>
+        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z"
+              fill="#0F0F0F"></path>
+          </g>
         </svg>
-      </button>
-      <div *ngIf="ValidateUser()" (click)="RemoveUser()" style="padding-right: 10px;cursor: pointer;">
-        <img *ngIf="theme=='light'" src="../../../../assets/logout.png" width="20" />
-        <img *ngIf="theme=='dark'" src="../../../../assets/logoutwhite.png" width="20" />
-      </div>
+      </a>
+      <p-overlayPanel #op>
+        <ul class="text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+          <li>
+            <a routerLink="/userDetails" href="#"
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+          </li>
+          <li>
+            <a (click)="RemoveUser()" href="#"
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">logout</a>
+          </li>
+        </ul>
+      </p-overlayPanel>
     </div>
 
   </div>
+
 </nav>

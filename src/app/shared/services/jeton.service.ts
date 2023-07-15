@@ -15,8 +15,8 @@ export class JetonService {
   addJeton(jeton: Jeton) {
     return this.http.post(this.BASE_URI + "add-jeton", jeton);
   }
-  updateJeton(jeton: Jeton) {
-    return this.http.put(this.BASE_URI + "modify-jeton", jeton);
+  updateJeton(jeton: Jeton,idUser:number,idRoom:number) {
+    return this.http.put(this.BASE_URI + "modify-jeton/"+idUser+"/"+idRoom, jeton);
   }
   getJeton() {
     return this.http.get(this.BASE_URI + "retrive-all-jeton");
@@ -24,8 +24,11 @@ export class JetonService {
   deleteJeton(idJet: number) {
     return this.http.delete(this.BASE_URI + "remove-jeton/" + idJet);
   }
-  getJetonByUser(idUser: number): Promise<any> {
-    return this.http.get<Jeton>(this.BASE_URI + "getJetonByRoom/" + idUser).toPromise();
+  getJetonByUser(idUser: number) {
+    return this.http.get<Jeton>(this.BASE_URI + "getJetonByUser/" + idUser);
+  }
+  updateJetonBidValue(idJeton:number,amount:any){
+    return this.http.put(this.BASE_URI+"update-jeton-bid-value/"+idJeton+"/"+amount,null)
   }
 
 }

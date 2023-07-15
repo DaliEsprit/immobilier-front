@@ -1,3 +1,4 @@
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,41 +15,75 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit{
   form:FormGroup
   loginError=false
-  constructor(private alert:SweatAlertService,private userService:UserService,private fb:FormBuilder,private authService:AuthService,private router:Router){
+  constructor( private socialAuthService: SocialAuthService,private alert:SweatAlertService,private userService:UserService,private fb:FormBuilder,private authService:AuthService,private router:Router){
   this.form=fb.group({
     email:['',[Validators.required,Validators.email]],
     password:['',Validators.required]
   })
   }
   ngOnInit(): void {
+    this.socialAuthService.authState.subscribe((user) => {
+    
+      this.authService.socialLogin(user).subscribe(res=>{
+        this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+        this.authService.loggedIn=true
+        this.alert.show("success","login success")
+      localStorage.setItem("token",res["accessToken"]);
+      Promise.resolve()
+      this.userService.getCurrent().subscribe((next:any)=>{
+        localStorage.setItem("user",JSON.stringify(next) );
+
+        if(next.role=="ROLE_GUEST"){
+          this.router.navigateByUrl("/userDetails");
+         this.authService.isGuest=true
+        }
+      })
+      localStorage.setItem("useremail",res["email"]);
+      this.router.navigateByUrl("");
+      
+      })
+    });
     this.form.valueChanges.subscribe(res=>{
       this.loginError=false
     })
   }
-
-  login(){
+  facebookLogin(){
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+  googleLogin(){
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  
+  }
+  login(){  
     this.authService.loginUser(this.form.value).subscribe({
       next:user=>{ 
+        this.getUserLocation()
         this.authService.loggedIn=true
         this.alert.show("success","login success")
-        
-      if(user["accessToken"]!=null){
-      localStorage.setItem("token",user["accessToken"]);
-      Promise.resolve()
-      this.userService.getCurrent().subscribe((next:any)=>{
-        localStorage.setItem("user",JSON.stringify(next) );
-      })
-      localStorage.setItem("useremail",user["email"]);
-      this.router.navigateByUrl("");
-      }
-      else
-        alert("user is invalid")
+        localStorage.setItem("token",user["accessToken"]);
+        Promise.resolve()
+        localStorage.setItem("user",JSON.stringify(user) );
+        localStorage.setItem("useremail",user["email"]);
+        this.router.navigateByUrl("");
+        this.authService.isGuest=true
+    
     },
   error:err=>{
     this.loginError=true
   }})
   }
-
+  getUserLocation(): void {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+  console.log(longitude,latitude);
+  
+      });
+    } else {
+      console.log('Geolocation is not supported by this browser.');
+    }
+  }
   forgetPassword(){
     Swal.fire({
       title:'Forget Password?',
@@ -57,7 +92,9 @@ export class LoginComponent implements OnInit{
       confirmButtonText:'envoyer'
     }).then((result) => { 
       if (result.isConfirmed) { 
-        
+        this.authService.sendUpdatePwdEmail(result.value).subscribe(res=>{
+          this.alert.show("success","reset password mail sent successfully")
+        })
       } 
     })
   }

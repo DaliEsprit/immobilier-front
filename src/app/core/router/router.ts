@@ -4,7 +4,7 @@ import { RegisterComponent } from "src/app/components/auth/register/register.com
 import { UpdatePasswordComponent } from "src/app/components/auth/update-password/update-password.component";
 import { VerifyMailComponent } from "src/app/components/auth/verify-mail/verify-mail.component";
 import { ImmobiliereDetailsComponent } from "src/app/components/immobiliere-details/immobiliere-details.component";
-import { PaymentComponent } from "src/app/components/payment/payment.component";
+import { PayementComponent } from "src/app/components/payement/payement.component";
 import { UserDetailsComponent } from "src/app/components/user-details/user-details.component";
 import { RoomComponent } from "src/app/room/room.component";
 import { RoomsComponent } from "src/app/rooms/rooms.component";
@@ -17,10 +17,8 @@ const Routing: Routes = [
         (m) => m.ArticlesRoutingModule
       ),
   } ,
+  { path: 'room/:id', component: RoomComponent },
   {
-    path: "room",
-    component: RoomComponent
-  },{
     path:"register",
     component:RegisterComponent
   },{
@@ -34,7 +32,7 @@ const Routing: Routes = [
     component:ImmobiliereDetailsComponent
   },{
     path:"payment",
-    component:PaymentComponent
+    component:PayementComponent
   },{
     path:"rooms",
     component:RoomsComponent
@@ -42,7 +40,7 @@ const Routing: Routes = [
     path:"verify-mail/:token",
     component:VerifyMailComponent
   },{
-    path:"update-password",
+    path:"update-password/:token",
     component:UpdatePasswordComponent
   }
   ];
