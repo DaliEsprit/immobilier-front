@@ -58,7 +58,7 @@ save(){
   delete user.confirmPassword
   this.userService.save(user).subscribe({
     next:user=>{
-   
+   this.router.navigateByUrl("")
   },
 error:err=>{
   this.alert.show("error",err.error.message)

@@ -29,7 +29,7 @@ export class HeaderComponent {
       'theme-toggle-light-icon'
     );
 let user = JSON.parse(localStorage.getItem("user")) 
-this.userName = user.firstName + " " + user.lastName
+this.userName = user?.firstName + " " + (user?.lastName || "")
     this.themeService.theme$.subscribe(theme => {
       this.theme = theme
     })
@@ -78,6 +78,7 @@ this.userName = user.firstName + " " + user.lastName
     localStorage.clear()
     this.socialAuthService.signOut()
     this.authService.loggedIn=false
+    this.authService.isGuest=false
     this.router.navigateByUrl("")
   }
   showDialog() {

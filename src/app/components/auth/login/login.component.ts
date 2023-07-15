@@ -22,27 +22,7 @@ export class LoginComponent implements OnInit{
   })
   }
   ngOnInit(): void {
-    this.socialAuthService.authState.subscribe((user) => {
-    
-      this.authService.socialLogin(user).subscribe(res=>{
-        this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
-        this.authService.loggedIn=true
-        this.alert.show("success","login success")
-      localStorage.setItem("token",res["accessToken"]);
-      Promise.resolve()
-      this.userService.getCurrent().subscribe((next:any)=>{
-        localStorage.setItem("user",JSON.stringify(next) );
-
-        if(next.role=="ROLE_GUEST"){
-          this.router.navigateByUrl("/userDetails");
-         this.authService.isGuest=true
-        }
-      })
-      localStorage.setItem("useremail",res["email"]);
-      this.router.navigateByUrl("");
-      
-      })
-    });
+   
     this.form.valueChanges.subscribe(res=>{
       this.loginError=false
     })
