@@ -28,8 +28,9 @@ import { UpdatePasswordComponent } from 'src/app/components/auth/update-password
 import { GoogleSigninButtonDirective, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { PasswordModule } from 'primeng/password';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-
 import { ChatComponent } from 'src/app/chat/chat.component';
+import { AgmCoreModule } from '@agm/core';
+
 
 const routes: Routes = [
   {
@@ -73,10 +74,12 @@ const routes: Routes = [
     SharedModule ,
     SocialLoginModule,
     PasswordModule,
-    OverlayPanelModule,
-    
+    OverlayPanelModule,    
     DialogModule,
   RouterModule.forChild(routes),
+  AgmCoreModule.forRoot({
+    apiKey: ''
+  })
   ]
 })
 export class LayoutModule { }

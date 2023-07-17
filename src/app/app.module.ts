@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
@@ -5,16 +6,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component'; 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ArticlesModule } from './components/articles/articles.module';
+
  import { TokenInterceptor } from './core/interceptors/auth.interceptor'; 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { PayementComponent } from './components/payement/payement.component';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
-
+import { HeaderComponent } from './core/layout/header/header.component';
+import { AgmCoreModule } from '@agm/core';
+import { FormImmobilierComponent } from './form-immobilier/form-immobilier.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GestionImmobilierComponent } from './gestion-immobilier/gestion-immobilier.component'; 
 
  @NgModule({
   declarations: [
     AppComponent,
-    PayementComponent
+    PayementComponent,
+    FormImmobilierComponent,
+    GestionImmobilierComponent,
                             
   ],
   imports: [ 
@@ -24,7 +32,10 @@ import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, So
     HttpClientModule,
     ArticlesModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AgmCoreModule.forRoot({
+        apiKey: ''
+      })
   ],
   providers: [
     {

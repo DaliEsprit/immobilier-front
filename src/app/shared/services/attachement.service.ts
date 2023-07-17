@@ -7,21 +7,18 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AttachementService {
-  protected readonly BASE_URI=environment.baseUri+"attachement/"
+  private apiServerUrl = environment.baseUri;
   listAttachment:Attachements[]=[];
-  constructor(private http:HttpClient) { }
-  getAttachement(){
-    return this.http.get<Attachements[]>(this.BASE_URI+"retrieve-all-attachment");
-  }
-  addAttachement( attachement:Attachements){
-    return this.http.post(this.BASE_URI+"add-attachement",attachement);
-  }
-  modifyAttachment(attachement:Attachements){
-    return this.http.put(this.BASE_URI+"modify-attachement",attachement);
-  }
-  deleteAttachment(idAtt:number){
-    return this.http.delete(this.BASE_URI+"remove-attachment/"+idAtt);
-  }
   
+  constructor(private http:HttpClient) { }
+  getAttachement(idImmobilier:any):any{
+    return this.http.get<Attachements[]>(`${this.apiServerUrl}attachement/retrieve-all-attachments`+idImmobilier);
+  }
 
-}
+  addAttachement(attachement:Attachements):any{
+    return this.http.post<Attachements>(`${this.apiServerUrl}attachement/add-attachement`,attachement);
+  }
+  assignttachement(idAttachement:any, idImmobilier:any):any{
+    
+    return this.http.put<Attachements>(`${this.apiServerUrl}attachement/assign-attachement/`+ idAttachement+'/'+idImmobilier, null)
+}}

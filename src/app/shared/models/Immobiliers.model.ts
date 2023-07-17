@@ -5,9 +5,11 @@ export class immobilier{
     status!:string;
     etat!:string;
     description!:string;
+    price!:number;
     userId!:number;
     roomId!:number;
-    attachement!:string;
+    attachement: Array<Attachements> =[];
+    images: Array<any> = [] ;
     nbClick!:number
 
 }
