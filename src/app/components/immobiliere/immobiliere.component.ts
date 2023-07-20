@@ -1,33 +1,23 @@
-import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { Attachements } from 'src/app/shared/models/Attachments.model';
 import { immobilier } from 'src/app/shared/models/Immobiliers.model';
+import { AttachementService } from 'src/app/shared/services/attachement.service';
+import { AttachementsService } from 'src/app/shared/services/attachments.service';
+import { ImmobilierService } from 'src/app/shared/services/immobilier.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-immobiliere',
   templateUrl: './immobiliere.component.html',
   styleUrls: ['./immobiliere.component.scss']
 })
-export class ImmobiliereComponent {
-  listImmobliere:immobilier[]=[
-    {id:1,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:2,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:3,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:4,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:5,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:6,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:7,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:8,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:9,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:10,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:11,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:12,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:13,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:14,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-    {id:15,status:"good",etat:"neuf",description:"gogoogogoggogo",userId:4,roomId:0,attachement:"https://resize-elle.ladmedia.fr/rcrop/638,,forcex/img/var/plain_site/storage/images/deco/pratique/travaux/plans-2d-3d/plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2/88947988-1-fre-FR/Plan-de-studio-3-facons-d-amenager-un-studio-de-35-m2.jpg",nbClick:0},
-
-  ];
-constructor(private auth:AuthService,private router:Router){}
+export class ImmobiliereComponent implements OnInit {
+listImmobliere:immobilier[]=[];
+listAttachment:Attachements[]=[];
+constructor(private auth:AuthService,private router:Router, private immobilierService:ImmobilierService, private attachmentService:AttachementsService, private userServ: UserService){}
 
 validateUser(){
   if(this.auth.getToken()!=null)
@@ -42,7 +32,73 @@ navToImmobiliereDetails(idImmobilier:number){
     if(im.id==idImmobilier)
     im.nbClick=im.nbClick+1;
   })
-  return this.router.navigateByUrl("/immobiliereDetails")
+  
+  return this.router.navigateByUrl("/immobiliereDetails/"+idImmobilier)
+}
+
+// google maps zoom level
+zoom: number = 8;
+
+// initial center position for the map
+lat: number = 51.673858;
+lng: number = 7.815982;
+
+clickedMarker(label: string, index: number) {
+  console.log(`clicked the marker: ${label || index}`)
+}
+
+markers = [
+    {
+        lat: 51.673858,
+        lng: 7.815982,
+        label: "A",
+        draggable: true
+    },
+    
+]
+ngOnInit(): void {
+ 
+  this.getImmobilier();
+  //this.navToRoom();
+  this.getAttachment(1)
+}
+
+public getImmobilier():void{
+ this.immobilierService.getImmobilier().subscribe(
+  (response: immobilier[]) =>{this.listImmobliere = response;}
+ , 
+ (error:HttpErrorResponse) =>{alert(error.message)}
+ );
+}
+
+public getAttachment(Idimmobilier: any):void{
+  this.attachmentService.getAttachement(Idimmobilier).subscribe(
+   (response: Attachements[]) =>{this.listImmobliere.forEach(im=>{
+    
+   if (im.id == Idimmobilier){
+   // im.attachement = response
+   }
+   console.log(response)
+   console.log(this.listImmobliere)
+   })}
+  , 
+  
+  );
+ }
+
+navToRoom() {
+  this.userServ.getCurrent().subscribe({
+    next: (data: any) => {
+            console.log(data)
+        
+          
+            this.router.navigateByUrl("/immobilier")
+          
+        }
+      })
+    
+
+
 }
 
 }

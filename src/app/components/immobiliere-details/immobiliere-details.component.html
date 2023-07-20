@@ -3,11 +3,11 @@
         <div class="grid gap-4">
             <div>
                 <img class="h-auto max-w-full rounded-lg"
-                    src={{selectedImage}} alt="">
+                    src={{Immobliere.images[0].changingThisBreaksApplicationSecurity}} alt="">
             </div>
             <div class="grid grid-cols-5 gap-4">
-                <div *ngFor="let att of attachmentList ">
-                    <img (mouseover)="setMainAttachemnt(att.idAttachment)" src={{att.path}} />
+                <div *ngFor="let att of Immobliere.images ">
+                    <img (mouseover)="setMainAttachemnt(att.changingThisBreaksApplicationSecurity)" src={{att.changingThisBreaksApplicationSecurity}} />
                 </div>
             </div>
         </div>
@@ -15,8 +15,8 @@
     </div>
     <div style="flex: 3;padding-left: 20px;">
         <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Appartement Name</h5>
-            <label><strong>Status:</strong> good</label>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{Immobliere.description}}</h5>
+            <label><strong>Status:</strong> </label>
             <br/>
             <label><strong>Etat:</strong> Neuf</label>
             <p class="font-normal text-gray-700 dark:text-gray-400"><strong>Description:</strong> Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
@@ -35,4 +35,28 @@
             </div>
         </div>
     </div>
+    
 </div>
+<agm-map 
+[latitude]="lat"
+[longitude]="lng"
+[zoom]="zoom"
+[disableDefaultUI]="false" >
+
+<agm-marker
+    *ngFor="let m of markers; let i = index"
+    (markerClick)="clickedMarker(m.label, i)"
+    [latitude]="m.lat"
+    [longitude]="m.lng"
+    [label]="m.label"
+    [markerDraggable]="m.draggable">
+   
+  <agm-info-window>
+    <strong>Label: {{m.label}}</strong><br/>
+    <strong>Latitude: {{m.lat}}</strong><br/>
+    <strong>Longitude: {{m.lng}}</strong>
+  </agm-info-window>
+ 
+</agm-marker>
+
+</agm-map>
