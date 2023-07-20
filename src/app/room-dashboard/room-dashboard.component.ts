@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class RoomDashboardComponent {
   listRooms: Room[] = [];
+  listDisapprovedRooms: Room[] = [];
   user: User;
   open: number;
   closed: number;
@@ -61,10 +62,10 @@ export class RoomDashboardComponent {
           this.roomService.getRoomsByUser(user.id).subscribe({
             next: (rooms: Room[]) => {
               this.listRooms = rooms
-              this.listRooms.forEach(room=>{
+              this.listRooms.forEach(room => {
                 this.roomService.getUserbyRoomCreated(room.id).subscribe({
-                  next:(user:User)=>{
-                    room.user=user;
+                  next: (user: User) => {
+                    room.user = user;
                   }
                 })
               })
@@ -75,18 +76,19 @@ export class RoomDashboardComponent {
             }
           })
         }
-        else if (this.user.role == "ROLE_ADMIN"){
+        else if (this.user.role == "ROLE_ADMIN") {
           this.roomService.getallroom().subscribe({
-            next:(rooms:Room[])=>{
+            next: (rooms: Room[]) => {
               this.listRooms = rooms
+              this.listDisapprovedRooms = rooms.filter(r => r.approvedRoom == false)
               this.open = rooms.filter(r => r.roomStatus == "Open").length
               this.closed = rooms.filter(r => r.roomStatus == "Closed").length
               this.notstarted = rooms.filter(r => r.roomStatus == "NotStarted").length
               this.approved = rooms.filter(r => r.approvedRoom == true).length
-              this.listRooms.forEach(room=>{
+              this.listRooms.forEach(room => {
                 this.roomService.getUserbyRoomCreated(room.id).subscribe({
-                  next:(userf:User)=>{
-                    room.user=userf;
+                  next: (userf: User) => {
+                    room.user = userf;
                   }
                 })
               })
@@ -137,6 +139,15 @@ export class RoomDashboardComponent {
         this.getAllRooms()
         this.Editvisible = false
       }
+    })
+  }
+  editDisapprovedRoom() {
+    this.listDisapprovedRooms.forEach(room => {
+      this.roomService.updateRoom(room, parseInt(this.user.id)).subscribe({
+        next: () => {
+          this.getAllRooms()
+        }
+      })
     })
   }
   hide() {
@@ -191,9 +202,9 @@ export class RoomDashboardComponent {
     }
 
   }
-  checkapprove(value){
+  checkapprove(value) {
     console.log(value)
-    console.log(this.RoomToEdit.approvedRoom)
+    // console.log(this.RoomToEdit.approvedRoom)
   }
 
 }
