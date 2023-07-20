@@ -1,3 +1,5 @@
+import { immobilier } from "./Immobiliers.model";
+
 export class Attachements{
     idAttachment!:number;
     name!:string;

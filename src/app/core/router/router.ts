@@ -5,8 +5,11 @@ import { UpdatePasswordComponent } from "src/app/components/auth/update-password
 import { VerifyMailComponent } from "src/app/components/auth/verify-mail/verify-mail.component";
 import { ImmobiliereDetailsComponent } from "src/app/components/immobiliere-details/immobiliere-details.component";
 import { PayementComponent } from "src/app/components/payement/payement.component";
+import { ImmobiliereComponent } from "src/app/components/immobiliere/immobiliere.component";
 import { UserDetailsComponent } from "src/app/components/user-details/user-details.component";
 import { RoomDashboardComponent } from "src/app/room-dashboard/room-dashboard.component";
+import { FormImmobilierComponent } from "src/app/form-immobilier/form-immobilier.component";
+import { GestionImmobilierComponent } from "src/app/gestion-immobilier/gestion-immobilier.component";
 import { RoomComponent } from "src/app/room/room.component";
 import { RoomsComponent } from "src/app/rooms/rooms.component";
 
@@ -29,7 +32,7 @@ const Routing: Routes = [
     path:"userDetails",
     component:UserDetailsComponent
   },{
-    path:"immobiliereDetails",
+    path:"immobiliereDetails/:id",
     component:ImmobiliereDetailsComponent
   },{
     path:"payment",
@@ -37,6 +40,7 @@ const Routing: Routes = [
   },{
     path:"rooms",
     component:RoomsComponent
+
   },{
     path:"verify-mail/:token",
     component:VerifyMailComponent
@@ -46,7 +50,22 @@ const Routing: Routes = [
   },{
     path:"roomDashboard",
     component:RoomDashboardComponent
+
+  },
+  {
+    path:"immobiliere",
+    component:ImmobiliereComponent
+  },
+  {
+    path:"immobiliereGestion",
+    component: GestionImmobilierComponent
+  },
+  {
+    path:"formImmobilier",
+    component: FormImmobilierComponent
+
   }
+  
   ];
   
   export { Routing };
