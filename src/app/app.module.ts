@@ -15,7 +15,8 @@ import { HeaderComponent } from './core/layout/header/header.component';
 import { AgmCoreModule } from '@agm/core';
 import { FormImmobilierComponent } from './form-immobilier/form-immobilier.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GestionImmobilierComponent } from './gestion-immobilier/gestion-immobilier.component'; 
+import { GestionImmobilierComponent } from './gestion-immobilier/gestion-immobilier.component';
+import { ModifierImmobilierComponent } from './modifier-immobilier/modifier-immobilier.component'; 
 
  @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { GestionImmobilierComponent } from './gestion-immobilier/gestion-immobil
     PayementComponent,
     FormImmobilierComponent,
     GestionImmobilierComponent,
+    ModifierImmobilierComponent,
                             
   ],
   imports: [ 

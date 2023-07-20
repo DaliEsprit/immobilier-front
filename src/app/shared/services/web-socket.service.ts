@@ -17,12 +17,10 @@ export class WebSocketService {
       this.newmessage="hello"
       console.log("dsssssssssssssss");
       this.sendMessage() 
-    },1000)
+    },100000000)
   }
   ngOnInit() {
-    
-    
- 
+
     this.connect();
   }
   setConnected(connected: boolean) {
@@ -56,4 +54,5 @@ export class WebSocketService {
   showMessage(message) {
     this.greetings.push(message);
   }
+  
 }

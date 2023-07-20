@@ -27,7 +27,7 @@ export class AppComponent {
   private listUsers:User[];
   constructor(private authService:AuthService,private roomService: RoomService, private jetonService: JetonService,private s:WebSocketService) {
    this.authService.socialSignOn()
-   s.connect()
+   //s.connect()
   }
   ngOnInit(): void {
    

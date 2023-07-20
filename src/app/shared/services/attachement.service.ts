@@ -12,7 +12,7 @@ export class AttachementService {
   
   constructor(private http:HttpClient) { }
   getAttachement(idImmobilier:any):any{
-    return this.http.get<Attachements[]>(`${this.apiServerUrl}attachement/retrieve-all-attachments`+idImmobilier);
+    return this.http.get<Attachements[]>(`${this.apiServerUrl}attachement/retrieve-all-attachements/`+idImmobilier);
   }
 
   addAttachement(attachement:Attachements):any{
@@ -21,4 +21,10 @@ export class AttachementService {
   assignttachement(idAttachement:any, idImmobilier:any):any{
     
     return this.http.put<Attachements>(`${this.apiServerUrl}attachement/assign-attachement/`+ idAttachement+'/'+idImmobilier, null)
-}}
+}
+
+deleteAttachementbyName(name: string):any{
+    
+  return this.http.delete<Attachements>(`${this.apiServerUrl}attachement/remove-attachmentbyname/`+ name);
+}
+}

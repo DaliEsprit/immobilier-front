@@ -11,6 +11,7 @@ import { FormImmobilierComponent } from "src/app/form-immobilier/form-immobilier
 import { GestionImmobilierComponent } from "src/app/gestion-immobilier/gestion-immobilier.component";
 import { RoomComponent } from "src/app/room/room.component";
 import { RoomsComponent } from "src/app/rooms/rooms.component";
+import { ModifierImmobilierComponent } from "src/app/modifier-immobilier/modifier-immobilier.component";
 
 const Routing: Routes = [
   {
@@ -60,6 +61,10 @@ const Routing: Routes = [
     path:"formImmobilier",
     component: FormImmobilierComponent
 
+  },
+  {
+    path:"modifyImmobilier/:id",
+    component: ModifierImmobilierComponent
   }
   
   ];
