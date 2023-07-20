@@ -29,7 +29,10 @@ import { GoogleSigninButtonDirective, SocialLoginModule } from '@abacritt/angula
 import { PasswordModule } from 'primeng/password';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ChatComponent } from 'src/app/chat/chat.component';
+import { RoomDashboardComponent } from 'src/app/room-dashboard/room-dashboard.component';
 import { AgmCoreModule } from '@agm/core';
+import { FormImmobilierComponent } from 'src/app/form-immobilier/form-immobilier.component';
+import { GestionImmobilierComponent } from 'src/app/gestion-immobilier/gestion-immobilier.component';
 
 
 const routes: Routes = [
@@ -56,8 +59,11 @@ const routes: Routes = [
     RoomsComponent,
     VerifyMailComponent,
     UpdatePasswordComponent,
-  
-    ChatComponent
+    ChatComponent,
+    RoomDashboardComponent,
+    FormImmobilierComponent,
+    GestionImmobilierComponent
+
   ],
   imports: [
     ReactiveFormsModule,

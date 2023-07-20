@@ -1,0 +1,262 @@
+<div class="dahboard-room-wrap">
+    <div class="dahboard-room-body">
+        <div class="dashoboard-room-main">
+            <div class="dashoboard-room-row" style="display: flex;">
+                <div class=" stat-card notstarted">
+                    <div class="stat-title">
+                        Room Not started
+                    </div>
+                    <div class="stat-content ">
+                        {{notstarted}}
+                    </div>
+                </div>
+                <div class=" stat-card closed">
+                    <div class="stat-title">
+                        Room Closed
+                    </div>
+                    <div class="stat-content">
+                        {{closed}}
+                    </div>
+                </div>
+                <div class=" stat-card open">
+                    <div class="stat-title">
+                        Room Open
+                    </div>
+                    <div class="stat-content">
+                        {{open}}
+                    </div>
+                </div>
+                <div class=" stat-card">
+                    <div class="stat-title">
+                        Approved Rooms
+                    </div>
+                    <div class="stat-content">
+                        {{approved}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dashoboard-room-main">
+            <button type="button" (click)="openAddRoomWrap()"
+                class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Add
+                Room</button>
+
+        </div>
+        <div class="dashoboard-room-main">
+
+            <div class="dashoboard-room-row">
+                <table border="2px">
+                    <tr>
+                        <th>Room Id</th>
+                        <th>Room Type</th>
+                        <th>Min Amount </th>
+                        <th>Room Status</th>
+                        <th>Room Time</th>
+                        <th>Approved</th>
+                        <th>Created By</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr *ngFor="let room of listRooms ">
+                        <td>{{room.id}}</td>
+                        <td *ngIf="room.goldRoom">Gold</td>
+                        <td *ngIf="room.premiumRoom">Premium</td>
+                        <td *ngIf="!room.goldRoom&& !room.premiumRoom"> Basic</td>
+                        <td>{{room.minAmount}}</td>
+                        <td>{{room.roomStatus}}</td>
+                        <td>{{room.timeRoom}} seconds</td>
+                        <td *ngIf="room.approvedRoom"> Approved</td>
+                        <td *ngIf="!room.approvedRoom"> Disapproved</td>
+                        <td>{{room.user.email}}</td>
+                        <td style="display: flex;height: 30px;" *ngIf="(room.roomStatus!='Closed'&& user.role=='ROLE_SELLER')|| user.role=='ROLE_ADMIN'">
+                            <div class="action-icon" (click)="navToRoom(room.id)">
+                                <img src="../../assets/eye.png" width="20px" />
+                            </div>
+                            <div class="action-icon" (click)="openEditWrap(room.id)">
+                                <img src="../../assets/pencil.png" width="20px" />
+                            </div>
+                            <div class="action-icon" (click)="deleteRoom(room.id)">
+                                <img src="../../assets/trash.png" width="20px" />
+                            </div>
+                        </td>
+                        <td *ngIf="room.roomStatus=='Closed'&& user.role=='ROLE_SELLER'"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="edit-wrap" *ngIf="Editvisible">
+            <div class="edit-main">
+                <div class="edit-row">
+                    <div class="edit-col">
+                        <div>
+                            <label for="small-input"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room Id</label>
+                            <input type="text" id="small-input" disabled readonly [(ngModel)]="RoomToEdit.id"
+                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
+                    </div>
+                    <div class="edit-col">
+                        <div>
+                            <label for="small-input"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room Min
+                                Amount</label>
+                            <input type="text" id="small-input" [(ngModel)]="RoomToEdit.minAmount"
+                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
+                    </div>
+                    <div class="edit-col">
+                        <div>
+                            <label for="small-input"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room Time</label>
+                            <input type="text" id="small-input" [(ngModel)]="RoomToEdit.timeRoom"
+                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-row">
+                <ul (change)="onItemUpdateChange($event.target.value)"
+                    class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                        <div class="flex items-center pl-3">
+                            <input id="horizontal-list-radio-license" type="radio" value="BasicRoom" [checked]="basicCheckedValue" name="list-radio" 
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            <label for="horizontal-list-radio-license"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                Basic Room </label>
+                        </div>
+                    </li>
+                    <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                        <div class="flex items-center pl-3">
+                            <input id="horizontal-list-radio-id" type="radio" value="goldRoom"  [checked]="goldchekedValue" name="list-radio"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            <label for="horizontal-list-radio-id"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                Gold Room</label>
+                        </div>
+                    </li>
+                    <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                        <div class="flex items-center pl-3">
+                            <input id="horizontal-list-radio-millitary" type="radio"  value="premiumRoom"   [checked]="premiumcheckedValue"name="list-radio"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            <label for="horizontal-list-radio-millitary"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                Premium Room</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="edit-row">
+                <div class="edit-col">
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room
+                        Status</label>
+                    <select id="countries" [(ngModel)]="RoomToEdit.roomStatus"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="Closed">Closed</option>
+                        <option value="NotStarted">Not Started</option>
+                        <option value="Open">Open</option>
+                    </select>
+                </div>
+                <div class="edit-col">
+                    <label for="countries"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Immobiliere</label>
+                    <select id="countries"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                    </select>
+                </div>
+                <div class="edit-col" style="display: flex; align-items: center;" *ngIf="user.role=='ROLE_ADMIN'">
+                    <div class="flex items-center" >
+                        <input (change)="checkapprove($event.target.value)"  id="checked-checkbox" type="checkbox" [(ngModel)]="RoomToEdit.approvedRoom"  [checked]="RoomToEdit.approvedRoom" value="approved" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="checked-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Approved</label>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-row">
+                <div class="edit-col">
+                    <button type="button" style="width: 100%;" (click)="editRoom()"
+                        class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Edit</button>
+                </div>
+            </div>
+        </div>
+        <div class="edit-wrap" *ngIf="AddVisible">
+            <div class="edit-main">
+                <div class="edit-row">
+                    <div class="edit-col">
+                        <div>
+                            <label for="small-input"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room Min
+                                Amount</label>
+                            <input type="text" id="small-input"
+                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                [(ngModel)]="RoomToAdd.minAmount">
+                        </div>
+                    </div>
+                    <div class="edit-col">
+                        <div>
+                            <label for="small-input"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room Time</label>
+                            <input type="text" id="small-input"
+                                class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                [(ngModel)]="RoomToAdd.timeRoom">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-row">
+                <ul (change)="onItemChange($event.target.value)"
+                    class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                        <div class="flex items-center pl-3">
+                            <input id="horizontal-list-radio-license" type="radio" name="list-radio" value="BasicRoom"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            <label for="horizontal-list-radio-license"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                Basic Room </label>
+                        </div>
+                    </li>
+                    <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                        <div class="flex items-center pl-3">
+                            <input id="horizontal-list-radio-id" type="radio" name="list-radio" value="goldRoom"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            <label for="horizontal-list-radio-id"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                Gold Room</label>
+                        </div>
+                    </li>
+                    <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                        <div class="flex items-center pl-3">
+                            <input id="horizontal-list-radio-millitary" type="radio" name="list-radio"
+                                value="premiumRoom"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            <label for="horizontal-list-radio-millitary"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                Premium Room</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="edit-row">
+                <div class="edit-col">
+                    <label for="countries"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Immobiliere</label>
+                    <select id="countries"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                    </select>
+                </div>
+            </div>
+            <div class="edit-row">
+                <div class="edit-col">
+                    <button type="button" style="width: 100%;" (click)="AddRoom()"
+                        class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Add
+                        Room</button>
+                </div>
+            </div>
+        </div>
+        <div class="conf-add-room" *ngIf="approveModel&& user.role!='ROLE_ADMIN'">
+            <div style="color: #000;">
+                <p style="text-align: center;">You Room has been sent to the Admin to approve</p>
+            </div>
+        </div>
+    </div>
+</div>
