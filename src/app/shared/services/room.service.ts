@@ -9,14 +9,15 @@ import { Room } from '../models/Room.model';
 export class RoomService {
   Room:Room=new Room();
   listRooms:Room=new Room();
+  userIdRoom:number
   protected readonly BASE_URI=environment.baseUri+"room/";
 
   constructor(private http:HttpClient) { }
-  addRoom(room:Room){
-    return this.http.post(this.BASE_URI+"add-room",room);
+  addRoom(room:Room,idUser:string){
+    return this.http.post(this.BASE_URI+"add-room/"+idUser,room);
   }
-  updateRoom(room:Room){
-    return this.http.put(this.BASE_URI+"modify-room",room);
+  updateRoom(room:Room,idUser:number){
+    return this.http.put(this.BASE_URI+"modify-room/"+idUser,room);
   }
   getallroom(){
     return this.http.get(this.BASE_URI+"retrieve-all-room");
@@ -47,5 +48,16 @@ export class RoomService {
   }
   getRoomTime(idRoom:number){
     return this.http.get(this.BASE_URI+"get-room-time/"+idRoom)
+  }
+  getRoomsByUser(idUser:string){
+    return this.http.get(this.BASE_URI+"retrieve-rooms-by-user/"+idUser)
+  }
+  retrieveUserByRoom(idRoom:number){
+    return this.http.get(this.BASE_URI+"retrieve-user-by-room/"+idRoom).subscribe({
+      next:(data:any)=>this.userIdRoom=data
+    })
+  }
+  getUserbyRoomCreated(idRoom:number){
+    return this.http.get(this.BASE_URI+"get-user-by-room-created/"+idRoom)
   }
 }

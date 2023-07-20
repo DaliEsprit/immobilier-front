@@ -7,6 +7,7 @@ import { ImmobiliereDetailsComponent } from "src/app/components/immobiliere-deta
 import { PayementComponent } from "src/app/components/payement/payement.component";
 import { ImmobiliereComponent } from "src/app/components/immobiliere/immobiliere.component";
 import { UserDetailsComponent } from "src/app/components/user-details/user-details.component";
+import { RoomDashboardComponent } from "src/app/room-dashboard/room-dashboard.component";
 import { FormImmobilierComponent } from "src/app/form-immobilier/form-immobilier.component";
 import { GestionImmobilierComponent } from "src/app/gestion-immobilier/gestion-immobilier.component";
 import { RoomComponent } from "src/app/room/room.component";
@@ -47,6 +48,9 @@ const Routing: Routes = [
   },{
     path:"update-password/:token",
     component:UpdatePasswordComponent
+  },{
+    path:"roomDashboard",
+    component:RoomDashboardComponent
 
   },
   {
