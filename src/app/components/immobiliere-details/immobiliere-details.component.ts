@@ -78,8 +78,7 @@ public getImmobilierbyId(id: number):void{
   this.immobilierService.getImmobilierbyId(this.id).subscribe(
    (response: immobilier) =>{
     this.Immobliere = response;
-    console.log(this.Immobliere)
-  console.log(response)
+   
   this.attachmentService.getAttachement(id).subscribe(
     (response: Attachements[]) =>{response.forEach(sm=>{
       this.Immobliere.attachement = response
@@ -91,16 +90,14 @@ public getImmobilierbyId(id: number):void{
      console.log(response);
      
      let objectURL = URL.createObjectURL(response);
-     console.log(this.sanitizer.bypassSecurityTrustUrl(objectURL))
-     console.log(this.Immobliere)
-     console.log(this.Immobliere["images"]);
+
      if (cout == 0) {
      this.Immobliere["images"] = [this.sanitizer.bypassSecurityTrustUrl(objectURL)];
     cout= 1;
-     console.log(this.Immobliere.images);
+    
     }else{
      this.Immobliere["images"].push(this.sanitizer.bypassSecurityTrustUrl(objectURL));
-     console.log(this.Immobliere.images);}
+     }
 }
    , 
  (error:HttpErrorResponse) =>{alert(error.message)}

@@ -18,7 +18,7 @@ export class LayoutComponent implements OnInit{
   showGUestAlert=false
   constructor(private cdr:ChangeDetectorRef,public sidebarService:SidebarService,public router:Router,public authService:AuthService, private userServ: UserService){
   }
-  role: string = "ROLE_SELLER";
+  role: string = "ROLE_BUYER";
 
   validateHomeRoute(){
     if (this.router.url=="/")

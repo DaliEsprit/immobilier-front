@@ -75,7 +75,7 @@ selectedImage:string= ''
         
        } else if (event instanceof HttpResponse) {
          this.message = event.body.message;
-        //this.fileInfos = this.fileuploadingService.getFiles();
+        
        }
        },
        (err: any) => {
@@ -97,13 +97,10 @@ selectedImage:string= ''
    }
    public updateImmobiliere():void{
    this.upload();
-    console.log(this.fileName)
-    console.log(this.currentFile.name)
+
     this.Attachement.name = this.currentFile.name;
     this.Attachement.path = this.path + this.currentFile.name;
-    
-    console.log(this.immobiliers);
-   //this.immobiliers.attachement.push(this.Attachement);
+  
    this.AttachmentService.addAttachement(this.Attachement).subscribe(
     (response: number) =>{ this.response2 =response;  this.immobilierService.updateImmobiliere(this.immobiliers, this.id).subscribe(
       (response: number) =>{ this.response1 =response; this.AttachmentService.assignttachement(this.response2,this.response1).subscribe(
@@ -126,7 +123,6 @@ selectedImage:string= ''
   }
 
   public deleteAttachment(name: string):void{
-    console.log(name)
     let cout: number =0;
     this.attachmentService.deleteAttachementbyName(name).subscribe(
      (response: Attachements) =>{
@@ -142,7 +138,6 @@ selectedImage:string= ''
     this.immobilierService.getImmobilierbyId(this.id).subscribe(
      (response: immobilier) =>{
       this.Immobliere = response;
-      console.log(this.Immobliere)
       this._value = this.Immobliere.etat;
        
     console.log(response)
@@ -157,16 +152,12 @@ selectedImage:string= ''
        console.log(response);
        
        let objectURL = URL.createObjectURL(response);
-       console.log(this.sanitizer.bypassSecurityTrustUrl(objectURL))
-       console.log(this.Immobliere)
-       console.log(this.Immobliere["images"]);
        if (cout == 0) {
        this.Immobliere["images"] = [this.sanitizer.bypassSecurityTrustUrl(objectURL)];
       cout= 1;
-       console.log(this.Immobliere.images);
       }else{
        this.Immobliere["images"].push(this.sanitizer.bypassSecurityTrustUrl(objectURL));
-       console.log(this.Immobliere.images);}
+       }
   }
      , 
    (error:HttpErrorResponse) =>{alert(error.message)}

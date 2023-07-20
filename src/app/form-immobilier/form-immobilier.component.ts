@@ -9,6 +9,7 @@ import { Attachements } from '../shared/models/Attachments.model';
 import { environment } from 'src/environments/environment.development';
 import { AttachementService } from '../shared/services/attachement.service';
 import {Location} from '@angular/common';
+import { UserService } from '../shared/services/user.service';
 @Component({
   selector: 'app-form-immobilier',
   templateUrl: './form-immobilier.component.html',
@@ -24,7 +25,8 @@ export class FormImmobilierComponent implements OnInit {
     fileName = '';
     uploadProgress:number;
     uploadSub: Subscription;
-  constructor(private _location: Location,private router:Router, private AttachmentService:AttachementService ,private immobilierService:ImmobilierService, private fileuploadingService: UploadFileService,private http: HttpClient){}
+    idUser: number;
+  constructor(private userServ: UserService, private _location: Location,private router:Router, private AttachmentService:AttachementService ,private immobilierService:ImmobilierService, private fileuploadingService: UploadFileService,private http: HttpClient){}
 
   private baseUrl = 'http://localhost:8089/api/up/upload/';
   private path = "file:/Users/imen/Desktop/ProjectMission/gestion-immobilier/uploads/"
@@ -41,8 +43,10 @@ export class FormImmobilierComponent implements OnInit {
  
   
    ngOnInit() {
-   //this.fileInfos = this.fileuploadingService.getFiles();
+
+   this.userServ.getCurrent().subscribe({next: (data:any)=> {this.idUser= data.id}})
    }
+   
  
    selectFile(event: any) {
    this.selectedFiles = event.target.files;
@@ -64,7 +68,7 @@ export class FormImmobilierComponent implements OnInit {
         
        } else if (event instanceof HttpResponse) {
          this.message = event.body.message;
-        //this.fileInfos = this.fileuploadingService.getFiles();
+   
        }
        },
        (err: any) => {
@@ -86,15 +90,12 @@ export class FormImmobilierComponent implements OnInit {
    }
    public addImmobilier():void{
    this.upload();
-    console.log(this.fileName)
-    console.log(this.currentFile.name)
+   
     this.Attachement.name = this.currentFile.name;
     this.Attachement.path = this.path + this.currentFile.name;
     
-    console.log(this.immobiliers);
-   //this.immobiliers.attachement.push(this.Attachement);
    this.AttachmentService.addAttachement(this.Attachement).subscribe(
-    (response: number) =>{ this.response2 =response;  this.immobilierService.addImmobiliere(this.immobiliers).subscribe(
+    (response: number) =>{ this.response2 =response;  this.immobilierService.addImmobiliere(this.immobiliers, this.idUser ).subscribe(
       (response: number) =>{ this.response1 =response; this.AttachmentService.assignttachement(this.response2,this.response1).subscribe(
         (response: Attachements) =>{  }
        , 
