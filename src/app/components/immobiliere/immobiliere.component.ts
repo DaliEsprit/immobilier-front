@@ -8,6 +8,8 @@ import { AttachementService } from 'src/app/shared/services/attachement.service'
 import { AttachementsService } from 'src/app/shared/services/attachments.service';
 import { ImmobilierService } from 'src/app/shared/services/immobilier.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { UploadFileService } from 'src/app/shared/services/upload-file-service.service';
 
 @Component({
   selector: 'app-immobiliere',
@@ -17,7 +19,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class ImmobiliereComponent implements OnInit {
 listImmobliere:immobilier[]=[];
 listAttachment:Attachements[]=[];
-constructor(private auth:AuthService,private router:Router, private immobilierService:ImmobilierService, private attachmentService:AttachementsService, private userServ: UserService){}
+constructor(private sanitizer: DomSanitizer, private uploadfileService: UploadFileService,  private auth:AuthService,private router:Router, private immobilierService:ImmobilierService, private attachmentService:AttachementService, private userServ: UserService){}
 
 validateUser(){
   if(this.auth.getToken()!=null)
@@ -28,6 +30,7 @@ validateUser(){
   };
 }
 navToImmobiliereDetails(idImmobilier:number){
+  console.log(idImmobilier)
   this.listImmobliere.filter(im=>{
     if(im.id==idImmobilier)
     im.nbClick=im.nbClick+1;
@@ -60,31 +63,9 @@ ngOnInit(): void {
  
   this.getImmobilier();
   //this.navToRoom();
-  this.getAttachment(1)
+
 }
 
-public getImmobilier():void{
- this.immobilierService.getImmobilier().subscribe(
-  (response: immobilier[]) =>{this.listImmobliere = response;}
- , 
- (error:HttpErrorResponse) =>{alert(error.message)}
- );
-}
-
-public getAttachment(Idimmobilier: any):void{
-  this.attachmentService.getAttachement(Idimmobilier).subscribe(
-   (response: Attachements[]) =>{this.listImmobliere.forEach(im=>{
-    
-   if (im.id == Idimmobilier){
-   // im.attachement = response
-   }
-   console.log(response)
-   console.log(this.listImmobliere)
-   })}
-  , 
-  
-  );
- }
 
 navToRoom() {
   this.userServ.getCurrent().subscribe({
@@ -97,8 +78,42 @@ navToRoom() {
         }
       })
     
-
-
 }
 
+public getImmobilier():void{
+  this.immobilierService.getImmobilier().subscribe(
+   (response: immobilier[]) =>{this.listImmobliere = response;
+     {this.listImmobliere.forEach(im=>{
+  
+  
+   this.attachmentService.getAttachement(im.id).subscribe(
+    (response: Attachements[]) =>{response.forEach(sm=>{
+     im.attachement = response
+    
+    console.log(response)
+    console.log(sm)
+    console.log(im.attachement[0].path)
+    console.log(sm.name)
+    this.uploadfileService.getFiles(sm.name).subscribe(
+
+    (response: any) =>{ 
+     console.log(response);
+   
+     let objectURL = URL.createObjectURL(response);
+     im["images"] = [this.sanitizer.bypassSecurityTrustUrl(objectURL)];
+}
+   , 
+ (error:HttpErrorResponse) =>{alert(error.message)}
+ );
+    })}
+   , 
+   
+   );
+   
+  }
+  , 
+  (error:HttpErrorResponse) =>{alert(error.message)}
+  );
+ }})}
+ 
 }

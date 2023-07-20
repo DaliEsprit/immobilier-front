@@ -21,8 +21,8 @@ export class ImmobilierService {
   public removeImmobiliere(idMob:any): any{
    return this.http.delete<any>(`${this.apiServerUrl}immobilier/remove-immobilier/`+idMob);
   }
-  public updateImmobiliere(immobliere:immobilier){
-    return this.http.put(`${this.apiServerUrl}immobilier/modify-immobilier`,immobliere);
+  public updateImmobiliere(immobliere:immobilier, id: number): any{
+    return this.http.put(`${this.apiServerUrl}immobilier/modify-immobilier/`+ id,immobliere);
   }
   public getImmobilierbyId(id: number):any{
     return this.http.get<any>(`${this.apiServerUrl}immobilier/get-by-id/`+id);

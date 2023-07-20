@@ -1,0 +1,100 @@
+<button type="button" (click)="backClicked()" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">return</button>
+
+<form #f="ngForm" (ngSubmit)="updateImmobiliere()" >
+    <div class="form-group">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="description" [(ngModel)]="immobiliers.description" #description="ngModel" required minlength="3" alt={{Immobliere.description}} [attr.placeholder]="Immobliere.description">
+        
+        <div *ngIf="description.invalid && description.touched">
+            <div *ngIf="description.errors?.['required']">
+            Title is required!
+        </div>
+        <div *ngIf="description.errors?.['minlength']">
+            Title must have at least 3 characters!
+        </div>
+    </div>
+    </div>
+    <div class="form-group">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Etat:</label>
+      
+        <select  [attr.placeholder]="Immobliere.etat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="etat" [(ngModel)]="Immobliere.etat" #etat="ngModel" >
+            <option selected  Value="Immobliere.etat" default>{{Immobliere.etat}}</option>
+            <option Value="Bonetat" >Bon état</option>
+            <option Value="Etat moyen">Etat moyen</option>  
+            <option Value="Etm moyen">Mauvais état</option>    
+        </select>
+
+        <div *ngIf="etat.invalid && etat.touched">
+            <div *ngIf="etat.errors?.['required']">
+            Title is required!
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price:</label>
+        <input value = {{Immobliere.price}}  [attr.placeholder]="Immobliere.price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="number" name="price" [(ngModel)]="immobiliers.price"  #price="ngModel" min=0>
+        
+        <div *ngIf="price.invalid">
+            <div *ngIf="price.errors?.['required']">
+            Price is required!
+        </div>
+        <div *ngIf="price.errors?.['min']">
+            price must be positive!
+        
+    </div>
+    </div>
+    </div>
+ 
+    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload file:</label>
+    <div class="row">
+        <div class="col-8">
+          <label class="btn btn-default p-0">
+            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" (change)="selectFile($event)" />
+          </label>
+        </div>
+      
+       
+      </div>
+      
+      <div *ngIf="currentFile" class="progress my-3">
+        <div
+          class="progress-bar progress-bar-info progress-bar-striped"
+          role="progressbar"
+          attr.aria-valuenow="{{ progress }}"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          [ngStyle]="{ width: progress + '%' }"
+        >
+          {{ progress }}%
+        </div>
+      </div>
+      
+      <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
+      
+  
+      <div class="form-group" style="margin-top: 2rem;" >
+        <input class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" type="submit" value="modify" [disabled]="f.invalid" >
+     </div>
+     </div>
+     </form>
+     <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+
+     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+     <div class="form-group">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+      
+        <select  #imageName  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="etat" >
+            <option [value]="opt.path.slice(67)" *ngFor="let opt of Immobliere.attachement" [value]="opt.path.slice(67)" id="imageName">{{opt.path.slice(67)}}</option>
+             
+        </select>
+
+    
+    </div>
+
+     
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="imageName" id="imageName" #imageName >
+
+        <button type="button" style="width: 100%;" (click)="deleteAttachment(imageName.value)" formtarget="_blank"
+        class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">delete
+    </button>
+

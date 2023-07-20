@@ -18,7 +18,7 @@ export class LayoutComponent implements OnInit{
   showGUestAlert=false
   constructor(private cdr:ChangeDetectorRef,public sidebarService:SidebarService,public router:Router,public authService:AuthService, private userServ: UserService){
   }
-  role: string = "ROLE_BUYER";
+  role: string = "ROLE_SELLER";
 
   validateHomeRoute(){
     if (this.router.url=="/")
@@ -32,15 +32,16 @@ export class LayoutComponent implements OnInit{
       
     return this.router.navigateByUrl("/immobiliereGestion") 
 
-  else return this.router.navigateByUrl("/immobiliereGestion")    }})
+  else return this.router.navigateByUrl("/immobiliere")    }})
   }
   
   ngOnInit(): void {
     this.authService.isGuest.subscribe(res=>{
       this.showGUestAlert=res
 this.cdr.detectChanges()  
+
   
   })
-  this.checkRole()
+ this.checkRole()
   }
 }

@@ -17,11 +17,11 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./gestion-immobilier.component.scss']
 })
 export class GestionImmobilierComponent {
-  listImmobliere:immobilier[]=[];
+listImmobliere:immobilier[]=[];
 listAttachment:Attachements[]=[];
 
   constructor( private sanitizer: DomSanitizer,private auth:AuthService,private router:Router, private uploadfileService: UploadFileService, private attachmentService:AttachementsService, private immobilierService:ImmobilierService, private userServ: UserService){}
-  
+ 
   validateUser(){
     if(this.auth.getToken()!=null)
     return true
@@ -30,7 +30,7 @@ listAttachment:Attachements[]=[];
     return false
     };
   }
- 
+
   // google maps zoom level
   zoom: number = 8;
   image:  Array<any> =[];
@@ -72,13 +72,6 @@ listAttachment:Attachements[]=[];
     );
    }
 
-  public  updateImmobiliere(Immobilier: immobilier):void{
-    this.immobilierService.updateImmobiliere(Immobilier).subscribe(
-     (response: immobilier[]) =>{this.listImmobliere = response;}
-    , 
-    (error:HttpErrorResponse) =>{alert(error.message)}
-    );
-   }
   public addImmobilier(){
     this.router.navigateByUrl("/formImmobilier")  
   }
@@ -90,10 +83,18 @@ listAttachment:Attachements[]=[];
     
     return this.router.navigateByUrl("/immobiliereDetails/"+idImmobilier)
   }
+
+  navToImmobiliereModifier(idImmobilier:number){
+    this.listImmobliere.filter(im=>{
+      if(im.id==idImmobilier)
+      im.nbClick=im.nbClick+1;
+    })
+    
+    return this.router.navigateByUrl("/modifyImmobilier/"+idImmobilier)
+  }
+  
   
   // google maps zoom level
-  
-
   
   public getImmobilier():void{
    this.immobilierService.getImmobilier().subscribe(

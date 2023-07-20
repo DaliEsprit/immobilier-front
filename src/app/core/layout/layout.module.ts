@@ -33,7 +33,7 @@ import { RoomDashboardComponent } from 'src/app/room-dashboard/room-dashboard.co
 import { AgmCoreModule } from '@agm/core';
 import { FormImmobilierComponent } from 'src/app/form-immobilier/form-immobilier.component';
 import { GestionImmobilierComponent } from 'src/app/gestion-immobilier/gestion-immobilier.component';
-
+import { ModifierImmobilierComponent } from 'src/app/modifier-immobilier/modifier-immobilier.component';
 
 const routes: Routes = [
   {
@@ -62,8 +62,8 @@ const routes: Routes = [
     ChatComponent,
     RoomDashboardComponent,
     FormImmobilierComponent,
-    GestionImmobilierComponent
-
+    GestionImmobilierComponent,
+    ModifierImmobilierComponent
   ],
   imports: [
     ReactiveFormsModule,
