@@ -11,37 +11,37 @@ import { UserService } from 'src/app/shared/services/user.service';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
-export class LayoutComponent implements OnInit{
-  sidebarVisible:boolean=false
-  routerLink:string="/"
+export class LayoutComponent implements OnInit {
+  sidebarVisible: boolean = false
+  routerLink: string = "/"
 
-  showGUestAlert=false
-  constructor(private cdr:ChangeDetectorRef,public sidebarService:SidebarService,public router:Router,public authService:AuthService, private userServ: UserService){
+  showGUestAlert = false
+  constructor(private cdr: ChangeDetectorRef, public sidebarService: SidebarService, public router: Router, public authService: AuthService, private userServ: UserService) {
   }
-  role: string = "ROLE_SELLER";
+  role: string = "ROLE_BUYER";
 
-  validateHomeRoute(){
-    if (this.router.url=="/")
-    return true ;
+  validateHomeRoute() {
+    if (this.router.url == "/")
+      return true;
     else
-    return false;
+      return false;
   }
- 
+
   checkRole() {
-    this.userServ.getCurrent().subscribe({next: (data:any)=> {if(this.role == data.role)
-      
-    return this.router.navigateByUrl("/immobiliereGestion") 
-
-  else return this.router.navigateByUrl("/immobiliere")    }})
+    this.userServ.getCurrent().subscribe({
+      next: (data: any) => {
+        this.role=data.role
+      }
+    })
   }
-  
-  ngOnInit(): void {
-    this.authService.isGuest.subscribe(res=>{
-      this.showGUestAlert=res
-this.cdr.detectChanges()  
 
-  
-  })
- this.checkRole()
+  ngOnInit(): void {
+    this.authService.isGuest.subscribe(res => {
+      this.showGUestAlert = res
+      this.cdr.detectChanges()
+
+
+    })
+    this.checkRole()
   }
 }

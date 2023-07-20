@@ -16,7 +16,7 @@
   export class LoginComponent implements OnInit{
     form:FormGroup
     loginError=false
-    role: string = "ROLE_SELLER";
+    role: string = "ROLE_BUYER";
     constructor( private socialAuthService: SocialAuthService,private alert:SweatAlertService,private userService:UserService,private fb:FormBuilder,private authService:AuthService,private router:Router){
     this.form=fb.group({
       email:['',[Validators.required,Validators.email]],
