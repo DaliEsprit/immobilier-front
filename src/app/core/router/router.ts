@@ -6,6 +6,7 @@ import { VerifyMailComponent } from "src/app/components/auth/verify-mail/verify-
 import { ImmobiliereDetailsComponent } from "src/app/components/immobiliere-details/immobiliere-details.component";
 import { PayementComponent } from "src/app/components/payement/payement.component";
 import { UserDetailsComponent } from "src/app/components/user-details/user-details.component";
+import { RoomDashboardComponent } from "src/app/room-dashboard/room-dashboard.component";
 import { RoomComponent } from "src/app/room/room.component";
 import { RoomsComponent } from "src/app/rooms/rooms.component";
 
@@ -42,6 +43,9 @@ const Routing: Routes = [
   },{
     path:"update-password/:token",
     component:UpdatePasswordComponent
+  },{
+    path:"roomDashboard",
+    component:RoomDashboardComponent
   }
   ];
   

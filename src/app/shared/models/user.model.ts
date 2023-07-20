@@ -7,4 +7,5 @@ export interface User{
     intPhone?:number,
     localPhone?:number,
     bidValue?:any,
+    role:string,
 }

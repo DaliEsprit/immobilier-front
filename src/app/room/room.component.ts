@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnChanges, SimpleChanges } from '@angular/core';
 import { HeaderComponent } from '../core/layout/header/header.component';
 import { RoomService } from '../shared/services/room.service';
 import { User } from '../shared/models/user.model';
@@ -12,12 +12,13 @@ import { AuthService } from '../core/auth/auth.service';
 import { UserService } from '../shared/services/user.service';
 import { interval, Subscription } from 'rxjs';
 import { webSocket } from 'rxjs/webSocket';
+import { WebSocketService } from '../shared/services/web-socket.service';
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
 })
-export class RoomComponent {
+export class RoomComponent implements OnChanges {
   listUsers: User[] = [];
   immobilier: immobilier = new immobilier();
   room: Room = new Room();
@@ -34,7 +35,11 @@ export class RoomComponent {
   public elapsedTime: string;
   initialduration: number;
   listRooms: Room[];
-  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute, private userServ: UserService, private router: Router, private ngZone: NgZone) {
+  listTest: any[] = []
+  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute, private userServ: UserService, private router: Router, private websocket: WebSocketService) {
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+
   }
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -95,6 +100,7 @@ export class RoomComponent {
         this.listUsers.forEach(us => this.getUserBidAmount(us.id))
       }
     })
+    this.sortList()
   }
   updateBid(userId: string) {
     console.log(this.currentRoomAmount);
@@ -115,6 +121,7 @@ export class RoomComponent {
                       const elementToMove = this.listUsers.splice(currentIndex, 1)[0];
                       this.listUsers.splice(0, 0, elementToMove);
                       this.getUserBidAmount(this.user.id);
+                      this.testRoom(parseInt(this.id))
                       this.currentRoomAmount = 0;
                       this.reset();
                     }
@@ -135,7 +142,6 @@ export class RoomComponent {
   // }
   sortList() {
     this.listUsers.sort((a, b) => {
-      // Compare the desired property for sorting (e.g., 'name' or 'value')
       if (a.bidValue < b.bidValue) {
         return 1;
       } else if (a.bidValue > b.bidValue) {
@@ -149,10 +155,10 @@ export class RoomComponent {
   ExitRoom(): void {
     this.userServ.getCurrent().subscribe({
       next: (user: User) => {
-        this.RoomSer.ExitRoom(user.id,parseInt(this.id)).subscribe({
-          next: () => { 
+        this.RoomSer.ExitRoom(user.id, parseInt(this.id)).subscribe({
+          next: () => {
             this.router.navigateByUrl("/rooms");
-           }
+          }
         }
         )
       }
@@ -196,10 +202,11 @@ export class RoomComponent {
       })
     if (this.room.timeRoom <= 0 && this.room.roomStatus == "Open") {
       this.room.roomStatus = "Closed"
-      this.RoomSer.updateRoom(this.room).subscribe({
+      var idUser=this.RoomSer.userIdRoom;
+      this.RoomSer.updateRoom(this.room,idUser).subscribe({
         next: () => {
           this.listUsers.forEach(user => {
-            this.RoomSer.ExitRoom(user.id,parseInt(this.id)).subscribe({
+            this.RoomSer.ExitRoom(user.id, parseInt(this.id)).subscribe({
               next: () => {
                 this.router.navigateByUrl("/rooms")
               }

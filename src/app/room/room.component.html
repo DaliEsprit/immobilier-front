@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div style="flex: 2;background-color: #ffff;padding: 20px; border-radius: 5px;margin-top: 20px;max-height: 580px;overflow-y: auto;">
+        <div  style="flex: 2;background-color: #ffff;padding: 20px; border-radius: 5px;margin-top: 20px;max-height: 580px;overflow-y: auto;">
             <div *ngIf="room.roomStatus=='Open'">
                 <div class="elapsedTime">
                    Current Time Left {{ elapsedTime }}
@@ -134,8 +134,10 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngFor="let tt of listTest">
+                           {{tt}} 
+                    </div>
                 </div>
-                <app-chat></app-chat>
 
             </div>
         </div>

@@ -9,12 +9,16 @@ import { ArticlesModule } from './components/articles/articles.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PayementComponent } from './components/payement/payement.component';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
+import { MatTabsModule } from '@angular/material/tabs';
+import * as CanvasJSAngularChart from '../charts/canvasjs.angular.compoenet';
+var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
 
  @NgModule({
   declarations: [
     AppComponent,
-    PayementComponent
+    PayementComponent,
+     CanvasJSChart
                             
   ],
   imports: [ 
@@ -24,7 +28,8 @@ import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, So
     HttpClientModule,
     ArticlesModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTabsModule
   ],
   providers: [
     {

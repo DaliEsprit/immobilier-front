@@ -30,6 +30,7 @@ import { PasswordModule } from 'primeng/password';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 import { ChatComponent } from 'src/app/chat/chat.component';
+import { RoomDashboardComponent } from 'src/app/room-dashboard/room-dashboard.component';
 
 const routes: Routes = [
   {
@@ -56,7 +57,8 @@ const routes: Routes = [
     VerifyMailComponent,
     UpdatePasswordComponent,
   
-    ChatComponent
+    ChatComponent,
+    RoomDashboardComponent
   ],
   imports: [
     ReactiveFormsModule,
