@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment.development';
 import { AttachementService } from '../shared/services/attachement.service';
 import {Location} from '@angular/common';
 import { UserService } from '../shared/services/user.service';
+import { User } from '../shared/models/user.model';
 @Component({
   selector: 'app-form-immobilier',
   templateUrl: './form-immobilier.component.html',
@@ -19,6 +20,7 @@ export class FormImmobilierComponent implements OnInit {
   immobiliers:immobilier=new immobilier();
   response1 = 0;
    response2 = 0;
+   currentUser:User;
   @Input()
     requiredFileType:string;
     Attachement: Attachements= new Attachements();
@@ -43,8 +45,10 @@ export class FormImmobilierComponent implements OnInit {
  
   
    ngOnInit() {
-
-   this.userServ.getCurrent().subscribe({next: (data:any)=> {this.idUser= data.id}})
+   //this.fileInfos = this.fileuploadingService.getFiles();
+   this.userServ.getCurrent().subscribe({
+    next:(user:User)=>this.currentUser=user
+   })
    }
    
  

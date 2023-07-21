@@ -57,7 +57,7 @@
           localStorage.setItem("useremail",user["email"]);
           this.router.navigateByUrl("");
           this.authService.isGuest=true
-      this.checkRole()
+      this.router.navigateByUrl("/immobiliere")
       },
     error:err=>{
       this.loginError=true

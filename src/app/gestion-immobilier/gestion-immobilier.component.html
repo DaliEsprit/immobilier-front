@@ -1,35 +1,37 @@
+<div *ngIf="currentUser.role=='ROLE_ADMIN' || currentUser.role=='ROLE_SELLER'">
+    <div  class="grid grid-cols-4 gap-4">
+
+        <div *ngFor="let immo of listImmobliere ">
+            <div class="cardBox">
+                <div
+                    class=" card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <img (click)="navToImmobiliereDetails(immo.id)" style="cursor: pointer;" class="rounded-t-lg"
+                        src={{immo.images[0].changingThisBreaksApplicationSecurity}} alt="" />
+
+                    <div class="p-5">
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"> Status: {{immo.Status}}</p>
+
+                    </div>
+                    <button type="button" style="width: 100%;" (click)="validateUser()"
+                        class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Reserve
+                    </button>
+
+                    <button type="button" style="width: 100%;" (click)="navToImmobiliereModifier(immo.id)"
+                        class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Modify
+                    </button>
+                    <button type="button" style="width: 100%;" (click)="deleteImmobilier(immo.id)"
+                        class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">delete
+                    </button>
+                </div>
 
 
-<div class="grid grid-cols-4 gap-4" >
-
-<div *ngFor="let immo of listImmobliere " >
-    <div class="cardBox">
-    <div class=" card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <img  (click)="navToImmobiliereDetails(immo.id)" style="cursor: pointer;" class="rounded-t-lg" src= {{immo.images[0].changingThisBreaksApplicationSecurity}} alt="" />
-  
-        <div class="p-5">
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"> Status: {{immo.Status}}</p>
-  
+            </div>
         </div>
-        <button type="button" style="width: 100%;" (click)="validateUser()"
-            class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Reserve
-        </button>
-     
-        <button type="button" style="width: 100%;" (click)="navToImmobiliereModifier(immo.id)"
-        class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Modify
-    </button>
-    <button type="button" style="width: 100%;" (click)="deleteImmobilier(immo.id)"
-    class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">delete
-</button>
     </div>
-    
-
+    <button type="button" style="width: 100%; margin-top: 3rem;" (click)="addImmobilier()"
+        class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">ADD
+    </button>
 </div>
+<div *ngIf="currentUser.role=='ROLE_BUYER'">
+    you are not authrized 
 </div>
-</div>
-<button type="button" style="width: 80%; margin-bottom: 7rem; position:absolute;bottom:0;" (click)="addImmobilier()"
-    class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">ADD
-</button>
-
-  
-  
