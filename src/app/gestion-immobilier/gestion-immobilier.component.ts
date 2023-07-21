@@ -10,6 +10,7 @@ import { AttachementsService } from '../shared/services/attachments.service';
 import { UploadFileService } from '../shared/services/upload-file-service.service';
 import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { User } from '../shared/models/user.model';
 
 @Component({
   selector: 'app-gestion-immobilier',
@@ -19,7 +20,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class GestionImmobilierComponent {
 listImmobliere:immobilier[]=[];
 listAttachment:Attachements[]=[];
-
+currentUser:User;
   constructor( private sanitizer: DomSanitizer,private auth:AuthService,private router:Router, private uploadfileService: UploadFileService, private attachmentService:AttachementsService, private immobilierService:ImmobilierService, private userServ: UserService){}
  
   validateUser(){
@@ -52,7 +53,9 @@ listAttachment:Attachements[]=[];
       
   ]
   ngOnInit(): void {
-   
+   this.userServ.getCurrent().subscribe({
+    next:( user:User)=> this.currentUser=user
+   })
     this.getImmobilier();
    
     //this.navToRoom();

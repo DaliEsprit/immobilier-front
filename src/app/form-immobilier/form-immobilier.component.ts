@@ -9,6 +9,8 @@ import { Attachements } from '../shared/models/Attachments.model';
 import { environment } from 'src/environments/environment.development';
 import { AttachementService } from '../shared/services/attachement.service';
 import {Location} from '@angular/common';
+import { UserService } from '../shared/services/user.service';
+import { User } from '../shared/models/user.model';
 @Component({
   selector: 'app-form-immobilier',
   templateUrl: './form-immobilier.component.html',
@@ -18,13 +20,14 @@ export class FormImmobilierComponent implements OnInit {
   immobiliers:immobilier=new immobilier();
   response1 = 0;
    response2 = 0;
+   currentUser:User;
   @Input()
     requiredFileType:string;
     Attachement: Attachements= new Attachements();
     fileName = '';
     uploadProgress:number;
     uploadSub: Subscription;
-  constructor(private _location: Location,private router:Router, private AttachmentService:AttachementService ,private immobilierService:ImmobilierService, private fileuploadingService: UploadFileService,private http: HttpClient){}
+  constructor(private _location: Location,private router:Router, private AttachmentService:AttachementService ,private immobilierService:ImmobilierService, private fileuploadingService: UploadFileService,private http: HttpClient,private userserve:UserService){}
 
   private baseUrl = 'http://localhost:8089/api/up/upload/';
   private path = "file:/Users/imen/Desktop/ProjectMission/gestion-immobilier/uploads/"
@@ -42,6 +45,9 @@ export class FormImmobilierComponent implements OnInit {
   
    ngOnInit() {
    //this.fileInfos = this.fileuploadingService.getFiles();
+   this.userserve.getCurrent().subscribe({
+    next:(user:User)=>this.currentUser=user
+   })
    }
  
    selectFile(event: any) {

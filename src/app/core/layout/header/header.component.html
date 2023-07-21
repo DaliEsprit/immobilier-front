@@ -2,7 +2,7 @@
   <div [ngClass]="{'dark': (themeService.theme$ | async) == 'dark'}"
     class="max-w-screen-xl z-10 flex flex-wrap items-center justify-between mx-auto p-2">
     <div class="flex justify-center items-center">
-      <a href="#" class="flex items-center justify-start">
+      <a routerLink="immobiliere" class="flex items-center justify-start">
         <b class="text-2xl">Immobiler</b>
       </a>
 
@@ -24,6 +24,9 @@
       </div>
       <div routerLink="roomDashboard" >
         roomDashboard
+      </div>
+      <div routerLink="immobiliereGestion" *ngIf="currentUser.role=='ROLE_SELLER'|| currentUser.role=='ROLE_ADMIN'">
+          gestion immobiliere
       </div>
 
       <button *showIfLogged="true" style="background-color: transparent;" type="button"
