@@ -57,12 +57,6 @@ currentUser:User;
     next:( user:User)=> this.currentUser=user
    })
     this.getImmobilier();
-   
-    //this.navToRoom();
- 
-    //this.navToRoom();
-  
-    
   }
  
 
@@ -108,16 +102,9 @@ currentUser:User;
     this.attachmentService.getAttachement(im.id).subscribe(
      (response: Attachements[]) =>{response.forEach(sm=>{
       im.attachement = response
-     
-     console.log(response)
-     console.log(sm)
-     console.log(im.attachement[0].path)
-     console.log(sm.name)
      this.uploadfileService.getFiles(sm.name).subscribe(
 
-     (response: any) =>{ 
-      console.log(response);
-    
+     (response: any) =>{    
       let objectURL = URL.createObjectURL(response);
       im["images"] = [this.sanitizer.bypassSecurityTrustUrl(objectURL)];
  }

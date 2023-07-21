@@ -39,9 +39,13 @@ export class LayoutComponent implements OnInit {
     this.authService.isGuest.subscribe(res => {
       this.showGUestAlert = res
       this.cdr.detectChanges()
-
+      this.userServ.getCurrent().subscribe({
+        next: (data: any) => {
+          this.role=data.role
+        }
+      })
 
     })
-    this.checkRole()
+   // this.checkRole()
   }
 }
