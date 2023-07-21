@@ -8,6 +8,8 @@ import { ThemeService } from '../shared/services/teme.service';
 import { JetonService } from '../shared/services/jeton.service';
 import { Jeton } from '../shared/models/Jeton.model';
 import { User } from '../shared/models/user.model';
+import { PayementService } from '../shared/services/payement.service';
+import { Payement } from '../shared/models/Payement.model';
 
 @Component({
   selector: 'app-rooms',
@@ -22,8 +24,11 @@ export class RoomsComponent {
   listUsers: User[] = [];
   joined: boolean = false;
   visible: boolean = false
+  visibleGold: boolean = false;
+  visiblePremium: boolean = false;
   selfJoined: boolean = false;
-  constructor(private router: Router, private roomserv: RoomService, private userServ: UserService, public themeService: ThemeService, private jetonServ: JetonService) { }
+  payment:Payement=new Payement();
+  constructor(private router: Router, private roomserv: RoomService, private userServ: UserService, public themeService: ThemeService, private jetonServ: JetonService,private paymentserv:PayementService) { }
   ngOnInit(): void {
     this.roomserv.getallroom().subscribe({
       next: (data: any) => {
@@ -52,6 +57,8 @@ export class RoomsComponent {
     }
     return this.visible
   }
+  
+
   navToRoom(roomId: number) {
     this.listRooms.forEach(room => {
       this.roomserv.getUsersbyRoom(room.id).subscribe({
@@ -95,7 +102,19 @@ export class RoomsComponent {
                 })
               }
               else {
-                this.router.navigateByUrl("/payment");
+                this.roomserv.getRoom(roomId).subscribe({
+                  next:(rommm:Room)=>{
+                    this.room=rommm;
+                    if(rommm.goldRoom){
+                      this.showGoldDialog();
+ 
+                    }
+                    else{
+                      this.showPremuimDialog()
+                    }
+                  }
+                })
+                
               }
             }
           })
@@ -145,5 +164,29 @@ export class RoomsComponent {
       }
     })
 
+  }
+  showGoldDialog(){
+    this.visibleGold = true;
+    this.jetonServ.pricegold="29.99"
+
+  }
+  showPremuimDialog(){
+    this.visiblePremium = true;
+    this.jetonServ.pricegold="19.99"
+
+  }
+  addGoldPayment(){
+    this.paymentserv.addPayement(this.payment,"Gold").subscribe({
+      next:(Payement:Payement)=>{
+        this.router.navigateByUrl("/payment/"+Payement.payementId)
+      }
+    })
+  }
+  addGoldPremuim(){
+    this.paymentserv.addPayement(this.payment,"Premieum").subscribe({
+      next:(Payement:Payement)=>{
+        this.router.navigateByUrl("/payment/"+Payement.payementId)
+      }
+    })
   }
 }

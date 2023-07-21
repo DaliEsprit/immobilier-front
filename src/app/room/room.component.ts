@@ -36,7 +36,7 @@ export class RoomComponent implements OnChanges {
   initialduration: number;
   listRooms: Room[];
   listTest: any[] = []
-  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute, private userServ: UserService, private router: Router, private websocket: WebSocketService) {
+  constructor(private RoomSer: RoomService, private jetonServ: JetonService, private route: ActivatedRoute, private userServ: UserService, private router: Router) {
   }
   ngOnChanges(changes: SimpleChanges): void {
 

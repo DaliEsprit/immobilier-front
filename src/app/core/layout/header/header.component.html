@@ -23,13 +23,13 @@
         <img routerLink="rooms" *ngIf="theme=='dark'" src="../../../../assets/roomWhite.png" width="20" />
       </div>
       <div *showIfLogged="true">
-        <div routerLink="roomDashboard" *ngIf="currentUser.role=='ROLE_SELLER'|| currentUser.role=='ROLE_ADMIN'">
-          roomDashboard
+        <div routerLink="roomDashboard" >
+          Gestion Room
         </div>
       </div>
       <div *showIfLogged="true">
-        <div routerLink="immobiliereGestion" *ngIf="currentUser.role=='ROLE_SELLER'|| currentUser.role=='ROLE_ADMIN'">
-          gestion immobiliere
+        <div routerLink="immobiliereGestion" >
+          Gestion immobiliere
         </div>
       </div>
       <button *showIfLogged="true" style="background-color: transparent;" type="button"
