@@ -13,19 +13,20 @@ import { GestionImmobilierComponent } from "src/app/gestion-immobilier/gestion-i
 import { RoomComponent } from "src/app/room/room.component";
 import { RoomsComponent } from "src/app/rooms/rooms.component";
 import { ModifierImmobilierComponent } from "src/app/modifier-immobilier/modifier-immobilier.component";
+import { UsersComponent } from "src/app/components/users/users.component";
 
 const Routing: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('../../components/articles/articles-routing.module').then(
-        (m) => m.ArticlesRoutingModule
-      ),
+    component:ImmobiliereComponent
   } ,
   { path: 'room/:id', component: RoomComponent },
   {
     path:"register",
     component:RegisterComponent
+  },{
+    path:"users",
+    component:UsersComponent
   },{
     path:"login",
     component:LoginComponent

@@ -11,6 +11,7 @@ import { AttachementService } from '../shared/services/attachement.service';
 import {Location} from '@angular/common';
 import { UserService } from '../shared/services/user.service';
 import { User } from '../shared/models/user.model';
+import { GeolocationService } from '@ng-web-apis/geolocation';
 @Component({
   selector: 'app-form-immobilier',
   templateUrl: './form-immobilier.component.html',
@@ -28,7 +29,7 @@ export class FormImmobilierComponent implements OnInit {
     uploadProgress:number;
     uploadSub: Subscription;
     idUser: number;
-  constructor(private userServ: UserService, private _location: Location,private router:Router, private AttachmentService:AttachementService ,private immobilierService:ImmobilierService, private fileuploadingService: UploadFileService,private http: HttpClient){}
+  constructor(private readonly geolocation$: GeolocationService,private userServ: UserService, private _location: Location,private router:Router, private AttachmentService:AttachementService ,private immobilierService:ImmobilierService, private fileuploadingService: UploadFileService,private http: HttpClient){}
 
   private baseUrl = 'http://localhost:8089/api/up/upload/';
   private path = "file:/Users/imen/Desktop/ProjectMission/gestion-immobilier/uploads/"
@@ -97,20 +98,26 @@ export class FormImmobilierComponent implements OnInit {
    
     this.Attachement.name = this.currentFile.name;
     this.Attachement.path = this.path + this.currentFile.name;
-    
-   this.AttachmentService.addAttachement(this.Attachement).subscribe(
-    (response: number) =>{ this.response2 =response;  this.immobilierService.addImmobiliere(this.immobiliers, this.idUser ).subscribe(
-      (response: number) =>{ this.response1 =response; this.AttachmentService.assignttachement(this.response2,this.response1).subscribe(
-        (response: Attachements) =>{  }
+    this.geolocation$.subscribe(geo=>{
+      this.AttachmentService.addAttachement(this.Attachement).subscribe(
+       
+        (response: number) =>{
+           this.response2 =response;
+            
+             this.immobilierService.addImmobiliere(this.immobiliers,parseInt(this.currentUser.id),geo.coords.longitude,geo.coords.latitude  ).subscribe(
+          (response: number) =>{ this.response1 =response; this.AttachmentService.assignttachement(this.response2,this.response1).subscribe(
+            (response: Attachements) =>{  }
+           , 
+           (error:HttpErrorResponse) =>{alert(error.message)}
+           ) }
+         , 
+         (error:HttpErrorResponse) =>{alert(error.message)}
+         ) }
        , 
        (error:HttpErrorResponse) =>{alert(error.message)}
-       ) }
-     , 
-     (error:HttpErrorResponse) =>{alert(error.message)}
-     ) }
-   , 
-   (error:HttpErrorResponse) =>{alert(error.message)}
-   )
+       )
+    })
+  
     
     
     
