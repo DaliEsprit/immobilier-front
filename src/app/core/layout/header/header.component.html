@@ -22,7 +22,7 @@
         <img routerLink="rooms" *ngIf="theme=='light'" src="../../../../assets/room.png" width="20" />
         <img routerLink="rooms" *ngIf="theme=='dark'" src="../../../../assets/roomWhite.png" width="20" />
       </div>
-      <div routerLink="roomDashboard" >
+      <div routerLink="roomDashboard" *ngIf="currentUser.role=='ROLE_SELLER'|| currentUser.role=='ROLE_ADMIN'"  >
         roomDashboard
       </div>
       <div routerLink="immobiliereGestion" *ngIf="currentUser.role=='ROLE_SELLER'|| currentUser.role=='ROLE_ADMIN'">
