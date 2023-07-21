@@ -8,6 +8,8 @@ import { Observable, Subscription, catchError, lastValueFrom, map ,tap} from 'rx
   providedIn: 'root'
 })
 export class JetonService {
+  pricegold:any;
+  pricePremium:any;
   jeton: Jeton = new Jeton();
   private subscription: Subscription;
   protected readonly BASE_URI = environment.baseUri + "jeton/"
@@ -29,6 +31,9 @@ export class JetonService {
   }
   updateJetonBidValue(idJeton:number,amount:any){
     return this.http.put(this.BASE_URI+"update-jeton-bid-value/"+idJeton+"/"+amount,null)
+  }
+  updateJetonStatus(userId: number, jetonStatus: string){
+    return this.http.put(this.BASE_URI+"updateJetonStatus/"+userId+"/"+jetonStatus, null);
   }
 
 }

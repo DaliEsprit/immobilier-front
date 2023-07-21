@@ -70,9 +70,28 @@
         </div>
 
     </div>
-    <p-dialog header="Warning" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <p-dialog header="Warning" [(visible)]="visibleGold" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
         <p style="text-align: center;font-weight: 800; color: red;" class="m-0"[style]="">
-            you have to exit the joined room
+            Access Denied !!!!
+            <br>
+            Upgrade Pack to Gold For 29.99$
+            <img style="display: block; margin-left: auto; margin-right: auto; width: 50%;" src="https://turismo.infosardinya.it/wp-content/uploads/2019/11/icon-gold.jpg" alt="Gold Pack">
         </p>
-    </p-dialog>
+        <button     type="button" (click)="addGoldPayment()"
+        style="width: 100%;border-radius:0px;border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;"
+        class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Buy Gold Pack
+    </button>    
+</p-dialog>
+<p-dialog header="Warning" [(visible)]="visiblePremium" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <p style="text-align: center;font-weight: 800; color: red;" class="m-0"[style]="">
+        Access Denied !!!!
+        <br>
+        Upgrade Pack to Premuim For 19.99$
+        <img style="display: block; margin-left: auto; margin-right: auto; width: 50%;" src="https://image.jimcdn.com/app/cms/image/transf/none/path/s21bd25b54c409925/image/ie5a27b974d23daf1/version/1548272666/image.png" alt="Gold Pack">
+    </p>
+    <button (click)="addGoldPremuim()" routerLinkActive="router-link-active"  type="button"
+    style="width: 100%;border-radius:0px;border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;"
+    class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Buy Premuim Pack
+</button>    
+</p-dialog>
 </div>
