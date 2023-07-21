@@ -12,12 +12,15 @@ import { AuthService } from "../auth/auth.service"
       ) { }
   
     intercept(req: HttpRequest<any>, next: HttpHandler){
- 
-      let tokenizedReq=req.clone({
-        setHeaders:{
-          Authorization:`Bearer ${this.authService.getToken()}`
-        }
-      })
+      let tokenizedReq=req
+ if(this.authService.getToken()){
+  tokenizedReq=req.clone({
+    setHeaders:{
+      Authorization:`Bearer ${this.authService.getToken()}`
+    }
+  })
+ }
+     
       return next.handle(tokenizedReq)
     }
   }

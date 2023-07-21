@@ -42,8 +42,8 @@ export class AuthService {
      loginUser(user:any){
         return this.http.post(`${this.BASE_URI}auth/signIn`, user);
      }
-     socialLogin(user:any){
-        return this.http.post(`${this.BASE_URI}auth/social-login`, user);
+     socialLogin(user:any,long,lat){
+        return this.http.post(`${this.BASE_URI}auth/social-login?long=${long}&&lat=${lat}`, user);
      }
     logout(): Observable<any> {
         return this.http.post(`${this.BASE_URI}logout`, {});
@@ -78,10 +78,10 @@ export class AuthService {
 
      socialSignOn(){
         this.socialAuthService.authState.subscribe((user) => {
-          //  this.geolocation$.subscribe(position => console.log(position.coords.));
+            this.geolocation$.subscribe(position => { 
           
 
-            this.socialLogin(user).subscribe(res=>{
+            this.socialLogin(user,position.coords.longitude,position.coords.latitude).subscribe(res=>{
               this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
               this.loggedIn=true
               this.alert.show("success","login success")
@@ -98,7 +98,7 @@ export class AuthService {
             localStorage.setItem("useremail",res["email"]);
             this.router.navigateByUrl("");
             
-            })
+            })});
           });
      }
 }
