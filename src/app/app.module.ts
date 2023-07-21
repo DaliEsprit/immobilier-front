@@ -14,11 +14,13 @@ import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, So
 import { HeaderComponent } from './core/layout/header/header.component';
 import { AgmCoreModule } from '@agm/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UsersComponent } from './components/users/users.component';
 
  @NgModule({
   declarations: [
     AppComponent,
     PayementComponent,
+    UsersComponent,
                             
   ],
   imports: [ 

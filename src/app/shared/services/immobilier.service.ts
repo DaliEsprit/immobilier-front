@@ -15,8 +15,8 @@ export class ImmobilierService {
   public getImmobilier(): any{
     return this.http.get<immobilier[]>(`${this.apiServerUrl}immobilier/retrieve-all-immobilier`);
   }
-  public addImmobiliere(immobilier:immobilier, idUser:string){
-    return this.http.post<any>(`${this.apiServerUrl}immobilier/add-immobilier/`+ idUser,immobilier);
+  public addImmobiliere(immobilier:immobilier, idUser:number,long,lat){
+    return this.http.post<any>(`${this.apiServerUrl}immobilier/add-immobilier/${idUser}?long=${long}&&lat=${lat}` ,immobilier);
   }
   public removeImmobiliere(idMob:any): any{
    return this.http.delete<any>(`${this.apiServerUrl}immobilier/remove-immobilier/`+idMob);
