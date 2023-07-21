@@ -36,7 +36,8 @@
                 </div>
             </div>
         </div>
-        <div class="dashoboard-room-main" style="display: grid;" *ngIf="user.role=='ROLE_ADMIN' && listDisapprovedRooms.length>0 ">
+        <div class="dashoboard-room-main" style="display: grid;"
+            *ngIf="user.role=='ROLE_ADMIN' && listDisapprovedRooms.length>0 ">
 
             <div class="dashoboard-room-row">
                 <table border="2px">
@@ -61,10 +62,10 @@
                         <td>
                             <div class="flex items-center" style="display: initial;">
                                 <input (change)="checkapprove($event.target.value)" id="checked-checkbox"
-                                    type="checkbox" [(ngModel)]="room.approvedRoom"
-                                    [checked]="room.approvedRoom" value="approved"
+                                    type="checkbox" [(ngModel)]="room.approvedRoom" [checked]="room.approvedRoom"
+                                    value="approved"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                  
+
                             </div>
                         </td>
                     </tr>
@@ -203,7 +204,10 @@
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Immobiliere</label>
                     <select id="countries"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
+                        <option>select Immobiliere</option>
+                        <option *ngFor="let immo of listImmobiliere" value={{immo.description}}>
+                            {{immo.description}}
+                        </option>
                     </select>
                 </div>
                 <div class="edit-col" style="display: flex; align-items: center;" *ngIf="user.role=='ROLE_ADMIN'">
@@ -286,7 +290,10 @@
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Immobiliere</label>
                     <select id="countries"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
+                        <option>select Immobiliere</option>
+                        <option *ngFor="let immo of listImmobiliere" value={{immo.description}}>
+                            {{immo.description}}
+                        </option>
                     </select>
                 </div>
             </div>

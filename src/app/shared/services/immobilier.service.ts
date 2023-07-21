@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
@@ -12,7 +12,7 @@ export class ImmobilierService {
   constructor(private http:HttpClient) { 
 
   }
-  public getImmobilier(): any{
+  public getImmobilier(){
     return this.http.get<immobilier[]>(`${this.apiServerUrl}immobilier/retrieve-all-immobilier`);
   }
   public addImmobiliere(immobilier:immobilier, idUser:number){
@@ -26,6 +26,9 @@ export class ImmobilierService {
   }
   public getImmobilierbyId(id: number):any{
     return this.http.get<any>(`${this.apiServerUrl}immobilier/get-by-id/`+id);
+  }
+  public getImmobiliereByUser(idUser:number) :Observable<any>{
+    return this.http.get<any>(`${this.apiServerUrl}immobilier/retrieve-immobiliere-by-user/`+idUser);
   }
 
 }
