@@ -1,11 +1,11 @@
-export class User{
-    id?:string
-    mail:string
-    displayName:string
-    pwd:string
-    country?:string
-    intPhone?:number
-    localPhone?:number
-    bidValue?:any
-    role:string
+export interface User{
+    id?:string,
+    mail:string,
+    displayName:string,
+    pwd:string,
+    country?:string,
+    intPhone?:number,
+    localPhone?:number,
+    bidValue?:any,
+    role:string,
 }

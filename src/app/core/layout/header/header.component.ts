@@ -16,23 +16,23 @@ export class HeaderComponent {
   menuItems: MenuItem[];
   theme: any = ""
   userName = "Med Ali Nouri"
-  currentUser:User=new User()
+  currentUser: User
   visible: boolean = false;
   mainFeedTitle: string = ""
-  constructor( 
+  constructor(
     private socialAuthService: SocialAuthService,
-    private authService: AuthService, 
-    public themeService: ThemeService, 
-    public sideBarService: SidebarService, 
-    private cdr: ChangeDetectorRef, 
+    private authService: AuthService,
+    public themeService: ThemeService,
+    public sideBarService: SidebarService,
+    private cdr: ChangeDetectorRef,
     private router: Router,
-    private userser:UserService) {
+    private userser: UserService) {
     let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     let themeToggleLightIcon = document.getElementById(
       'theme-toggle-light-icon'
     );
-let user = JSON.parse(localStorage.getItem("user")) 
-this.userName = user?.firstName + " " + (user?.lastName || "")
+    let user = JSON.parse(localStorage.getItem("user"))
+    this.userName = user?.firstName + " " + (user?.lastName || "")
     this.themeService.theme$.subscribe(theme => {
       this.theme = theme
     })
@@ -57,11 +57,13 @@ this.userName = user?.firstName + " " + (user?.lastName || "")
     ];
   }
   ngOnInit(): void {
-    this.userser.getCurrent().subscribe({
-      next:(user:User)=>this.currentUser=user,
-      error:()=>this.currentUser.role=""
-    })
-    console.log(this.currentUser)
+    if (this.authService.loggedIn.source._value) {
+      this.userser.getCurrent().subscribe({
+        next: (user: User) => this.currentUser = user,
+        error: () => this.currentUser.role = ""
+      })
+      console.log(this.currentUser)
+    }
   }
 
   selectedItem!: any;
@@ -87,8 +89,8 @@ this.userName = user?.firstName + " " + (user?.lastName || "")
   RemoveUser(): any {
     localStorage.clear()
     this.socialAuthService.signOut()
-    this.authService.loggedIn=false
-    this.authService.isGuest=false
+    this.authService.loggedIn = false
+    this.authService.isGuest = false
     this.router.navigateByUrl("")
   }
   showDialog() {
