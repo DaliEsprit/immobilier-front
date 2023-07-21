@@ -5,6 +5,8 @@ import { ThemeService } from 'src/app/shared/services/teme.service';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { User } from 'src/app/shared/models/user.model';
+import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -14,7 +16,7 @@ export class HeaderComponent {
   menuItems: MenuItem[];
   theme: any = ""
   userName = "Med Ali Nouri"
-
+  currentUser:User
   visible: boolean = false;
   mainFeedTitle: string = ""
   constructor( 
@@ -23,7 +25,8 @@ export class HeaderComponent {
     public themeService: ThemeService, 
     public sideBarService: SidebarService, 
     private cdr: ChangeDetectorRef, 
-    private router: Router) {
+    private router: Router,
+    private userser:UserService) {
     let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     let themeToggleLightIcon = document.getElementById(
       'theme-toggle-light-icon'
@@ -52,6 +55,11 @@ this.userName = user?.firstName + " " + (user?.lastName || "")
         routerLink: '/about',
       },
     ];
+  }
+  ngOnInit(): void {
+    this.userser.getCurrent().subscribe({
+      next:(user:User)=>this.currentUser=user
+    })
   }
 
   selectedItem!: any;
