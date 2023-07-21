@@ -80,6 +80,7 @@ save(){
     next:user=>{
    localStorage.setItem("user",JSON.stringify(user))
    this.authService.isGuest=false
+   this.alert.show("success","information updated")
    this.router.navigateByUrl("")
   },
 error:err=>{
