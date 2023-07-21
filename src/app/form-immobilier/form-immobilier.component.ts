@@ -28,7 +28,7 @@ export class FormImmobilierComponent implements OnInit {
     fileName = '';
     uploadProgress:number;
     uploadSub: Subscription;
-    idUser: number;
+    idUser: string;
   constructor(private readonly geolocation$: GeolocationService,private userServ: UserService, private _location: Location,private router:Router, private AttachmentService:AttachementService ,private immobilierService:ImmobilierService, private fileuploadingService: UploadFileService,private http: HttpClient){}
 
   private baseUrl = 'http://localhost:8089/api/up/upload/';
@@ -48,7 +48,8 @@ export class FormImmobilierComponent implements OnInit {
    ngOnInit() {
    //this.fileInfos = this.fileuploadingService.getFiles();
    this.userServ.getCurrent().subscribe({
-    next:(user:User)=>this.currentUser=user
+    next:(user:User)=>{this.currentUser=user;
+    this.idUser = user.id}
    })
    }
    

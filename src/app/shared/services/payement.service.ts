@@ -15,8 +15,15 @@ export class PayementService {
   getPayement(){
     return this.http.get<Payement[]>(this.BASE_URI+"retrieve-all-payement");
    }
-   addPayement(payement:Payement){
-    return this.http.post(this.BASE_URI+"add-payement",payement);
+   addPayement(payement:Payement,paymentStatus:string){
+    return this.http.post(this.BASE_URI+"add-payement/"+paymentStatus,payement);
+  }
+  getPaymentbyId(pid:number){
+    return this.http.get(this.BASE_URI+"retrieve-pay-by-id/"+pid)
+  }
+
+  updatePayement(pay:Payement,id:number){
+    return this.http.put(this.BASE_URI+"update-payement/"+pay,id);
   }
   
 }
