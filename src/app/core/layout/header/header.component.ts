@@ -16,7 +16,7 @@ export class HeaderComponent {
   menuItems: MenuItem[];
   theme: any = ""
   userName = "Med Ali Nouri"
-  currentUser:User
+  currentUser:User=new User()
   visible: boolean = false;
   mainFeedTitle: string = ""
   constructor( 
@@ -58,8 +58,10 @@ this.userName = user?.firstName + " " + (user?.lastName || "")
   }
   ngOnInit(): void {
     this.userser.getCurrent().subscribe({
-      next:(user:User)=>this.currentUser=user
+      next:(user:User)=>this.currentUser=user,
+      error:()=>this.currentUser.role=""
     })
+    console.log(this.currentUser)
   }
 
   selectedItem!: any;
