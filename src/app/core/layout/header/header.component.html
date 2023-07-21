@@ -22,13 +22,16 @@
         <img routerLink="rooms" *ngIf="theme=='light'" src="../../../../assets/room.png" width="20" />
         <img routerLink="rooms" *ngIf="theme=='dark'" src="../../../../assets/roomWhite.png" width="20" />
       </div>
-      <div routerLink="roomDashboard" *ngIf="currentUser.role=='ROLE_SELLER'|| currentUser.role=='ROLE_ADMIN'"  >
-        roomDashboard
+      <div *showIfLogged="true">
+        <div routerLink="roomDashboard" *ngIf="currentUser.role=='ROLE_SELLER'|| currentUser.role=='ROLE_ADMIN'">
+          roomDashboard
+        </div>
       </div>
-      <div routerLink="immobiliereGestion" *ngIf="currentUser.role=='ROLE_SELLER'|| currentUser.role=='ROLE_ADMIN'">
+      <div *showIfLogged="true">
+        <div routerLink="immobiliereGestion" *ngIf="currentUser.role=='ROLE_SELLER'|| currentUser.role=='ROLE_ADMIN'">
           gestion immobiliere
+        </div>
       </div>
-
       <button *showIfLogged="true" style="background-color: transparent;" type="button"
         class="relative inline-flex items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         <img routerLink="notification" *ngIf="theme=='light'" src="../../../../assets/bell-ring.png" width="20" />
