@@ -5,6 +5,8 @@ import { Room } from '../shared/models/Room.model';
 import { User } from '../shared/models/user.model';
 import { Chart } from 'chart.js';
 import { Router } from '@angular/router';
+import { immobilier } from '../shared/models/Immobiliers.model';
+import { ImmobilierService } from '../shared/services/immobilier.service';
 
 @Component({
   selector: 'app-room-dashboard',
@@ -29,6 +31,8 @@ export class RoomDashboardComponent {
   premiumcheckedValue: boolean;
   premiumRoom: boolean;
   approveModel: boolean;
+  listImmobiliere: immobilier[];
+  immobilierename: string = "";
   pieChartOptions = {
     animationEnabled: true,
     title: {
@@ -48,12 +52,27 @@ export class RoomDashboardComponent {
       },
     ],
   };
-  constructor(private roomService: RoomService, private userservice: UserService, private router: Router) {
+  constructor(private roomService: RoomService, private userservice: UserService, private router: Router, private immoServ: ImmobilierService) {
 
   }
   ngOnInit(): void {
     this.getAllRooms();
+    this.getAllImmobiliere();
   }
+  getAllImmobiliere() {
+    this.userservice.getCurrent().subscribe({
+      next: (user: User) => {
+        this.user = user;
+        this.immoServ.getImmobiliereByUser(parseInt(this.user.id)).subscribe({
+          next: (immobilier: immobilier[]) => {
+            this.listImmobiliere = immobilier
+            console.log(this.listImmobiliere)
+          }
+        })
+      }
+    })
+  }
+
   getAllRooms() {
     this.userservice.getCurrent().subscribe({
       next: (user: User) => {
@@ -136,6 +155,13 @@ export class RoomDashboardComponent {
     this.RoomToEdit.user = this.user;
     this.roomService.updateRoom(this.RoomToEdit, parseInt(this.user.id)).subscribe({
       next: () => {
+        this.immoServ.getImmobiliereByName(this.immobilierename).subscribe({
+          next: (immobilier: immobilier) => {
+            this.roomService.AssignImmobiliereToRoom(parseInt(this.user.id),immobilier.id,this.RoomToEdit.id).subscribe({
+              next:()=>this.immobilierename=""
+            })
+          }
+        })
         this.getAllRooms()
         this.Editvisible = false
       }
@@ -159,14 +185,15 @@ export class RoomDashboardComponent {
     this.approveModel = false
   }
   AddRoom() {
-    console.log(this.RoomToAdd.minAmount);
+    console.log(this.immobilierename)
+
     this.roomService.addRoom(this.RoomToAdd, this.user.id).subscribe({
-      next: () => {
+      next: (RoomAddded:any) => {
         this.getAllRooms()
         this.AddVisible = false
         this.RoomToAdd.minAmount = 0
         this.RoomToAdd.timeRoom = 0
-        this.approveModel = true
+        this.approveModel = true;
       }
     })
   }
