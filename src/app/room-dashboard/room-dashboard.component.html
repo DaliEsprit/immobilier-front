@@ -36,6 +36,27 @@
                 </div>
             </div>
         </div>
+        <div class="dashoboard-room-main"  *ngIf="user.role=='ROLE_ADMIN'">
+
+            <div class="dashoboard-room-row">
+                <table border="2px">
+                    <tr>
+                        <th>Reservation Id</th>
+                        <th>Date Reservation </th>
+                        <th>User ID</th>
+                        <th>Immobiler ID </th>
+                        <th>Room ID </th>
+                    </tr>
+                    <tr *ngFor="let res of listReservations">
+                        <td> {{res.idReservation}}</td>
+                        <td>{{res.dateReservation}}</td>
+                        <td>{{res.userId}}</td>
+                        <td>{{res.ImmobilierId}}</td>
+                        <td>{{res.RoomId}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
         <div class="dashoboard-room-main" style="display: grid;"
             *ngIf="user.role=='ROLE_ADMIN' && listDisapprovedRooms.length>0 ">
 
