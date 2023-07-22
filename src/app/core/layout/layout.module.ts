@@ -32,6 +32,7 @@ import { ChatComponent } from 'src/app/chat/chat.component';
 import { AgmCoreModule } from '@agm/core';
 
 
+
 const routes: Routes = [
   {
     path: '',
@@ -43,6 +44,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
+   
     FooterComponent,
     LayoutComponent,
     HeaderComponent,
@@ -57,7 +59,8 @@ const routes: Routes = [
     VerifyMailComponent,
     UpdatePasswordComponent,
   
-    ChatComponent
+    ChatComponent,
+    
   ],
   imports: [
     ReactiveFormsModule,

@@ -11,7 +11,7 @@ import { ArticlesModule } from './components/articles/articles.module';
 
 import { PayementComponent } from './components/payement/payement.component';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
-import { HeaderComponent } from './core/layout/header/header.component';
+
 import { AgmCoreModule } from '@agm/core';
 import { FormImmobilierComponent } from './form-immobilier/form-immobilier.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -33,6 +33,7 @@ import { GestionImmobilierComponent } from './gestion-immobilier/gestion-immobil
     ArticlesModule,
     FormsModule,
     ReactiveFormsModule,
+ 
     AgmCoreModule.forRoot({
         apiKey: ''
       })

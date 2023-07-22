@@ -17,6 +17,10 @@ export class HeaderComponent {
 
   visible: boolean = false;
   mainFeedTitle: string = ""
+  currentRate:number=4;
+  currentRating: number = 0;
+
+ 
   constructor( 
     private socialAuthService: SocialAuthService,
     private authService: AuthService, 
@@ -60,7 +64,9 @@ this.userName = user?.firstName + " " + (user?.lastName || "")
   search(event: any) {
     this.suggestions = [...Array(10).keys()].map(item => event.query + '-' + item);
   }
-
+  onRatingChange(rating: number): void {
+    this.currentRating = rating;
+  }
   toggleTheme(): void {
     this.themeService.toggleDarkMode();
   }
