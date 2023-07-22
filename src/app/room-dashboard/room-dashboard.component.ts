@@ -31,7 +31,8 @@ export class RoomDashboardComponent {
   premiumcheckedValue: boolean;
   premiumRoom: boolean;
   approveModel: boolean;
-  listImmobiliere: immobilier[]
+  listImmobiliere: immobilier[];
+  immobilierename: string = "";
   pieChartOptions = {
     animationEnabled: true,
     title: {
@@ -154,6 +155,13 @@ export class RoomDashboardComponent {
     this.RoomToEdit.user = this.user;
     this.roomService.updateRoom(this.RoomToEdit, parseInt(this.user.id)).subscribe({
       next: () => {
+        this.immoServ.getImmobiliereByName(this.immobilierename).subscribe({
+          next: (immobilier: immobilier) => {
+            this.roomService.AssignImmobiliereToRoom(parseInt(this.user.id),immobilier.id,this.RoomToEdit.id).subscribe({
+              next:()=>this.immobilierename=""
+            })
+          }
+        })
         this.getAllRooms()
         this.Editvisible = false
       }
@@ -177,14 +185,15 @@ export class RoomDashboardComponent {
     this.approveModel = false
   }
   AddRoom() {
-    console.log(this.RoomToAdd.minAmount);
+    console.log(this.immobilierename)
+
     this.roomService.addRoom(this.RoomToAdd, this.user.id).subscribe({
-      next: () => {
+      next: (RoomAddded:any) => {
         this.getAllRooms()
         this.AddVisible = false
         this.RoomToAdd.minAmount = 0
         this.RoomToAdd.timeRoom = 0
-        this.approveModel = true
+        this.approveModel = true;
       }
     })
   }

@@ -1,3 +1,4 @@
+import { immobilier } from "./Immobiliers.model";
 import { User } from "./user.model";
 
 export class Room{
@@ -10,7 +11,7 @@ export class Room{
     roomStatus:string;
     approvedRoom!:boolean;
     timeRoom:number=0;
-    immobiliereId:number;
+    immobiliere:immobilier;
     joined:boolean=false;
     users:User[];
     user:User;

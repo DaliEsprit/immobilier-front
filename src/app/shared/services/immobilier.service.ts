@@ -30,5 +30,9 @@ export class ImmobilierService {
   public getImmobiliereByUser(idUser:number) :Observable<any>{
     return this.http.get<any>(`${this.apiServerUrl}immobilier/retrieve-immobiliere-by-user/`+idUser);
   }
+  public getImmobiliereByName(name:string){
+    return this.http.get<any>(`${this.apiServerUrl}immobilier/retrieve-immo-by-name/`+name);
+
+  }
 
 }
