@@ -15,8 +15,8 @@ import { RoomService } from 'src/app/shared/services/room.service';
   styleUrls: ['./payement.component.scss']
 })
 export class PayementComponent {
-  priceGold: string = "29.99$";
-  pricePremium: string = "19.99$";
+  priceGold: number = 29.99;
+  pricePremium: number = 19.99;
   user: User;
   jeton: Jeton;
   updatePay: Payement;
@@ -47,23 +47,22 @@ export class PayementComponent {
   }
   getValue(){
     if(this.payement.paymentStatus == "Gold" ){
-      this.payement.price = "29.99$"
+      this.payement.price = 29.99
     }
     else{
-      this.payement.price = "19.99$"
+      this.payement.price = 19.99
     }
   }
 
   updatePayement() {
     this.route.paramMap.subscribe(params => {
       this.paymentId = params.get('id');
-   
     this.payementService.getPaymentbyId(parseInt(this.paymentId)).subscribe({
       next:(data:any)=>{
-        this.payement = data;
         this.payementService.updatePayement(this.payement, parseInt(this.payement.payementId)).subscribe({
           next: (payement: Payement) => {
-            console.log(this.payement)
+            this.payement = payement
+            this.updateJeton()
           }
         })
       }
@@ -71,29 +70,21 @@ export class PayementComponent {
   })
   }
 
-  addPayement() {
-    this.payementService.addPayement(this.payement, this.payement.paymentStatus).subscribe({
-      next: (pay: Payement) => {
-        this.payement = pay;
-        var success = true;
-        if (success) {
-          if (pay.price = this.priceGold) {
-            var user = JSON.parse(localStorage.getItem("user"))
-            this.jetonserv.updateJetonStatus(user.id, "Gold").subscribe({
-              next: (jeton: Jeton) => {
-                console.log(jeton.jetonStatus);
-              }
-            })
+  updateJeton(){
+    var user = JSON.parse(localStorage.getItem("user"))
+      if (this.payement.paymentStatus == "Gold") {
+        this.jetonserv.updateJetonStatus(user.id, "Gold").subscribe({
+          next: (jeton: Jeton) => {
+            this.router.navigateByUrl('/rooms')
           }
-          else {
-            this.jetonserv.updateJetonStatus(user.id, "Premieum").subscribe({
-              next: (jeton: Jeton) => {
-                console.log(jeton.jetonStatus);
-              }
-            })
-          }
-        }
+        })
       }
-    })
+      else {
+        this.jetonserv.updateJetonStatus(user.id, "Premieum").subscribe({
+          next: (jeton: Jeton) => {
+            this.router.navigateByUrl('/rooms')
+          }
+        })
+      }
   }
 }

@@ -23,7 +23,7 @@ export class PayementService {
   }
 
   updatePayement(pay:Payement,id:number){
-    return this.http.put(this.BASE_URI+"update-payement/"+pay,id);
+    return this.http.put(this.BASE_URI+"update-payement/"+id, pay);
   }
   
 }
