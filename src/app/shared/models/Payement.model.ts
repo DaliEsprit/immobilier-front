@@ -4,7 +4,7 @@ export class Payement{
     creditCardNumber: number;
     date: string;
     cvc: number;
-    price: string;
+    price: number;
     paymentStatus:string
     
 } 
