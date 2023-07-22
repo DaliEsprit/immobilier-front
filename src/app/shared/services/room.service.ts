@@ -66,5 +66,11 @@ export class RoomService {
   RetrieveImmobliereByRoom(idRoom:number){
     return this.http.get(this.BASE_URI+"retrieve-Immobilier-by-room/"+idRoom);
   }
+  getAllReservation(){
+    return this.http.get(this.BASE_URI+"retrieve-all-reservation-by-room")
+  }
+  getResRef(idRes:number){
+    return this.http.get(this.BASE_URI+"reservationRef/"+idRes);
+  }
   
 }

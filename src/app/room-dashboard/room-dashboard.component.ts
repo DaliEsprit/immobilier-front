@@ -7,6 +7,7 @@ import { Chart } from 'chart.js';
 import { Router } from '@angular/router';
 import { immobilier } from '../shared/models/Immobiliers.model';
 import { ImmobilierService } from '../shared/services/immobilier.service';
+import { Reservation } from '../shared/models/Reservation.model';
 
 @Component({
   selector: 'app-room-dashboard',
@@ -33,6 +34,7 @@ export class RoomDashboardComponent {
   approveModel: boolean;
   listImmobiliere: immobilier[];
   immobilierename: string = "";
+  listReservations:any[]
   pieChartOptions = {
     animationEnabled: true,
     title: {
@@ -58,6 +60,23 @@ export class RoomDashboardComponent {
   ngOnInit(): void {
     this.getAllRooms();
     this.getAllImmobiliere();
+    this.getAllReservation();
+  }
+  getAllReservation(){
+    this.roomService.getAllReservation().subscribe({
+      next:(data:any)=>{
+        this.listReservations=data
+        this.listReservations.forEach(res=>{
+          this.roomService.getResRef(res.idReservation).subscribe({
+            next:(ref:any)=>{
+              res.RoomId=ref[0]
+              res.ImmobilierId=ref[1]
+              res.userId=ref[2]
+            }
+          })
+        })
+      }
+    })
   }
   getAllImmobiliere() {
     this.userservice.getCurrent().subscribe({

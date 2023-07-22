@@ -2,10 +2,9 @@ import { immobilier } from "./Immobiliers.model";
 
 export class Reservation{
     idRese!:string;
-    immobilier!:immobilier;
-    userAchId!:number;
-    userSelId!:number;
+    immobilier!:string;
     roomId!:number;
+    User:string;
     dateReservation!:string;
 
 }
