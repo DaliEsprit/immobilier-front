@@ -149,14 +149,13 @@ public getImmobilierbyId(id: number):void{
    let userid: number=1;
 
    this.userservice.getCurrent().subscribe((u:User) => {
-     userid = parseInt(u.id); // Store the user ID inside the userid variable
-     // You can use the userid here or perform any other logic with it.
+     userid = parseInt(u.id) |1;
      console.log('User ID:', userid);
    }, (error: HttpErrorResponse) => {
      console.error('Error getting user data:', error.message);
    });
    console.log(this.feedback)
-   this.Feedservice.addbyuser(this.feedback,userid).subscribe(
+   this.Feedservice.addFeedback(this.feedback).subscribe(
      (response:feedback)=>{
        console.log(response)
        

@@ -2,7 +2,7 @@
 
 <div *ngFor="let immo of listImmobliere " >
     
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" (click)="navToImmobiliereDetails(immo.id)">
         <img  (click)="navToImmobiliereDetails(immo.id)" style="cursor: pointer;" class="rounded-t-lg" src= {{immo.images[0].changingThisBreaksApplicationSecurity}} alt="" />
   
         <div class="p-5">
