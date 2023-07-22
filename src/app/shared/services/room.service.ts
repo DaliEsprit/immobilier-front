@@ -16,8 +16,8 @@ export class RoomService {
   addRoom(room:Room,idUser:string){
     return this.http.post(this.BASE_URI+"add-room/"+idUser,room);
   }
-  updateRoom(room:Room,idUser:number){
-    return this.http.put(this.BASE_URI+"modify-room/"+idUser,room);
+  updateRoom(room:Room){
+    return this.http.put(this.BASE_URI+"modify-room",room);
   }
   getallroom(){
     return this.http.get(this.BASE_URI+"retrieve-all-room");
@@ -60,4 +60,11 @@ export class RoomService {
   getUserbyRoomCreated(idRoom:number){
     return this.http.get(this.BASE_URI+"get-user-by-room-created/"+idRoom)
   }
+  ReserveRoom(idUser:number,idImmo:number,idRoom:number){
+    return this.http.post(this.BASE_URI+"room-reservation/"+idUser+"/"+idImmo+"/"+idRoom,{});
+  }
+  RetrieveImmobliereByRoom(idRoom:number){
+    return this.http.get(this.BASE_URI+"retrieve-Immobilier-by-room/"+idRoom);
+  }
+  
 }

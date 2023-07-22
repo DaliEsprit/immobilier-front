@@ -45,12 +45,16 @@ export class RoomComponent implements OnChanges {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     })
+    console.log(this.id)
     // console.log(this.webSocketSer.connect());
     this.RoomSer.getRoom(parseInt(this.id)).subscribe({
       next: (rm: Room) => {
         this.room = rm; console.log(this.room);;
       }
     });
+    this.RoomSer.RetrieveImmobliereByRoom(parseInt(this.id)).subscribe({
+      next: (imo: immobilier) => {this.immobilier = imo; console.log(this.immobilier)}
+    })
     this.getUsers(parseInt(this.id));
     this.testRoom(parseInt(this.id));
     this.userServ.getCurrent().subscribe({
@@ -198,23 +202,29 @@ export class RoomComponent implements OnChanges {
     if (this.room.roomStatus == "Open")
       this.RoomSer.updateRoomTime(parseInt(this.id), this.room.timeRoom).subscribe({
         next: () => {
+          if (this.room.timeRoom <= 0 && this.room.roomStatus == "Open" || this.room.roomStatus=="Closed") {
+            this.room.roomStatus = "Closed";
+             if (this.listUsers.length > 0) {
+               this.RoomSer.ReserveRoom(parseInt(this.listUsers[0].id), this.immobilier.id, parseInt(this.id)).subscribe({
+                 next: () => console.log(this.listUsers[0])
+               })
+             }
+            var idUser = this.RoomSer.userIdRoom;
+            this.RoomSer.updateRoom(this.room).subscribe({
+              next: () => {
+                this.listUsers.forEach(user => {
+                  this.RoomSer.ExitRoom(user.id, parseInt(this.id)).subscribe({
+                    next: () => {
+                      this.router.navigateByUrl("/rooms")
+                    }
+                  })
+                })
+              }
+            });
+          }
         }
       })
-    if (this.room.timeRoom <= 0 && this.room.roomStatus == "Open") {
-      this.room.roomStatus = "Closed"
-      var idUser=this.RoomSer.userIdRoom;
-      this.RoomSer.updateRoom(this.room,idUser).subscribe({
-        next: () => {
-          this.listUsers.forEach(user => {
-            this.RoomSer.ExitRoom(user.id, parseInt(this.id)).subscribe({
-              next: () => {
-                this.router.navigateByUrl("/rooms")
-              }
-            })
-          })
-        }
-      });
-    }
+    
     return `${this.pad(minutes)}:${this.pad(seconds)}`;
   }
 

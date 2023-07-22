@@ -96,7 +96,7 @@ export class RoomsComponent {
                     this.roomserv.Room = p;
                   }
                   var idUser=this.roomserv.userIdRoom;
-                  this.roomserv.updateRoom(p,idUser).subscribe({ next: (data: any) => console.log(data) });
+                  this.roomserv.updateRoom(p).subscribe({ next: (data: any) => console.log(data) });
                   // console.log( this.jetonServ.getJetonByUser(1)
                   this.router.navigateByUrl("/room/" + roomId);
                 })

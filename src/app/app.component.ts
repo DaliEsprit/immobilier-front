@@ -76,7 +76,7 @@ export class AppComponent {
       if (room.timeRoom <= 0 && room.roomStatus == "Open") {
         room.roomStatus = "Closed"
         var idUser=this.roomService.userIdRoom
-        this.roomService.updateRoom(room,idUser).subscribe({
+        this.roomService.updateRoom(room).subscribe({
           next: () => console.log(room)
         })
 

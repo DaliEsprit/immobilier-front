@@ -25,33 +25,33 @@ export class WebSocketService {
 
   private stompClient = null;
   constructor(private Roomserv: RoomService, private jetonser: JetonService) {
-    setInterval(() => {
-      this.newmessage = "hello"
-      this.Roomserv.getallroom().subscribe({
-        next: (listRooms: Room[]) => {
-          this.listRooms = listRooms.filter(romm => romm.approvedRoom == true && romm.roomStatus == "Open")
-          this.listRooms.forEach(room => {
-            this.Roomserv.getUsersbyRoom(room.id).subscribe({
-              next: (users: User[]) => {
-                this.listUsers = users;
-                this.listUsers.forEach(user => {
-                  this.jetonser.getJetonByUser(parseInt(user.id)).subscribe({
-                    next: (datajet: any) => {
-                      user.bidValue = datajet.bidValue;
-                      if (!this.listuserBids.includes("userId: " + user.id))
-                        this.listuserBids.push("userId: " + user.id, "userBid: " + user.bidValue)
-                    }
-                  })
-                })
-                this.sendMessage(this.listuserBids)
+    // setInterval(() => {
+    //   this.newmessage = "hello"
+    //   this.Roomserv.getallroom().subscribe({
+    //     next: (listRooms: Room[]) => {
+    //       this.listRooms = listRooms.filter(romm => romm.approvedRoom == true && romm.roomStatus == "Open")
+    //       this.listRooms.forEach(room => {
+    //         this.Roomserv.getUsersbyRoom(room.id).subscribe({
+    //           next: (users: User[]) => {
+    //             this.listUsers = users;
+    //             this.listUsers.forEach(user => {
+    //               this.jetonser.getJetonByUser(parseInt(user.id)).subscribe({
+    //                 next: (datajet: any) => {
+    //                   user.bidValue = datajet.bidValue;
+    //                   if (!this.listuserBids.includes("userId: " + user.id))
+    //                     this.listuserBids.push("userId: " + user.id, "userBid: " + user.bidValue)
+    //                 }
+    //               })
+    //             })
+    //             this.sendMessage(this.listuserBids)
 
-              }
-            })
-          })
-        }
-      })
+    //           }
+    //         })
+    //       })
+    //     }
+    //   })
 
-    }, 1000)
+    // }, 1000)
   }
   ngOnInit() {
 
