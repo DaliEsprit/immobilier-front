@@ -153,7 +153,7 @@ export class RoomDashboardComponent {
   }
   editRoom() {
     this.RoomToEdit.user = this.user;
-    this.roomService.updateRoom(this.RoomToEdit, parseInt(this.user.id)).subscribe({
+    this.roomService.updateRoom(this.RoomToEdit).subscribe({
       next: () => {
         this.immoServ.getImmobiliereByName(this.immobilierename).subscribe({
           next: (immobilier: immobilier) => {
@@ -169,7 +169,7 @@ export class RoomDashboardComponent {
   }
   editDisapprovedRoom() {
     this.listDisapprovedRooms.forEach(room => {
-      this.roomService.updateRoom(room, parseInt(this.user.id)).subscribe({
+      this.roomService.updateRoom(room).subscribe({
         next: () => {
           this.getAllRooms()
         }
