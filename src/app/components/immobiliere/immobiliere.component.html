@@ -3,7 +3,7 @@
     <div class="cardBox">
       <div
         class="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <img (click)="navToImmobiliereDetails(immo.id)" style="cursor: pointer;" class="rounded-t-lg"
+        <img (click)="navToImmobiliereDetails(immo.id)" style="cursor: pointer;" class="rounded-t-lg" *ngIf="immo.images"
           src={{immo.images[0].changingThisBreaksApplicationSecurity}} alt="" />
         
           

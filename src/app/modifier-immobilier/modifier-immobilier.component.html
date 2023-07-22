@@ -3,13 +3,13 @@
 <form #f="ngForm" (ngSubmit)="updateImmobiliere()" >
     <div class="form-group">
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="description" [(ngModel)]="immobiliers.description" #description="ngModel" required minlength="3" alt={{Immobliere.description}} [attr.placeholder]="Immobliere.description">
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="description" [(ngModel)]="immobiliers.description" #description="ngModel"  minlength="3" alt={{Immobliere.description}} [attr.placeholder]="Immobliere.description">
         
        
     </div>
     <div class="form-group">
       <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-      <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="name" [(ngModel)]="immobiliers.name" #name="ngModel" required minlength="3" alt={{Immobliere.name}} [attr.placeholder]="Immobliere.name">
+      <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="name" [(ngModel)]="immobiliers.name" #name="ngModel"  minlength="3" alt={{Immobliere.name}} [attr.placeholder]="Immobliere.name">
       
      
   </div>
@@ -63,6 +63,7 @@
      </div>
      </div>
      </form>
+
      <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 
      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
@@ -70,7 +71,7 @@
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
       
         <select  #imageName  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="etat" >
-            <option [value]="opt.path.slice(67)" *ngFor="let opt of Immobliere.attachement" [value]="opt.path.slice(67)" id="imageName">{{opt.path.slice(67)}}</option>
+            <option [value]="opt.path.slice(67)" *ngFor="let opt of Immobliere.attachement" [value]="opt.path.slice(67)" id="imageName" >{{opt.path.slice(67)}}</option>
              
         </select>
 

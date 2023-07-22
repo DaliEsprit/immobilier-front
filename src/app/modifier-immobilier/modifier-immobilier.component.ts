@@ -97,14 +97,16 @@ selectedImage:string= ''
    }
    public updateImmobiliere():void{
    this.upload();
-
+   console.log(this.currentFile)
+   
+      if (this.currentFile != undefined ){
     this.Attachement.name = this.currentFile.name;
-    this.Attachement.path = this.path + this.currentFile.name;
+    this.Attachement.path = this.path + this.currentFile.name;}
   
    this.AttachmentService.addAttachement(this.Attachement).subscribe(
     (response: number) =>{ this.response2 =response;  this.immobilierService.updateImmobiliere(this.immobiliers, this.id).subscribe(
       (response: number) =>{ this.response1 =response; this.AttachmentService.assignttachement(this.response2,this.response1).subscribe(
-        (response: Attachements) =>{  }
+        (response: Attachements) =>{ console.log(response) }
        , 
        (error:HttpErrorResponse) =>{alert(error.message)}
        ) }

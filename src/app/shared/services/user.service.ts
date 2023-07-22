@@ -14,7 +14,12 @@ export class UserService {
     const url = `${this.BASE_URI}/current`;
     return this.http.get(url);
   }
-
+  getAll() { 
+    return this.http.get(this.BASE_URI);
+  }
+  disable(id) { 
+    return this.http.get(`${this.BASE_URI}/disable/${id}`);
+  }
   save(user:any){
     return this.http.post(this.BASE_URI,user)
   }

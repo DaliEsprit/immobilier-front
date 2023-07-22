@@ -17,7 +17,7 @@ export class AuthService {
     isLoggedIn=false
     private _loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(!!localStorage.getItem("token"));
     private _isGuest: BehaviorSubject<boolean> = new BehaviorSubject<boolean>((JSON.parse(localStorage.getItem("user")) && JSON.parse(localStorage.getItem("user"))?.role=="ROLE_GUEST"));
-
+    private user: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
 
     get isGuest():Observable<boolean> {
       return this._isGuest.asObservable();
@@ -77,28 +77,33 @@ export class AuthService {
      }
 
      socialSignOn(){
+  
         this.socialAuthService.authState.subscribe((user) => {
-            this.geolocation$.subscribe(position => { 
-          
+          if(!this.getToken()){
+          this.geolocation$.subscribe(position => { 
+        
 
-            this.socialLogin(user,position.coords.longitude,position.coords.latitude).subscribe(res=>{
-              this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
-              this.loggedIn=true
-              this.alert.show("success","login success")
-            localStorage.setItem("token",res["accessToken"]);
-            Promise.resolve()
-            this.userService.getCurrent().subscribe((next:any)=>{
-              localStorage.setItem("user",JSON.stringify(next) );
-      
-              if(next.role=="ROLE_GUEST"){
-                this.router.navigateByUrl("/userDetails");
-               this.isGuest=true
-              }
-            })
-            localStorage.setItem("useremail",res["email"]);
-            this.router.navigateByUrl("");
-            
-            })});
-          });
+          this.socialLogin(user,position.coords.longitude,position.coords.latitude).subscribe(res=>{
+        //    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+            this.loggedIn=true
+            this.alert.show("success","login success")
+          localStorage.setItem("token",res["accessToken"]);
+          Promise.resolve()
+          this.userService.getCurrent().subscribe((next:any)=>{
+            localStorage.setItem("user",JSON.stringify(next) );
+          //  this.user.next()
+            if(next.role=="ROLE_GUEST"){
+              this.router.navigateByUrl("/userDetails");
+             this.isGuest=true
+            }
+          })
+          localStorage.setItem("useremail",res["email"]);
+          this.router.navigateByUrl("");
+          
+          })});
+        }
+        });
+    
+        
      }
 }

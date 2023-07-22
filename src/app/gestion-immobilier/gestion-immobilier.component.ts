@@ -63,7 +63,7 @@ currentUser:User;
   public deleteImmobilier(idImmobilier:number):void{
     this.immobilierService.removeImmobiliere(idImmobilier).subscribe(
      (response: immobilier[]) =>{this.listImmobliere = response;
-      this.getImmobilier()}
+      }
     , 
     (error:HttpErrorResponse) =>{alert(error.message)}
     );

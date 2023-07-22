@@ -9,7 +9,8 @@ import { AttachementsService } from 'src/app/shared/services/attachments.service
 import { ImmobilierService } from 'src/app/shared/services/immobilier.service';
 import { UploadFileService } from 'src/app/shared/services/upload-file-service.service';
 import { UserService } from 'src/app/shared/services/user.service';
-
+import { PositionService } from 'src/app/shared/services/position.service';
+import { Position } from 'src/app/shared/models/Position.model';
 @Component({
   selector: 'app-immobiliere-details',
   templateUrl: './immobiliere-details.component.html',
@@ -22,7 +23,7 @@ selectedAttachment:any[]=[]
 selectedImage:string= '';
 selectedPath:string='';
 userId: string;
-constructor(private userServ: UserService,private sanitizer: DomSanitizer,private uploadfileService: UploadFileService, private attachmentService:AttachementsService,private auth:AuthService,private router:Router,private route:ActivatedRoute, private immobilierService:ImmobilierService){}
+constructor( private positionService: PositionService, private userServ: UserService,private sanitizer: DomSanitizer,private uploadfileService: UploadFileService, private attachmentService:AttachementsService,private auth:AuthService,private router:Router,private route:ActivatedRoute, private immobilierService:ImmobilierService){}
 setMainAttachemnt(changingThisBreaksApplicationSecurity: String ){
   this.selectedAttachment = this.Immobliere.images.filter(d=>d.changingThisBreaksApplicationSecurity == changingThisBreaksApplicationSecurity); 
   console.log(this.selectedAttachment)
@@ -49,22 +50,10 @@ validateUser(){
 zoom: number = 8;
 
 // initial center position for the map
-lat: number = 51.673858;
-lng: number = 7.815982;
+lat: number;
+lng: number;
+label : string = 'A';
 
-clickedMarker(label: string, index: number) {
-  console.log(`clicked the marker: ${label || index}`)
-}
-
-markers = [
-    {
-        lat: 51.673858,
-        lng: 7.815982,
-        label: "A",
-        draggable: true
-    },
-    
-]
 id:number=0;
 ngOnInit(): void {
   console.log(this.route)
@@ -73,8 +62,28 @@ ngOnInit(): void {
 this.getUserID()
 }
 
+markers = []
+
+
 public getImmobilierbyId(id: number):void{
+  
   let cout: number =0;
+  this.positionService.getPositionbyId(this.id).subscribe(
+    (response: Position) =>{
+     this.lat = parseInt(response.lat);
+     this.lng = parseInt(response.log);
+     console.log(this.markers)
+    this.markers.push({
+      lat: this.lat,
+      lng: this.lng,
+      label: "A",
+      draggable: true
+  });
+console.log(this.markers)}
+     , 
+     (error:HttpErrorResponse) =>{alert(error.message)})
+    
+
   this.immobilierService.getImmobilierbyId(this.id).subscribe(
    (response: immobilier) =>{
     this.Immobliere = response;
@@ -109,8 +118,14 @@ public getImmobilierbyId(id: number):void{
   , 
   (error:HttpErrorResponse) =>{alert(error.message)}
   );
- 
+  this.markers =[];
  }
 
 
 }
+
+
+
+
+
+
